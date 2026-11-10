@@ -1,0 +1,38 @@
+name: Hermes Lite (gate)
+
+on:
+  pull_request:
+    types: [opened, reopened, ready_for_review, synchronize]
+  check_run:
+    types: [completed]
+  workflow_dispatch:
+    inputs:
+      pr_number:
+        description: 'Numéro de PR spécifique (vide = toutes les PR ouvertes)'
+        required: false
+        default: ''
+
+permissions:
+  contents: write
+  pull-requests: write
+  checks: write
+
+concurrency:
+  group: hermes-lite-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: false
+
+env:
+  GH_TOKEN: ${{ secrets.HERMES_LITE_TOKEN || github.token }}
+  HERMES_REQUIRED_CHECKS: 'ci-budget,kiro,typecheck,lint,test,build,stale-base-guard'
+
+jobs:
+  gate:
+    name: gate
+    runs-on: [self-hosted, placard-worker]
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+      - name: Évaluation gate et dispatch Hermes sur conflit
+        run: python3 .github/hermes/gate.py

@@ -1,0 +1,26 @@
+name: kiro-guard
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+  workflow_dispatch: {}
+
+permissions:
+  contents: read
+
+concurrency:
+  group: kiro-guard-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  kiro:
+    name: kiro
+    runs-on: [self-hosted, placard-worker]
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+      - name: Contrôle de conformité Kiroween
+        run: python3 .github/kiro/check_kiro.py

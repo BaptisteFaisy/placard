@@ -1,0 +1,21 @@
+# Node / build
+node_modules/
+dist/
+build/
+coverage/
+*.tsbuildinfo
+.vite/
+playwright-report/
+test-results/
+
+# Placard — état local du rituel (jamais versionné)
+.placard/state/
+.placard/replacements.txt
+
+# OS / éditeurs
+.DS_Store
+Thumbs.db
+*.swp
+
+# Règle du concours Kiroween : le dossier .kiro DOIT être suivi par Git.
+# Aucune ligne de ce fichier ne concerne .kiro — vérifié par le job `kiro`.

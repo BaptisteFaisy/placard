@@ -1,0 +1,10 @@
+{
+  "$schema": "https://kiro.dev/schemas/hook-v1.json",
+  "name": "self-scan",
+  "description": "Analyse le dépôt Placard avec son propre moteur à la fin de chaque tour d'agent pour s'assurer qu'aucun secret n'a été introduit.",
+  "trigger": "turn_end",
+  "action": {
+    "type": "command",
+    "command": "node --import tsx/esm packages/cli/src/main.ts scan . --fail-on-open"
+  }
+}

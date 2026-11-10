@@ -1,0 +1,11 @@
+{
+  "$schema": "https://kiro.dev/schemas/hook-v1.json",
+  "name": "a11y-check",
+  "description": "Contrôle automatisé d'accessibilité AA sur les composants du manoir.",
+  "trigger": "task_end",
+  "matcher": "manor-ui",
+  "action": {
+    "type": "command",
+    "command": "pnpm vitest run packages/ui/src/a11y.test.tsx"
+  }
+}

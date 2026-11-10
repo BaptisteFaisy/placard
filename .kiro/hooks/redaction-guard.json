@@ -1,0 +1,11 @@
+{
+  "$schema": "https://kiro.dev/schemas/hook-v1.json",
+  "name": "redaction-guard",
+  "description": "Vérifie la propriété PLA-P-01 (aucun secret en clair) à chaque modification du moteur d'analyse.",
+  "trigger": "file_save",
+  "matcher": "packages/analysis/**",
+  "action": {
+    "type": "command",
+    "command": "pnpm vitest run packages/analysis/src/redaction.test.ts"
+  }
+}

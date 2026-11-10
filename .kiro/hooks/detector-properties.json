@@ -1,0 +1,11 @@
+{
+  "$schema": "https://kiro.dev/schemas/hook-v1.json",
+  "name": "detector-properties",
+  "description": "Lance les tests par propriétés fast-check des détecteurs (PLA-P-02, PLA-P-04).",
+  "trigger": "file_save",
+  "matcher": "packages/detectors/**",
+  "action": {
+    "type": "command",
+    "command": "pnpm vitest run packages/detectors/src/properties.test.ts"
+  }
+}
