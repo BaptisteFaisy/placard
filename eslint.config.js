@@ -6,6 +6,20 @@ import tseslint from 'typescript-eslint';
 
 export default tseslint.config(
   {
+    // Scripts d'outillage exécutés par Node hors du navigateur (recette, capture
+    // vidéo) : ils ont besoin des globaux Node.
+    files: ['scripts/**/*.mjs', 'scripts/**/*.js'],
+    languageOptions: {
+      globals: {
+        console: 'readonly',
+        process: 'readonly',
+        URL: 'readonly',
+        Buffer: 'readonly',
+        __dirname: 'readonly',
+      },
+    },
+  },
+  {
     ignores: [
       '**/dist/**',
       '**/node_modules/**',

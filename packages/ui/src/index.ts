@@ -4,9 +4,12 @@
 // aucun état global, aucune lecture de fichier. Les données viennent de
 // `@placard/manor-model` et `@placard/ritual`, la vérité métier reste dehors.
 //
-// Le thème est un fichier CSS à part (`./theme.css`) : l'application web
-// l'importe elle-même, pour que ce paquet reste consommable en Node (tests,
-// CLI) sans outillage CSS.
+// Le thème est un fichier CSS à part (`./theme.css`) : il est importé ici pour
+// que toute application qui consomme ce paquet embarque **ses** styles sans
+// avoir à connaître le chemin du fichier. Vitest et Node ignorent l'import
+// CSS (le paquet reste utilisable hors navigateur).
+
+import './theme.css';
 
 export { SeverityMark, colorOf, glyphOf, labelOf } from './a11y/SeverityMark.js';
 export type { SeverityMarkProps } from './a11y/SeverityMark.js';

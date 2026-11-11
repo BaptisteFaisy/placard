@@ -337,6 +337,91 @@
   overflow-x: auto;
 }
 
+/* ---------- Hall d'entrée (PLA-F-20) ---------- */
+
+.placard-hall {
+  padding: 1rem 1.25rem;
+  border-radius: var(--placard-radius);
+  background: var(--placard-stone);
+}
+
+.placard-hall__title {
+  margin: 0 0 0.25rem;
+  font-size: 1.25rem;
+  color: var(--placard-candle);
+}
+
+.placard-hall__lede {
+  margin: 0 0 1rem;
+}
+
+.placard-hall__counts {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  margin: 0 0 1.25rem;
+  padding: 0;
+}
+
+.placard-hall__count {
+  flex: 1 1 7rem;
+  padding: 0.5rem 0.75rem;
+  background: var(--placard-night);
+  border-left: 3px solid var(--placard-candle);
+  border-radius: var(--placard-radius);
+}
+
+.placard-hall__count dt {
+  font-size: 0.72rem;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  opacity: 0.85;
+}
+
+.placard-hall__count dd {
+  margin: 0;
+  font-size: 1.5rem;
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+}
+
+.placard-hall__breakdown {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 2rem;
+}
+
+.placard-hall__breakdown h3 {
+  margin: 0 0 0.4rem;
+  font-size: 0.85rem;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: var(--placard-candle);
+}
+
+/* Chaque ligne : pictogramme + libellé, puis le nombre poussé à droite. Sans
+ * cette grille, glyphe, libellé et compte se collent (« !!!Critical3 »). */
+.placard-hall__list {
+  display: grid;
+  gap: 0.3rem;
+  min-width: 15rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.placard-hall__list li {
+  display: flex;
+  align-items: baseline;
+  gap: 0.5rem;
+}
+
+.placard-hall__value {
+  margin-left: auto;
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+}
+
 /* ---------- Mouvement réduit ---------- */
 
 @media (prefers-reduced-motion: reduce) {
