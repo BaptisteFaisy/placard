@@ -134,7 +134,7 @@ placard/
 pnpm install
 pnpm typecheck   # tsc, strict, noUncheckedIndexedAccess
 pnpm lint        # ESLint: < 500 lines/file, < 50 lines/function (hard errors)
-pnpm test        # 536 tests: Vitest + fast-check
+pnpm test        # 543 tests: Vitest + fast-check
 pnpm build       # production build
 bash scripts/recette-c17.sh   # full acceptance recipe
 ```
@@ -145,7 +145,7 @@ bash scripts/recette-c17.sh   # full acceptance recipe
 |---|---|
 | `typecheck` | Strict TypeScript across all 10 packages |
 | `lint` | No file over 500 lines, no function over 50 lines, no `any` |
-| `test` | 536 tests: unit, property-based (fast-check) and end-to-end |
+| `test` | 543 tests: unit, property-based (fast-check) and end-to-end |
 | `build` | The static demo site and the CLI bundle build |
 | `ci-budget` | No job declares more than 5 minutes |
 | `kiro` | `/.kiro` present and tracked, MIT licence, journal present |
