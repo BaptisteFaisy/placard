@@ -1,0 +1,64 @@
+name: demo-deploy
+
+# Publie la démonstration hébergée (manoir du dépôt d'exemple) sur GitHub Pages.
+# Exigence du concours : une URL d'application qui fonctionne, gratuite et sans
+# restriction jusqu'au 29 janvier 2027. Le site est 100 % statique : le rapport
+# du dépôt d'exemple est embarqué, aucun serveur, aucune donnée ne sort du
+# navigateur (PLA-N-01).
+on:
+  push:
+    branches: [main]
+  workflow_dispatch: {}
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: demo-deploy
+  cancel-in-progress: true
+
+jobs:
+  build:
+    name: build-demo
+    runs-on: [self-hosted, placard-worker]
+    timeout-minutes: 5
+    outputs:
+      built: ${{ steps.build.outputs.built }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+      - uses: ./.github/actions/setup
+      - name: Construction du site statique
+        id: build
+        run: |
+          set -euo pipefail
+          if [ ! -f packages/web/package.json ]; then
+            echo "::warning::packages/web absent — déploiement ignoré"
+            echo "built=false" >> "$GITHUB_OUTPUT"
+            exit 0
+          fi
+          pnpm --filter @placard/web build
+          test -d packages/web/dist || { echo "::error::packages/web/dist absent"; exit 1; }
+          echo "built=true" >> "$GITHUB_OUTPUT"
+      - name: Préparation de l'artefact Pages
+        if: steps.build.outputs.built == 'true'
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: packages/web/dist
+
+  deploy:
+    name: deploy-demo
+    needs: build
+    if: needs.build.outputs.built == 'true'
+    runs-on: [self-hosted, placard-worker]
+    timeout-minutes: 5
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Déploiement sur GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
