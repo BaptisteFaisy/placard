@@ -209,15 +209,42 @@ def spawn(args):
     log = open(os.path.join(state_dir(), 'pr-%d.log' % num), 'ab', buffering=0)
     cmd = [sys.executable, os.path.abspath(__file__), '--run',
            '--repo', args.repo, '--pr', str(num)]
-    try:
-        subprocess.Popen(cmd, stdout=log, stderr=log, stdin=subprocess.DEVNULL,
-                         start_new_session=True, env=dict(os.environ))
-        print('[agent] #%d : chat ZeroClaw lancé (agent %s sur %s)'
-              % (num, env('HERMES_ZC_AGENT', 'hermes'),
-                 env('HERMES_ZC_URL', 'http://127.0.0.1:42617')), flush=True)
-    except OSError as exc:
-        print('[agent] #%d : lancement impossible %r' % (num, exc), flush=True)
+    mode = launch_detached(cmd, log, num)
+    print('[agent] #%d : chat ZeroClaw lancé via %s (agent %s sur %s)'
+          % (num, mode, env('HERMES_ZC_AGENT', 'hermes'),
+             env('HERMES_ZC_URL', 'http://127.0.0.1:42617')), flush=True)
     return 0
+
+
+def launch_detached(cmd, log, num):
+    """Lance le processus hors du cgroup du job CI ; retourne le mode employé.
+
+    Un runner installé en service systemd tue **tout le cgroup** du job à sa fin :
+    `start_new_session=True` ne suffit pas, le processus détaché disparaît avant
+    d'avoir pu parler à l'agent (constat du 11/11 sur placard : empreinte et
+    première ligne de journal écrites, puis plus aucun processus). `systemd-run
+    --user --scope` place le travail dans sa propre unité transitoire, qui
+    survit au job. Repli sur un `Popen` simple si systemd-run est absent.
+    """
+    unit = 'hermes-pr-%d' % num
+    wrapped = ['systemd-run', '--user', '--scope', '--collect', '--quiet',
+               '--unit=%s' % unit] + cmd
+    try:
+        subprocess.Popen(wrapped, stdout=log, stderr=log,
+                         stdin=subprocess.DEVNULL, start_new_session=True,
+                         env=dict(os.environ))
+        return 'systemd-run'
+    except OSError as exc:
+        print('[agent] #%d : systemd-run indisponible (%r), repli Popen'
+              % (num, exc), flush=True)
+        try:
+            subprocess.Popen(cmd, stdout=log, stderr=log,
+                             stdin=subprocess.DEVNULL, start_new_session=True,
+                             env=dict(os.environ))
+            return 'popen'
+        except OSError as exc2:
+            print('[agent] #%d : lancement impossible %r' % (num, exc2), flush=True)
+            return 'echec'
 
 
 def count_recent_spawns():
