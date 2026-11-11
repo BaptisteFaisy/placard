@@ -18,7 +18,7 @@
           +--> ci-budget ──┐
           +--> kiro ───────┤   dedicated workflows (guard jobs)
           +--> stale-base-guard ──┘
-          +--> hermes-lite/gate ──> label hermes/conflit + dispatch resolver
+          +--> hermes-lite/gate ──> label hermes/conflit + agent ZeroClaw hermes (InferHub)
                                           (on real git conflict only)
           |
           v
@@ -45,7 +45,7 @@ and Mergify is the only writer.
 | `kiro-guard.yml` | `kiro` | same | 5 min | `/.kiro` tracked and not git-ignored, MIT `LICENSE`, non-empty `KIRO_JOURNAL.md` |
 | `stale-base-guard.yml` | `stale-base-guard` | PR opened/synchronize/reopened, manual | 5 min | Measures `behind_by` and warns; never blocks (`exit 0`) |
 | `hermes-lite.yml` | `gate` | PR events, `check_run`, manual | 5 min | Labels and escalates a real merge conflict |
-| `hermes-conflict-resolver.yml` | `resolve` | manual (`pr_number`) | 5 min | Hermes conflict agent: deterministic attempt + escalation comment |
+| `hermes-lite-alert.yml` | `alert` | manual | 5 min | Lists PRs labelled `hermes/conflit` |
 
 All jobs run on the **self-hosted runners `placard-worker`** (labels
 `[self-hosted, placard-worker]`), hosted on the R630 machine, migrated from
@@ -131,30 +131,70 @@ places that drift.
   measures `behind_by` so a human sees the drift, while `update_method: merge`
   in the queue does the actual refresh.
 
-## 5. The Hermes gate
+## 5. The Hermes gate and the InferHub conflict agent
 
-`.github/hermes/gate.py`, run by the `gate` job of `hermes-lite.yml` on PR
-events and on completed check runs:
+`.github/hermes/gate.py` runs in the `gate` job of `hermes-lite.yml` (PR events,
+completed check runs, a 10-minute safety sweep, and manual dispatch).
 
-1. Lists open PRs with `mergeable` state.
+1. It lists open PRs. **The list endpoint does not carry `mergeable`**, so the
+   gate re-reads the single PR (`GET /repos/{o}/{r}/pulls/{n}`, up to 3 attempts
+   3 s apart — GitHub computes mergeability on demand). Without that re-read a
+   real conflict is invisible: measured on 2026-11-11, a `CONFLICTING` PR was
+   reported as merely "1 commit behind".
 2. When a PR is `CONFLICTING` (a **real** git conflict, not a stale branch):
-   - sets the `hermes-lite/verdict` check red for that PR,
-   - adds the label **`hermes/conflit`**,
-   - posts a comment naming the situation,
-   - dispatches the `hermes-conflict-resolver` workflow with `pr_number`.
-3. When a PR labelled `hermes/conflit` becomes `MERGEABLE` again, it removes the
-   label — the gate is self-healing.
+   - the `hermes-lite/verdict` check goes red,
+   - the label **`hermes/conflit`** is added,
+   - `.github/hermes/conflict_agent.py --spawn` is launched **detached**.
+3. When a labelled PR becomes `MERGEABLE` again, the label is removed — the gate
+   is self-healing.
 4. Without `GH_TOKEN` / `GITHUB_REPOSITORY` it degrades to a passive no-op and
-   exits 0 (a gate must never fail the build because it cannot talk to the API).
+   exits 0: a gate must never fail the build because it cannot reach the API.
 
-`hermes-conflict-resolver.yml` checks out with `fetch-depth: 0` (it needs the
-history to reason about a conflict) and either attempts a deterministic
-resolution or posts an escalation comment. It is `workflow_dispatch`-only, so it
-never fires on its own without the gate's decision.
+### The agent that actually resolves the conflict
 
-Hermes is **not** in `queue_conditions`: a conflict already blocks the queue via
-`-conflict`. Hermes exists to make the conflict *visible and actionable* rather
-than to be a second merge gate.
+`conflict_agent.py` does not resolve anything itself. It writes a complete brief
+(PR, base, head SHAs, touched files, recent commits, method, guard rails) and
+posts it over A2A JSON-RPC (`SendMessage`) to the **ZeroClaw daemon running on
+the runner machine** — `http://127.0.0.1:42617/a2a/hermes`, agent `hermes`,
+provider **`custom.inferhub`** (InferHub, `https://api.inferhub.dev/v1`).
+
+The agent then clones the PR branch under `/tmp/hermes-pr-<n>`, merges
+`origin/<base>`, keeps **both** intentions (never picks a side blindly), re-runs
+the guard rails (`pnpm typecheck`, `pnpm lint`, `ci-budget`, `kiro`), pushes
+**only the PR branch**, and the script publishes its report as a PR comment.
+
+Guards around the seizure:
+
+| Guard | Value | Why |
+|---|---|---|
+| Anti-loop stamp | per (PR, head SHA) | one seizure per commit |
+| Cooldown | 20 min | two chats on the same PR = loop |
+| Max spawns per run | 3 | a burst of conflicting PRs must not flood the agent |
+| Fork PRs | skipped | no write access |
+| `hermes/intervention-humaine` or `hold` | skipped | human hand-back |
+| `HERMES_AGENT_RESOLVE=0` | disables everything | kill switch |
+| Failure | never fails the job | an unavailable agent must not redden the queue |
+
+The detached process is started with `systemd-run --user --scope`: a runner
+installed as a systemd service kills its whole job cgroup when the job ends, and
+`start_new_session=True` does **not** escape it. Measured on 2026-11-11 — the
+stamp and the first log line were written, then the process was gone, so the
+agent was never reached.
+
+### Measured drill (2026-11-11)
+
+| Step | Evidence |
+|---|---|
+| Two branches add the same file with incompatible content | PR #20 (A) and PR #21 (B) |
+| Mergify merges A | #20 merged 14:29:26Z by `app/mergify` |
+| B becomes a real conflict | `mergeable: CONFLICTING`, `mergeStateStatus: DIRTY` |
+| Gate detects it and seizes the agent | label `hermes/conflit`, `pr-21.log`: `chat hermes -> http://127.0.0.1:42617 (3024 caractères)` |
+| Agent resolves and pushes | merge commit `cdff71f`, both intentions kept |
+| Agent's report published on the PR | comment `hermes/agent-conflit`, 1463 characters |
+| Mergify merges B | `b69a8e4` at 14:56:42Z — "less than a minute in the queue" |
+
+Mergify stays the **only** merge pilot: `HERMES_LITE_DRY_RUN=1` is set on the
+repository, so the gate labels, escalates and reports, but never merges.
 
 ## 6. Getting a PR out of the queue
 
@@ -184,7 +224,7 @@ conflicting PR cannot be queued anyway (`-conflict`).
 | `ci-budget` red | A job has no `timeout-minutes` or declares > 5 | Fix the workflow; never raise the timeout |
 | `kiro` red | `.kiro` untracked/ignored, `LICENSE` not MIT, journal too short | Fix the offending file; the check prints the line number |
 | `stale-base-guard` yellow warning | PR behind `main` by N commits | Nothing to do: the queue merges `main` into the PR |
-| `hermes/conflit` label | Real git conflict with `main` | Resolve manually, or let `hermes-conflict-resolver` report |
+| `hermes/conflit` label | Real git conflict with `main` | The InferHub agent is already seized; add `hermes/intervention-humaine` to take over |
 | PR green but never merges | `hold` label, draft, or a queue condition unmet | Remove `hold`, mark ready, check the seven required checks |
 | Job killed at 5:00 | The budget did its job | Split the job or move it out of the PR path |
 | Flaky check | One retry is allowed (`max_checks_retries: 1`) | If it fails twice, it is a real failure |

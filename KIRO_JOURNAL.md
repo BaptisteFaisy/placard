@@ -112,3 +112,84 @@ Les 12 propriétés `PLA-P-01` à `PLA-P-12` sont implémentées avec fast-check
 3. **La file Mergify exigeait l'application GitHub installée sur le dépôt**, geste réservé au navigateur : le dépôt a été câblé avec `.mergify.yml` validé (`mergify config simulate` → « 1 rule matches ») et un **merge auto-merge natif GitHub** en secours, afin que la chaîne « PR → CI verte → fusion automatique » ne dépende jamais d'un clic humain. Le même constat vaut pour le gate Hermes : le job `Hermes Lite (gate)` porte le label `hermes/conflit` et déclenche le workflow `hermes-conflict-resolver` dès qu'un vrai conflit est détecté.
 4. **La saturation CPU du runner partagé** (le R630 héberge des dizaines de runners d'autres dépôts) a fait expirer un worker vitest sur un test pourtant vert : corrigé en bornant le parallélisme des tests (`maxForks: 4`) et en conservant le `node_modules` entre deux jobs (`clean: false` + `git clean` ciblé), ce qui a ramené l'installation de 1 à 2 minutes à quelques secondes.
 5. **Les doublons de React** cassaient les tests d'interface (« A React Element from an older version of React »). Correction : `react` et `react-dom` déclarés à la racine, plus une copie d'entrée `packages/core/src/browser.ts` sans `node:crypto` pour le bundle web.
+
+---
+
+## 9. La chaîne de fusion, mesurée et non déclarée
+
+Le dépôt est son propre terrain d'essai : **24 PR fusionnées** (plus les
+brouillons `mergify/merge-queue/*` créés par la file), `main` protégée avec
+`enforce_admins: true` et sept checks requis.
+
+Répartition mesurée, `mergedBy` à l'appui :
+
+- **PR #1 à #12 — fusionnées à la main** (`gh pr merge`), le temps de vérifier
+  que l'application Mergify et le produit Merge Queue répondaient sur ce dépôt
+  neuf. Ce n'est pas un détail à cacher : tant que la configuration n'est pas
+  prouvée, piloter à la main est plus sûr que de laisser une file mal câblée
+  décider.
+- **PR #13 à #26 — toutes fusionnées par la file Mergify** (`mergedBy:
+  app/mergify`), sans aucun clic, y compris la PR en conflit résolue par l'agent
+  InferHub (#21, `b69a8e4`).
+
+**Exercice de conflit réel (11 novembre 2026)** — deux branches ajoutent le même
+fichier avec des contenus incompatibles :
+
+| Étape | Preuve |
+|---|---|
+| La branche A fusionne | PR #20, mergée par `app/mergify` à 14:29:26Z |
+| La branche B entre en conflit réel | `mergeable: CONFLICTING`, `mergeStateStatus: DIRTY` |
+| Le gate détecte et saisit l'agent | label `hermes/conflit`, journal : `chat hermes -> http://127.0.0.1:42617 (3024 caractères)` |
+| L'agent résout | clone, `git merge origin/main`, **les deux intentions conservées**, garde-fous rejoués, push du commit de fusion `cdff71f` |
+| L'agent rend compte | commentaire publié sur la PR (1 463 caractères), label `hermes/agent-conflit` |
+| La file fusionne | PR #21 mergée en `b69a8e4` à 14:56:42Z — « less than a minute in the queue » |
+
+L'agent de résolution n'est pas un script de fusion : c'est l'agent ZeroClaw
+**`hermes`** (provider `custom.inferhub`), saisi en A2A JSON-RPC sur le daemon du
+runner. Le job CI ne fait que lancer la saisine et rendre la main — il reste sous
+les 5 minutes du budget.
+
+**Deux bogues trouvés en voulant le prouver, pas en le déclarant :**
+
+1. `GET /repos/{o}/{r}/pulls?state=open` **ne renvoie pas** `mergeable` : les
+   passages `workflow_dispatch`, `schedule` et `check_run` du gate concluaient à
+   un simple retard sur une PR pourtant `DIRTY`. Corrigé par une relecture de la
+   PR seule (3 tentatives espacées, GitHub calculant la fusionabilité à la
+   demande). Sans cet exercice, le gate serait resté aveugle aux conflits hors
+   événement `pull_request`.
+2. Un runner installé en service systemd **tue tout le cgroup du job** à sa fin :
+   le processus détaché disparaissait après avoir écrit sa première ligne de
+   journal, avant d'avoir parlé à l'agent. `start_new_session=True` ne suffit
+   pas. Corrigé par `systemd-run --user --scope`, qui place la saisine dans sa
+   propre unité transitoire.
+
+---
+
+## 10. Ce que l'auto-scan du dépôt par lui-même a coûté
+
+Le hook `self-scan` et le job `kiro` font analyser le dépôt par son propre
+moteur, avec `--fail-on-open`. Premier passage : **378 trouvailles ouvertes**.
+Toutes des faux positifs, mais instructifs :
+
+| Classe | Volume | Correctif |
+|---|---|---|
+| `react-dom@19.3.1` lu comme une adresse e-mail | 368 | un TLD réel est alphabétique |
+| Condensats `sha512-…` d'un fichier de verrouillage | 2 | un condensat d'intégrité n'est pas un secret |
+| `https://docs.aws.amazon.com/…access-keys.html` | 1 | une URL n'est pas une chaîne suspecte |
+| `https://x-access-token:$T@github.com/…` | 1 | l'autorité d'une URL n'est pas une adresse |
+| `git@github.com:acme/repo.git` | 1 | préfixes `git@`, `hg@`, `svn@` écartés |
+| `0123456789` lu comme un téléphone | 1 | suites séquentielles rejetées |
+| `index 0000000..1111111 100644` lu comme une carte | 1 | préfixe d'émetteur (BIN) exigé |
+| `'plaintext-password': 'key-bearer'` | 1 | une valeur en mots courts n'est pas un secret |
+| `'[REDACTED:plaintext-password]'` | 1 | un marqueur de caviardage n'est jamais un secret |
+
+Résultat : **378 → 0 trouvaille ouverte**, avec sept tests de non-régression
+dédiés et aucune propriété de rappel affaiblie (`PLA-P-02` et `PLA-P-04` restent
+vertes : les 12 valeurs plantées du dépôt de démonstration sont toutes
+retrouvées). Quatre trouvailles restantes sont écartées par le mécanisme prévu à
+cet effet (`.placard/ignore.yml`, avec raison, auteur et date) : la clé
+d'exemple de la documentation AWS écrite dans une première version de ce journal
+— que l'outil a retrouvée **dans l'historique** alors qu'elle n'est plus dans le
+code, ce qui est exactement le problème qu'il traite —, un bloc PEM d'en-tête et
+de pied sans matière de clé dans un test, une adresse de fixture, et un `.npmrc`
+qui ne porte que les réglages d'espace de travail pnpm, sans `_authToken`.
