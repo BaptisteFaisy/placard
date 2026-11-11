@@ -64,15 +64,33 @@ async function dispatch(command: string | undefined, parsed: ReturnType<typeof p
       if (result.url) console.log(`🏚️ Manor served at ${result.url}`);
       return result;
     }
-    case 'demo':
-      return demoCommand({ seed: parsed.values['seed'] });
+    case 'demo': {
+      // `--target` choisit le dossier du dépôt synthétique ; sans lui, le
+      // générateur écrivait dans `.placard/demo-repo` quoi qu'on demande.
+      const options: DemoOptions = { seed: parsed.values['seed'] };
+      const target = parsed.values['target'];
+      if (target !== undefined) options.targetDir = target;
+      if (parsed.flags['serve']) options.serve = true;
+      const result = await demoCommand(options);
+      if (parsed.flags['serve'] && result.reportPath) {
+        const served = await serveCommand({ report: result.reportPath });
+        if (served.url) console.log(`🏚️ Manor served at ${served.url}`);
+      }
+      return result;
+    }
     case 'selftest':
       return selftestCommand();
-    case 'ritual':
-      return ritualCommand({
-        repoDir: '.',
+    case 'ritual': {
+      const options: RitualCliOptions = {
+        repoDir: parsed.positional[1] ?? '.',
         action: (parsed.positional[0] ?? 'status') as RitualCliOptions['action'],
-      });
+      };
+      const finding = parsed.values['finding'];
+      if (finding !== undefined) options.finding = finding;
+      const reason = parsed.values['reason'];
+      if (reason !== undefined) options.reason = reason;
+      return ritualCommand(options);
+    }
     default:
       return { exitCode: 0 };
   }

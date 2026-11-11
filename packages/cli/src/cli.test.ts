@@ -1,4 +1,7 @@
 import { describe, expect, it } from 'vitest';
+import { mkdtemp, rm } from 'node:fs/promises';
+import { join } from 'node:path';
+import { tmpdir } from 'node:os';
 import { cli } from './wire.js';
 import { parseArgs } from './args.js';
 
@@ -15,5 +18,20 @@ describe('cli commands & args', () => {
     const res = await cli.selftest();
     expect(res.exitCode).toBe(0);
     expect(res.reportPath).toBeDefined();
+  });
+});
+
+describe('demo --target', () => {
+  it('écrit le dépôt synthétique là où on le demande', async () => {
+    const dir = await mkdtemp(join(tmpdir(), 'placard-target-'));
+    try {
+      const result = await cli.demo({ targetDir: join(dir, 'sous-dossier') });
+      expect(result.exitCode).toBe(0);
+      expect(result.reportPath).toContain(join(dir, 'sous-dossier'));
+      const { stat } = await import('node:fs/promises');
+      expect((await stat(join(dir, 'sous-dossier', '.git'))).isDirectory()).toBe(true);
+    } finally {
+      await rm(dir, { recursive: true, force: true });
+    }
   });
 });

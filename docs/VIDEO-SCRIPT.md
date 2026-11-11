@@ -14,6 +14,35 @@ regenerate it with the command below.
 
 ---
 
+## Already produced: a silent draft cut
+
+`scripts/build-submission-video.mjs` assembles a **2 min 34 s** silent H.264 cut
+(1280×720, 30 fps, ~8.4 MB) from real material — no stock footage, no brand
+marks, no music:
+
+| # | Segment | Length | Source |
+|---|---|---|---|
+| 1 | Title card | 7 s | generated card |
+| 2 | The wall of JSON | 17 s | **real** `placard scan --json` output, scrolling |
+| 3 | `placard demo` / `placard serve` | 13 s | **real** CLI output |
+| 4 | The manor walkthrough | 75 s | `scripts/record-demo.mjs` on the built app |
+| 5 | Built with Kiro | 19 s | card with measured numbers |
+| 6 | The steering file | 13 s | `.kiro/steering/never-print-secrets.md`, verbatim |
+| 7 | Closing: 0 standing | 9 s | card with the repository and demo URLs |
+
+```bash
+npm i --prefix /tmp/placard-video playwright@1.49.0     # hors dépôt
+npx --prefix /tmp/placard-video playwright install chromium
+pnpm --filter @placard/web build
+NODE_PATH=/tmp/placard-video/node_modules node scripts/record-demo.mjs          # segment 4
+NODE_PATH=/tmp/placard-video/node_modules node scripts/build-submission-video.mjs
+# → /tmp/placard-video/placard-submission-draft.mp4
+```
+
+What is still missing before upload: the English voice-over (or subtitles) and
+the YouTube upload itself. Nothing else — the picture is complete and every
+frame comes from the real tool.
+
 ## Rules from the contest (read before recording)
 
 - Under 3 minutes, public on YouTube, showing the project running on the target

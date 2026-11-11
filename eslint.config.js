@@ -21,6 +21,7 @@ export default tseslint.config(
   },
   {
     ignores: [
+      '.placard/**',
       '**/dist/**',
       '**/node_modules/**',
       '**/coverage/**',
