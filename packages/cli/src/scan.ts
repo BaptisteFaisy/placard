@@ -12,6 +12,7 @@ import { readHistory } from '@placard/git-history';
 import { createDetectorEngine } from '@placard/detectors';
 import { analyze } from '@placard/analysis';
 import { renderSummary } from './output.js';
+import { repoSalt } from './salt.js';
 
 /** Une détection ancrée, telle que l'exige le moteur d'analyse. */
 interface AnchoredDetection {
@@ -126,6 +127,10 @@ export async function scanCommand(options: ScanOptions): Promise<CliResult> {
   }
 
   const snapshot = outcome.snapshot ?? fallbackSnapshot();
+  // Sel propre au dépôt (cahier C.6) : stable dans le temps, différent d'un
+  // dépôt à l'autre. Les empreintes restent donc comparables d'un scan à
+  // l'autre — c'est ce qui rend le fichier d'exclusions utilisable.
+  const salt = repoSalt(snapshot.name, repoDir);
   const analyzed = await analyze(
     {
       detections: outcome.detections,
@@ -139,14 +144,16 @@ export async function scanCommand(options: ScanOptions): Promise<CliResult> {
       },
       headPresence: new Map(),
     },
-    { repo: snapshot, salt: 'placard-local-salt', toolVersion: '0.1.0' },
+    { repo: snapshot, salt, toolVersion: '0.1.0' },
   );
 
   const reportPath = resolve(options.report ?? resolve(repoDir, '.placard/report.json'));
   await mkdir(resolve(reportPath, '..'), { recursive: true });
   await writeFile(reportPath, stringifyReport(analyzed.report), 'utf-8');
 
-  if (options.format !== 'json') {
+  if (options.format === 'json') {
+    process.stdout.write(stringifyReport(analyzed.report) + '\n');
+  } else {
     process.stdout.write(renderSummary(analyzed.report) + '\n');
   }
 
