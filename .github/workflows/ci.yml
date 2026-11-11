@@ -25,6 +25,7 @@ jobs:
       - uses: actions/checkout@v4
         with:
           fetch-depth: 1
+          clean: false
       - uses: ./.github/actions/setup
       - run: pnpm typecheck
 
@@ -36,6 +37,7 @@ jobs:
       - uses: actions/checkout@v4
         with:
           fetch-depth: 1
+          clean: false
       - uses: ./.github/actions/setup
       - run: pnpm lint
 
@@ -47,6 +49,7 @@ jobs:
       - uses: actions/checkout@v4
         with:
           fetch-depth: 1
+          clean: false
       - uses: ./.github/actions/setup
       - run: pnpm test
       - name: Rapports de tests
@@ -66,5 +69,6 @@ jobs:
       - uses: actions/checkout@v4
         with:
           fetch-depth: 1
+          clean: false
       - uses: ./.github/actions/setup
       - run: pnpm build
