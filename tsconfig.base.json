@@ -29,7 +29,8 @@
       "@placard/cli": ["packages/cli/src/index.ts"],
       "@placard/manor-model": ["packages/manor-model/src/index.ts"],
       "@placard/ui": ["packages/ui/src/index.ts"],
-      "@placard/web": ["packages/web/src/index.ts"]
+      "@placard/web": ["packages/web/src/index.ts"],
+      "@placard/integration": ["packages/integration/src/index.ts"]
     }
   }
 }

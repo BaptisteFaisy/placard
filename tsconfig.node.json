@@ -15,6 +15,7 @@
     "packages/ritual/src/**/*.ts",
     "packages/cli/src/**/*.ts",
     "packages/manor-model/src/**/*.ts",
+    "packages/integration/src/**/*.ts",
     "vitest.config.ts"
   ],
   "exclude": [
