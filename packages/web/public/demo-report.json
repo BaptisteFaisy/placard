@@ -1,0 +1,440 @@
+{
+  "schema": "1.0.0",
+  "tool": {
+    "name": "placard",
+    "version": "0.1.0"
+  },
+  "repo": {
+    "name": "placard-web-demo-build",
+    "head": "14d14fe4ed96d8c60143c6abfd0a6fb98980ac22",
+    "totalCommits": 120,
+    "publicRemote": false,
+    "analyzedAt": "2026-11-11T04:27:28.549Z"
+  },
+  "findings": [
+    {
+      "id": "sk_0001",
+      "family": "platform-token",
+      "rule": "platform-slack-token",
+      "fingerprint": "hmac256:378ac0e25d6e70a40bad744a0a19a784",
+      "preview": "xoxb…(45)",
+      "danger": 75,
+      "reasons": [
+        "base platform-token: +75"
+      ],
+      "inHead": false,
+      "introduced": {
+        "commit": "14d14fe4ed96d8c60143c6abfd0a6fb98980ac22",
+        "shortCommit": "14d14fe",
+        "date": "2026-11-11T04:27:28.519Z",
+        "author": "committer",
+        "message": "commit"
+      },
+      "removed": [
+        {
+          "commit": "4340d6da9166fe9cc571bef35ab652f96659f483",
+          "shortCommit": "4340d6d",
+          "date": "2026-11-11T04:27:28.525Z",
+          "author": "committer",
+          "message": "commit"
+        }
+      ],
+      "locations": [
+        {
+          "commit": "14d14fe4ed96d8c60143c6abfd0a6fb98980ac22",
+          "path": "src/db/connection.ts",
+          "line": 14,
+          "snippet": "const DEPLOY_CREDENTIAL = '[REDACTED:platform-token]';"
+        },
+        {
+          "commit": "4340d6da9166fe9cc571bef35ab652f96659f483",
+          "path": "src/db/connection.ts",
+          "line": 14,
+          "snippet": "const DEPLOY_CREDENTIAL = '[REDACTED:platform-token]';"
+        }
+      ],
+      "state": "open"
+    },
+    {
+      "id": "sk_0002",
+      "family": "platform-token",
+      "rule": "platform-assistant-project-key",
+      "fingerprint": "hmac256:45cdcc881ff15c483683cb59ac732af6",
+      "preview": "sk-p…(48)",
+      "danger": 45,
+      "reasons": [
+        "base platform-token: +75",
+        "test/example directory path: -30"
+      ],
+      "inHead": false,
+      "introduced": {
+        "commit": "3ca40f7242a32afd7f68f64fe01b30a1ce2ef144",
+        "shortCommit": "3ca40f7",
+        "date": "2026-11-11T04:27:28.543Z",
+        "author": "committer",
+        "message": "commit"
+      },
+      "removed": [
+        {
+          "commit": "5f9115fc8f67926e917c41fd8a67b6cd649fb059",
+          "shortCommit": "5f9115f",
+          "date": "2026-11-11T04:27:28.543Z",
+          "author": "committer",
+          "message": "commit"
+        }
+      ],
+      "locations": [
+        {
+          "commit": "3ca40f7242a32afd7f68f64fe01b30a1ce2ef144",
+          "path": "tests/config.test.ts",
+          "line": 14,
+          "snippet": "const DEPLOY_CREDENTIAL = '[REDACTED:platform-token]';"
+        },
+        {
+          "commit": "5f9115fc8f67926e917c41fd8a67b6cd649fb059",
+          "path": "tests/config.test.ts",
+          "line": 14,
+          "snippet": "const DEPLOY_CREDENTIAL = '[REDACTED:platform-token]';"
+        }
+      ],
+      "state": "open"
+    },
+    {
+      "id": "sk_0003",
+      "family": "signed-token",
+      "rule": "signed-token-jwt",
+      "fingerprint": "hmac256:4b23a2b4e70d92a19ca2b01a4c73ddf8",
+      "preview": "[REDACTED:signed-token](175)",
+      "danger": 10,
+      "reasons": [
+        "base signed-token: +40",
+        "test/example directory path: -30"
+      ],
+      "inHead": false,
+      "introduced": {
+        "commit": "b84497de1fdb2263d80a88dac81651b91f55bc1b",
+        "shortCommit": "b84497d",
+        "date": "2026-11-11T04:27:28.540Z",
+        "author": "committer",
+        "message": "commit"
+      },
+      "removed": [],
+      "locations": [
+        {
+          "commit": "b84497de1fdb2263d80a88dac81651b91f55bc1b",
+          "path": "examples/quickstart.ts",
+          "line": 9,
+          "snippet": "const SESSION_JWT = '[REDACTED:signed-token]';"
+        },
+        {
+          "commit": "b84497de1fdb2263d80a88dac81651b91f55bc1b",
+          "path": "tests/config.test.ts",
+          "line": 14,
+          "snippet": "const SESSION_JWT = '[REDACTED:signed-token]';"
+        }
+      ],
+      "state": "open"
+    },
+    {
+      "id": "sk_0004",
+      "family": "cloud-key",
+      "rule": "cloud-access-key-id",
+      "fingerprint": "hmac256:71916b6073a9bf91abae669c27a64f26",
+      "preview": "ASIA…(20)",
+      "danger": 85,
+      "reasons": [
+        "base cloud-key: +85"
+      ],
+      "inHead": false,
+      "introduced": {
+        "commit": "02092b80f01b831bdd3ab25f0502557019a06636",
+        "shortCommit": "02092b8",
+        "date": "2026-11-11T04:27:28.545Z",
+        "author": "committer",
+        "message": "commit"
+      },
+      "removed": [],
+      "locations": [
+        {
+          "commit": "02092b80f01b831bdd3ab25f0502557019a06636",
+          "path": "config/settings.yml",
+          "line": 8,
+          "snippet": "AWS_ACCESS_KEY_ID: '[REDACTED:cloud-key]'"
+        },
+        {
+          "commit": "02092b80f01b831bdd3ab25f0502557019a06636",
+          "path": "src/legacy/billing.ts",
+          "line": 13,
+          "snippet": "const AWS_ACCESS_KEY_ID = '[REDACTED:cloud-key]';"
+        },
+        {
+          "commit": "02092b80f01b831bdd3ab25f0502557019a06636",
+          "path": "src/services/storage.ts",
+          "line": 15,
+          "snippet": "const AWS_ACCESS_KEY_ID = '[REDACTED:cloud-key]';"
+        }
+      ],
+      "state": "open"
+    },
+    {
+      "id": "sk_0005",
+      "family": "cloud-key",
+      "rule": "cloud-api-key",
+      "fingerprint": "hmac256:9179c7009c5bc22440d8c38e394d3350",
+      "preview": "AIza…(39)",
+      "danger": 55,
+      "reasons": [
+        "base cloud-key: +85",
+        "test/example directory path: -30"
+      ],
+      "inHead": false,
+      "introduced": {
+        "commit": "0233c5bc057688f2cb9e00b74fbbc6dd1813f285",
+        "shortCommit": "0233c5b",
+        "date": "2026-11-11T04:27:28.527Z",
+        "author": "committer",
+        "message": "commit"
+      },
+      "removed": [
+        {
+          "commit": "4e0ed6b54427f839c4cfdaae96da4e1bdc6bd23c",
+          "shortCommit": "4e0ed6b",
+          "date": "2026-11-11T04:27:28.527Z",
+          "author": "committer",
+          "message": "commit"
+        }
+      ],
+      "locations": [
+        {
+          "commit": "0233c5bc057688f2cb9e00b74fbbc6dd1813f285",
+          "path": "docs/setup.md",
+          "line": 9,
+          "snippet": "- AWS_ACCESS_KEY_ID: '[REDACTED:cloud-key]'"
+        },
+        {
+          "commit": "0233c5bc057688f2cb9e00b74fbbc6dd1813f285",
+          "path": "examples/quickstart.ts",
+          "line": 12,
+          "snippet": "const AWS_ACCESS_KEY_ID = '[REDACTED:cloud-key]';"
+        },
+        {
+          "commit": "4e0ed6b54427f839c4cfdaae96da4e1bdc6bd23c",
+          "path": "docs/setup.md",
+          "line": 9,
+          "snippet": "- AWS_ACCESS_KEY_ID: '[REDACTED:cloud-key]'"
+        },
+        {
+          "commit": "4e0ed6b54427f839c4cfdaae96da4e1bdc6bd23c",
+          "path": "examples/quickstart.ts",
+          "line": 12,
+          "snippet": "const AWS_ACCESS_KEY_ID = '[REDACTED:cloud-key]';"
+        }
+      ],
+      "state": "open"
+    },
+    {
+      "id": "sk_0006",
+      "family": "bank-data",
+      "rule": "bank-iban",
+      "fingerprint": "hmac256:9c149caf1aea36e6ee6062a8489c32ef",
+      "preview": "FR90…KC5O",
+      "danger": 70,
+      "reasons": [
+        "base bank-data: +70"
+      ],
+      "inHead": false,
+      "introduced": {
+        "commit": "1551381f65cbec75d83c54c2ed723c2507be911c",
+        "shortCommit": "1551381",
+        "date": "2026-11-11T04:27:28.535Z",
+        "author": "committer",
+        "message": "commit"
+      },
+      "removed": [
+        {
+          "commit": "e88b028bc8258139a724e01dba289037d0cd1232",
+          "shortCommit": "e88b028",
+          "date": "2026-11-11T04:27:28.535Z",
+          "author": "committer",
+          "message": "commit"
+        }
+      ],
+      "locations": [
+        {
+          "commit": "1551381f65cbec75d83c54c2ed723c2507be911c",
+          "path": "deploy/production.env",
+          "line": 5,
+          "snippet": "SETTLEMENT_ACCOUNT=[REDACTED:bank-data]"
+        },
+        {
+          "commit": "e88b028bc8258139a724e01dba289037d0cd1232",
+          "path": "deploy/production.env",
+          "line": 5,
+          "snippet": "SETTLEMENT_ACCOUNT=[REDACTED:bank-data]"
+        }
+      ],
+      "state": "open"
+    },
+    {
+      "id": "sk_0007",
+      "family": "private-key",
+      "rule": "private-key-header",
+      "fingerprint": "hmac256:9c64c9973ebc9889b5431113347c1720",
+      "preview": "[REDACTED:private-key](31)",
+      "danger": 90,
+      "reasons": [
+        "base private-key: +90"
+      ],
+      "inHead": false,
+      "introduced": {
+        "commit": "4baeb026ea351cd122fd6c1480d489c0a760cf9f",
+        "shortCommit": "4baeb02",
+        "date": "2026-11-11T04:27:28.542Z",
+        "author": "committer",
+        "message": "commit"
+      },
+      "removed": [
+        {
+          "commit": "723d7e72764870b88d7d33c331373aa0bfc6c4a6",
+          "shortCommit": "723d7e7",
+          "date": "2026-11-11T04:27:28.532Z",
+          "author": "committer",
+          "message": "commit"
+        },
+        {
+          "commit": "a1cc99e9ec46e6ce20fda3e4acf49f97f01148d8",
+          "shortCommit": "a1cc99e",
+          "date": "2026-11-11T04:27:28.523Z",
+          "author": "committer",
+          "message": "commit"
+        }
+      ],
+      "locations": [
+        {
+          "commit": "4baeb026ea351cd122fd6c1480d489c0a760cf9f",
+          "path": "src/legacy/billing.ts",
+          "line": 16,
+          "snippet": "[REDACTED:private-key]"
+        },
+        {
+          "commit": "51d15901ce8a1c0c5bf1a25bace1b2c0f6d6be16",
+          "path": "src/config.ts",
+          "line": 16,
+          "snippet": "[REDACTED:private-key]"
+        },
+        {
+          "commit": "723d7e72764870b88d7d33c331373aa0bfc6c4a6",
+          "path": "src/legacy/billing.ts",
+          "line": 14,
+          "snippet": "[REDACTED:private-key]"
+        },
+        {
+          "commit": "a1cc99e9ec46e6ce20fda3e4acf49f97f01148d8",
+          "path": "src/config.ts",
+          "line": 18,
+          "snippet": "[REDACTED:private-key]"
+        }
+      ],
+      "state": "open"
+    },
+    {
+      "id": "sk_0008",
+      "family": "identity",
+      "rule": "identity-nir",
+      "fingerprint": "hmac256:ba91ec921c59d0024ea6c129d471c625",
+      "preview": "[REDACTED:identity](15)",
+      "danger": 0,
+      "reasons": [
+        "base identity: +30",
+        "test/example directory path: -30"
+      ],
+      "inHead": false,
+      "introduced": {
+        "commit": "cf63e48f434f5cd8674f3dc016ec6670f6a0e962",
+        "shortCommit": "cf63e48",
+        "date": "2026-11-11T04:27:28.533Z",
+        "author": "committer",
+        "message": "commit"
+      },
+      "removed": [],
+      "locations": [
+        {
+          "commit": "cf63e48f434f5cd8674f3dc016ec6670f6a0e962",
+          "path": "examples/quickstart.ts",
+          "line": 11,
+          "snippet": "const OWNER_SSN = '[REDACTED:identity]';"
+        }
+      ],
+      "state": "open"
+    },
+    {
+      "id": "sk_0009",
+      "family": "suspicious-string",
+      "rule": "suspicious-high-entropy",
+      "fingerprint": "hmac256:dcbf39e942263e531033a1a70a5811a1",
+      "preview": "[REDACTED:suspicious-string](40)",
+      "danger": 25,
+      "reasons": [
+        "base suspicious-string: +25"
+      ],
+      "inHead": false,
+      "introduced": {
+        "commit": "cd5bf46d9b4da658c89d4b30778b79532f61bd63",
+        "shortCommit": "cd5bf46",
+        "date": "2026-11-11T04:27:28.528Z",
+        "author": "committer",
+        "message": "commit"
+      },
+      "removed": [],
+      "locations": [
+        {
+          "commit": "cd5bf46d9b4da658c89d4b30778b79532f61bd63",
+          "path": "src/legacy/billing.ts",
+          "line": 14,
+          "snippet": "const LEGACY_API_KEY = '[REDACTED:suspicious-string]';"
+        }
+      ],
+      "state": "open"
+    },
+    {
+      "id": "sk_0010",
+      "family": "plaintext-password",
+      "rule": "plaintext-password-assignment",
+      "fingerprint": "hmac256:f3920d6daa9899a2445d0615125b25ba",
+      "preview": "[REDACTED:plaintext-password](16)",
+      "danger": 30,
+      "reasons": [
+        "base plaintext-password: +60",
+        "test/example directory path: -30"
+      ],
+      "inHead": false,
+      "introduced": {
+        "commit": "a609b3e2db347a5b07e72248e920cc5a00d8f125",
+        "shortCommit": "a609b3e",
+        "date": "2026-11-11T04:27:28.538Z",
+        "author": "committer",
+        "message": "commit"
+      },
+      "removed": [],
+      "locations": [
+        {
+          "commit": "a609b3e2db347a5b07e72248e920cc5a00d8f125",
+          "path": "examples/quickstart.ts",
+          "line": 10,
+          "snippet": "const DB_PASSWORD = '[REDACTED:plaintext-password]';"
+        },
+        {
+          "commit": "a609b3e2db347a5b07e72248e920cc5a00d8f125",
+          "path": "tests/config.test.ts",
+          "line": 15,
+          "snippet": "const DB_PASSWORD = '[REDACTED:plaintext-password]';"
+        }
+      ],
+      "state": "open"
+    }
+  ],
+  "skipped": {
+    "binary": 1,
+    "tooLarge": 1
+  }
+}

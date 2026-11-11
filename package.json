@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "type": "module",
-  "description": "Placard — Skeletons in the Closet. Scan Git history for forgotten secrets and personal data, triage them in a haunted manor, remediate in the right order.",
+  "description": "Placard \u2014 Skeletons in the Closet. Scan Git history for forgotten secrets and personal data, triage them in a haunted manor, remediate in the right order.",
   "license": "MIT",
   "packageManager": "pnpm@9.15.9",
   "engines": {
@@ -36,6 +36,8 @@
     "fast-check": "3.23.1",
     "jsdom": "25.0.1",
     "prettier": "3.4.1",
+    "react": "18.3.1",
+    "react-dom": "18.3.1",
     "tsx": "4.19.2",
     "typescript": "5.6.3",
     "typescript-eslint": "8.16.0",

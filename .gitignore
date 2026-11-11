@@ -8,7 +8,8 @@ coverage/
 playwright-report/
 test-results/
 
-# Placard — état local du rituel (jamais versionné)
+# Placard — état local du rituel et rapports générés (jamais versionné)
+.placard/
 .placard/state/
 .placard/replacements.txt
 

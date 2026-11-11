@@ -1,0 +1,57 @@
+:root {
+  --bg-night: #14101F;
+  --stone-wall: #2A2140;
+  --bone: #EDE6D6;
+  --candle: #F2A541;
+  --alert-red: #E4572E;
+  --poison-green: #8BD450;
+  --wax-seal: #B23A48;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  background-color: var(--bg-night);
+  color: var(--bone);
+  font-family: system-ui, -apple-system, sans-serif;
+}
+
+header {
+  padding: 1rem 2rem;
+  background-color: var(--stone-wall);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 2px solid var(--candle);
+}
+
+header h1 {
+  margin: 0;
+  font-size: 1.5rem;
+  color: var(--candle);
+}
+
+main {
+  padding: 1rem 2rem;
+}
+
+.view-tabs {
+  display: flex;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+.view-tabs button {
+  background: var(--stone-wall);
+  color: var(--bone);
+  border: 1px solid var(--candle);
+  padding: 0.5rem 1rem;
+  border-radius: 4px;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+.view-tabs button.active {
+  background: var(--candle);
+  color: var(--bg-night);
+}

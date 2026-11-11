@@ -18,6 +18,7 @@ const PAQUETS = [
   'manor-model',
   'ui',
   'web',
+  'integration',
 ] as const;
 
 const alias: Record<string, string> = {};
