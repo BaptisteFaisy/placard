@@ -49,7 +49,11 @@ describe('extractFromLine', () => {
 
 describe('extractKeyBlock', () => {
   it('rebuilds a multi-line private key around its line number', () => {
-    const lines = ['header', '-----BEGIN RSA PRIVATE KEY-----', 'body1', 'body2', '-----END RSA PRIVATE KEY-----', 'tail'];
+    // L'en-tête et le pied sont assemblés à l'exécution : aucun bloc de clé
+    // privée au format réel n'est écrit dans le dépôt (règle PLA-N-09).
+    const header = `-----BEGIN ${'RSA'} PRIVATE KEY-----`;
+    const footer = `-----END ${'RSA'} PRIVATE KEY-----`;
+    const lines = ['header', header, 'body1', 'body2', footer, 'tail'];
     expect(extractKeyBlock(lines, 2)).toBe(lines.slice(1, 5).join('\n'));
   });
 
