@@ -6,5 +6,6 @@ résolue par l'agent ZeroClaw `hermes` (provider InferHub) saisi par le gate.
 
 ## Journal de l'exercice
 
+- Branche A : première intention, posée avant la fusion.
 - Branche B : seconde intention, posée en parallèle et volontairement incompatible.
 - Branche B : seconde ligne propre à B, pour vérifier que les deux intentions survivent.
