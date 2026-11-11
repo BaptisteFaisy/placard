@@ -2,10 +2,13 @@ import { generate } from '../../demo-repo/src/index.js';
 import { cli } from '../../cli/src/index.js';
 import { copyFile, mkdir } from 'node:fs/promises';
 import { resolve } from 'node:path';
+import { tmpdir } from 'node:os';
 import { fileURLToPath } from 'node:url';
 
 async function main() {
-  const tmpDemo = resolve('/tmp/placard-web-demo-build');
+  // Le nom du dépôt affiché dans le manoir est celui du dossier : on lui donne
+  // un nom lisible à l'écran plutôt qu'un chemin de build.
+  const tmpDemo = resolve(tmpdir(), 'placard-demo', 'acme-api');
   console.log('Generating synthetic haunted repository in', tmpDemo);
   await generate({ targetDir: tmpDemo, seed: 'kiroween-2026-demo-manor' });
 
