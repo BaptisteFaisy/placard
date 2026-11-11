@@ -76,3 +76,19 @@ export function matchesAlphabetRange(
 ): boolean {
   return body.length >= min && body.length <= max && alphabet.test(body);
 }
+
+/**
+ * La valeur se trouve-t-elle dans la partie « autorité » d'une URL ?
+ *
+ * `https://x-access-token:$T@github.com/...` : le `@` y sépare des identifiants
+ * d'un hôte, ce n'est **pas** une adresse e-mail. Une seule implémentation,
+ * partagée par les familles `identity` (e-mail) et `suspicious-string` (chemin
+ * d'URL de documentation) — les deux se faisaient piéger par le même cas.
+ */
+export function isInsideUrl(line: string, value: string): boolean {
+  if (line === '' || value === '') return false;
+  const index = line.indexOf(value);
+  if (index < 0) return false;
+  const before = line.slice(Math.max(0, index - 200), index);
+  return /[a-z][a-z0-9+.-]*:\/\/[^\s'"`]*$/i.test(before);
+}

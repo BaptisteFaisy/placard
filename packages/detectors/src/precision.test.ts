@@ -49,3 +49,19 @@ describe('precision — rejet des six classes de faux positifs', () => {
     expect(scan("expect(isPublicRemote('git@github.com:acme/repo.git')).toBe(false);")).toHaveLength(0);
   });
 });
+
+describe('precision — autorité d’URL', () => {
+  const engine = createDetectorEngine();
+
+  it('n’interprète pas un identifiant de connexion d’URL comme une adresse e-mail', () => {
+    const line = 'git clone https://x-access-token:$T@github.com/acme/placard.git';
+    const found = engine.scanLine({
+      line,
+      path: '.github/hermes/conflict_agent.py',
+      commit: '0'.repeat(40),
+      lineNumber: 110,
+      side: 'added',
+    }).detections;
+    expect(found.filter((d) => d.rule === 'identity-email')).toHaveLength(0);
+  });
+});
