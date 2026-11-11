@@ -258,12 +258,38 @@ def try_merge(repo, token, pr, required):
     return 'error'
 
 
+def fetch_mergeability(repo, token, num, mergeable, state, attempts=3, pause=3):
+    """Relit `mergeable` sur la PR seule quand l'appelant vient de la liste.
+
+    `GET /repos/{o}/{r}/pulls?state=open` (utilisé par les passages
+    `workflow_dispatch`, `schedule` et `check_run`) ne renvoie **pas** les champs
+    `mergeable` / `mergeable_state` : sans cette relecture, un vrai conflit est
+    invisible et le gate conclut à un simple retard. Constat du 11/11 sur
+    placard : PR en `DIRTY`, gate muet (« en retard de 1 commit »).
+    GitHub calcule la fusionabilité à la demande : le premier appel peut rendre
+    `null`, d'où quelques tentatives espacées (coût borné : 9 s au pire, le job
+    reste sous les 5 min de `ci-budget`).
+    """
+    if mergeable is not None:
+        return mergeable, state
+    for _ in range(attempts):
+        sc, pr = api('GET', '/repos/%s/pulls/%d' % (repo, num), token=token)
+        if sc == 200 and isinstance(pr, dict):
+            value = pr.get('mergeable')
+            if value is not None:
+                return value, pr.get('mergeable_state') or ''
+        time.sleep(pause)
+    return None, state
+
+
 def handle_pr(pr, repo, token, required, dry=False, refresh=True):
     num = pr['number']
     sha = pr['head']['sha']
     base_ref = pr['base']['ref']
-    mergeable = pr.get('mergeable')           # None = calcul en cours
+    mergeable = pr.get('mergeable')           # None = calcul en cours, ou absent de la liste
     mergeable_state = pr.get('mergeable_state') or ''
+    mergeable, mergeable_state = fetch_mergeability(
+        repo, token, num, mergeable, mergeable_state)
 
     # Débloquer d'abord : un run en attente d'approbation ne produit aucun
     # check, donc juger maintenant donnerait un verdict sur du vide.
