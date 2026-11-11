@@ -1,0 +1,20 @@
+name: 'Setup (runner self-hosted placard-worker)'
+description: >
+  Vérifie la chaîne d'outils présente sur le runner self-hosted (Node LTS +
+  pnpm épinglé, exposés par le fichier .env du runner) puis installe les
+  dépendances verrouillées. Une seule implémentation, partagée par tous les
+  jobs : aucun téléchargement de Node en cours de CI (budget 5 minutes).
+runs:
+  using: composite
+  steps:
+    - name: Chaîne d'outils du runner
+      shell: bash
+      run: |
+        set -euo pipefail
+        node -v  || { echo "::error::node est absent du PATH du runner"; exit 1; }
+        pnpm -v  || { echo "::error::pnpm est absent du PATH du runner"; exit 1; }
+        git --version
+        python3 -V
+    - name: Dépendances verrouillées
+      shell: bash
+      run: pnpm install --frozen-lockfile

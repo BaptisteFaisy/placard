@@ -10,6 +10,7 @@ import sys
 from pathlib import Path
 
 def main() -> int:
+    # La racine est le dossier qui contient .github/ et .kiro/
     root = Path(__file__).resolve().parents[2]
     errors: list[str] = []
 

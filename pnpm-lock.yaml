@@ -63,7 +63,114 @@ importers:
         specifier: 2.1.8
         version: 2.1.8(@types/node@22.10.1)(jsdom@25.0.1)
 
-  packages/core: {}
+  packages/analysis:
+    dependencies:
+      '@placard/core':
+        specifier: workspace:*
+        version: link:../core
+      yaml:
+        specifier: 2.6.1
+        version: 2.6.1
+
+  packages/cli:
+    dependencies:
+      '@placard/analysis':
+        specifier: workspace:*
+        version: link:../analysis
+      '@placard/core':
+        specifier: workspace:*
+        version: link:../core
+      '@placard/demo-repo':
+        specifier: workspace:*
+        version: link:../demo-repo
+      '@placard/detectors':
+        specifier: workspace:*
+        version: link:../detectors
+      '@placard/git-history':
+        specifier: workspace:*
+        version: link:../git-history
+      '@placard/ritual':
+        specifier: workspace:*
+        version: link:../ritual
+
+  packages/core:
+    dependencies:
+      zod:
+        specifier: 3.23.8
+        version: 3.23.8
+
+  packages/demo-repo:
+    dependencies:
+      '@placard/core':
+        specifier: workspace:*
+        version: link:../core
+
+  packages/detectors:
+    dependencies:
+      '@placard/core':
+        specifier: workspace:*
+        version: link:../core
+
+  packages/git-history:
+    dependencies:
+      '@placard/core':
+        specifier: workspace:*
+        version: link:../core
+
+  packages/manor-model:
+    dependencies:
+      '@placard/core':
+        specifier: workspace:*
+        version: link:../core
+
+  packages/ritual:
+    dependencies:
+      '@placard/core':
+        specifier: workspace:*
+        version: link:../core
+      yaml:
+        specifier: 2.6.1
+        version: 2.6.1
+
+  packages/ui:
+    dependencies:
+      '@placard/core':
+        specifier: workspace:*
+        version: link:../core
+      '@placard/manor-model':
+        specifier: workspace:*
+        version: link:../manor-model
+      react:
+        specifier: 18.3.1
+        version: 18.3.1
+      react-dom:
+        specifier: 18.3.1
+        version: 18.3.1(react@18.3.1)
+
+  packages/web:
+    dependencies:
+      '@placard/core':
+        specifier: workspace:*
+        version: link:../core
+      '@placard/manor-model':
+        specifier: workspace:*
+        version: link:../manor-model
+      '@placard/ui':
+        specifier: workspace:*
+        version: link:../ui
+      react:
+        specifier: 18.3.1
+        version: 18.3.1
+      react-dom:
+        specifier: 18.3.1
+        version: 18.3.1(react@18.3.1)
+    devDependencies:
+      '@vitejs/plugin-react':
+        specifier: 4.3.4
+        version: 4.3.4(vite@5.4.11(@types/node@22.10.1))
+      vite:
+        specifier: 5.4.11
+        version: 5.4.11(@types/node@22.10.1)
 
 packages:
 
@@ -1293,6 +1400,10 @@ packages:
   lodash.merge@4.6.2:
     resolution: {integrity: sha512-0KpjqXRVvrYyCsX1swR/XTK0va6VQkQM6MNo7PqW77ByjAhoARA8EfrP1N4+KlKj8YS0ZUCtRT/YUuhyYDujIQ==}
 
+  loose-envify@1.4.0:
+    resolution: {integrity: sha512-lyuxPGr/Wfhrlem2CL/UcnUc1zcqKAImBDzukY7Y5F/yQiNdko6+fRLevlw1HgMySw7f611UIY408EtxRSoK3Q==}
+    hasBin: true
+
   loupe@3.2.1:
     resolution: {integrity: sha512-CdzqowRJCeLU72bHvWqwRBBlLcMEtIvGrlvef74kMnV2AolS9Y8xUv1I0U/MNAWMhBlKIoyuEgoJ0t/bbwHbLQ==}
 
@@ -1422,6 +1533,11 @@ packages:
   queue-microtask@1.2.3:
     resolution: {integrity: sha512-NuaNSa6flKT5JaSYQzJok04JzTL1CA6aGhv5rfLW3PgqA+M2ChpZQnAC8h8i4ZFkBS8X5RqkDBHA7r4hej3K9A==}
 
+  react-dom@18.3.1:
+    resolution: {integrity: sha512-5m4nQKp+rZRb09LNH59GM4BxTh9251/ylbKIbpe7TpGxfJ+9kv6BLkLBXIjjspbgbnIBNqlI23tRnTWT0snUIw==}
+    peerDependencies:
+      react: ^18.3.1
+
   react-dom@19.3.1:
     resolution: {integrity: sha512-Y0bARz53lhEC1NMCASs0/j+faB/zqt3R8hpvg1e8+61ZVJ4UL0UdC4cBbXfZMcIuhrfgeILTLe+ZeBCavQPtKQ==}
     peerDependencies:
@@ -1432,6 +1548,10 @@ packages:
 
   react-refresh@0.14.2:
     resolution: {integrity: sha512-jCvmsr+1IUSMUyzOkRcvnVbX3ZYC6g9TDrDbFuFmRDq7PD4yaGbLKNQL6k2jnArV8hjYxh7hVhAZB6s9HDGpZA==}
+    engines: {node: '>=0.10.0'}
+
+  react@18.3.1:
+    resolution: {integrity: sha512-wS+hAgJShR0KhEvPJArfuPVN1+Hz1t0Y6n5jLrGQbkb4urgPE/0Rve+1kMB1v/oWgHgm4WIcV+i7F2pTVj+2iQ==}
     engines: {node: '>=0.10.0'}
 
   react@19.3.1:
@@ -1469,6 +1589,9 @@ packages:
   saxes@6.0.0:
     resolution: {integrity: sha512-xAg7SOnEhrm5zI3puOOKyy1OMcMlIJZYNJY7xLBwSze0UjhPLnWfj2GF2EpT0jmzaJKIWKHLsaSSajf35bcYnA==}
     engines: {node: '>=v12.22.7'}
+
+  scheduler@0.23.2:
+    resolution: {integrity: sha512-UOShsPwz7NrMUqhR6t0hWjFduvOzbtv7toDH1/hIrfRNIDBnnBWd0CwJTGvTpngVlmwGCdP9/Zl/tVrDqcuYzQ==}
 
   scheduler@0.28.0:
     resolution: {integrity: sha512-juorfCmIkIw8tT+p5BXSm6PJjQF/ycEYmKyzURCIt/RaZIhL+PulbQ9Yu2z1HdOJDdqDTlxA1+xKBmHXJsczAw==}
@@ -1711,9 +1834,17 @@ packages:
   yallist@3.1.1:
     resolution: {integrity: sha512-a4UGQaWPH59mOXUYnAG2ewncQS4i4F43Tv3JoAM+s2VDAmS9NsK8GpDMLrCHPksFT7h3K6TOoUNn2pb7RoXx4g==}
 
+  yaml@2.6.1:
+    resolution: {integrity: sha512-7r0XPzioN/Q9kXBro/XPnA6kznR73DHq+GXh5ON7ZozRO6aMjbmiBuKste2wslTFkC5d1dw0GooOCepZXJ2SAg==}
+    engines: {node: '>= 14'}
+    hasBin: true
+
   yocto-queue@0.1.0:
     resolution: {integrity: sha512-rVksvsnNCdJ/ohGc6xgPwyN8eheCxsiLM8mxuE/t/mOVqJewPuO1miLpTHQiRgTKCLexL4MeAFVagts7HmNZ2Q==}
     engines: {node: '>=10'}
+
+  zod@3.23.8:
+    resolution: {integrity: sha512-XBx9AXhXktjUqnepgTiE5flcKIYWi/rme0Eaj+5Y0lftuGBq+jyRu/md4WnuxqgP1ubdpNCsYEYPxrzVHD8d6g==}
 
 snapshots:
 
@@ -2872,6 +3003,10 @@ snapshots:
 
   lodash.merge@4.6.2: {}
 
+  loose-envify@1.4.0:
+    dependencies:
+      js-tokens: 4.0.0
+
   loupe@3.2.1: {}
 
   lru-cache@10.4.3: {}
@@ -2978,6 +3113,12 @@ snapshots:
 
   queue-microtask@1.2.3: {}
 
+  react-dom@18.3.1(react@18.3.1):
+    dependencies:
+      loose-envify: 1.4.0
+      react: 18.3.1
+      scheduler: 0.23.2
+
   react-dom@19.3.1(react@19.3.1):
     dependencies:
       react: 19.3.1
@@ -2986,6 +3127,10 @@ snapshots:
   react-is@17.0.2: {}
 
   react-refresh@0.14.2: {}
+
+  react@18.3.1:
+    dependencies:
+      loose-envify: 1.4.0
 
   react@19.3.1: {}
 
@@ -3040,6 +3185,10 @@ snapshots:
   saxes@6.0.0:
     dependencies:
       xmlchars: 2.2.0
+
+  scheduler@0.23.2:
+    dependencies:
+      loose-envify: 1.4.0
 
   scheduler@0.28.0: {}
 
@@ -3236,4 +3385,8 @@ snapshots:
 
   yallist@3.1.1: {}
 
+  yaml@2.6.1: {}
+
   yocto-queue@0.1.0: {}
+
+  zod@3.23.8: {}

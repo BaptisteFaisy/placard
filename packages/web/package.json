@@ -1,0 +1,22 @@
+{
+  "name": "@placard/web",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "main": "./src/index.ts",
+  "types": "./src/index.ts",
+  "scripts": {
+    "test": "vitest run"
+  },
+  "dependencies": {
+    "@placard/core": "workspace:*",
+    "@placard/ui": "workspace:*",
+    "@placard/manor-model": "workspace:*",
+    "react": "18.3.1",
+    "react-dom": "18.3.1"
+  },
+  "devDependencies": {
+    "vite": "5.4.11",
+    "@vitejs/plugin-react": "4.3.4"
+  }
+}

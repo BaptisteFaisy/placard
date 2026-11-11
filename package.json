@@ -16,7 +16,7 @@
     "format": "prettier --write \"packages/*/src/**/*.{ts,tsx,css}\"",
     "test": "vitest run",
     "test:watch": "vitest",
-    "build": "pnpm -r --filter '!@placard/web' build && pnpm --filter @placard/web build",
+    "build": "pnpm -r --if-present build",
     "verify": "pnpm typecheck && pnpm lint && pnpm test",
     "self-scan": "tsx packages/cli/src/main.ts scan .",
     "budget:check": "python3 .github/ci-budget/check_timeouts.py",

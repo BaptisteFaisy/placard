@@ -15,6 +15,7 @@ const PAQUETS = [
   'demo-repo',
   'ritual',
   'cli',
+  'manor-model',
   'ui',
   'web',
 ] as const;

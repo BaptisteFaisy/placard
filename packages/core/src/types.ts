@@ -70,6 +70,8 @@ export interface RepoMeta {
 
 /** Structure complète du rapport d'analyse Placard (garanti SANS aucun secret). */
 export interface PlacardReport {
+  /** Version du schéma de rapport ; toute rupture de format l'incrémente. */
+  schema: string;
   tool: {
     name: 'placard';
     version: string;
@@ -86,16 +88,4 @@ export interface IgnoreEntry {
   reason: string;
   author: string;
   date: string;
-}
-
-/** Règle de détection interne. */
-export interface DetectorRule {
-  id: string;
-  family: FindingFamily;
-  name: string;
-  baseScore: number;
-  description: string;
-  keywords: string[];
-  pattern?: RegExp;
-  validate?: (match: string, context?: string) => boolean;
 }

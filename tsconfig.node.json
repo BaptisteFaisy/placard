@@ -2,7 +2,9 @@
   "extends": "./tsconfig.base.json",
   "compilerOptions": {
     "noEmit": true,
-    "types": ["node"]
+    "types": [
+      "node"
+    ]
   },
   "include": [
     "packages/core/src/**/*.ts",
@@ -12,7 +14,11 @@
     "packages/demo-repo/src/**/*.ts",
     "packages/ritual/src/**/*.ts",
     "packages/cli/src/**/*.ts",
+    "packages/manor-model/src/**/*.ts",
     "vitest.config.ts"
   ],
-  "exclude": ["**/dist/**", "**/node_modules/**"]
+  "exclude": [
+    "**/dist/**",
+    "**/node_modules/**"
+  ]
 }

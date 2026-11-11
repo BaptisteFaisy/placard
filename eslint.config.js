@@ -34,6 +34,19 @@ export default tseslint.config(
     },
   },
   {
+    // Fichiers de test : la borne « 50 lignes par fonction » vise le code de
+    // production. Un bloc `describe` est un conteneur déclaratif, pas une
+    // fonction métier ; chaque `it` reste court. Borne relevée à 120 pour les
+    // suites, la borne de 500 lignes par fichier reste inchangée.
+    files: ['**/*.test.ts', '**/*.test.tsx'],
+    rules: {
+      'max-lines-per-function': [
+        'error',
+        { max: 120, skipBlankLines: true, skipComments: true, IIFEs: false },
+      ],
+    },
+  },
+  {
     // Les composants React découpent déjà le rendu en sous-composants ;
     // la borne reste à 50 lignes, seule la règle « pas de any » est relâchée
     // pour les props génériques de test.
