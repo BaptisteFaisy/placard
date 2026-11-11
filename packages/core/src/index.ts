@@ -4,6 +4,8 @@ export * from './scoring.js';
 export * from './severity.js';
 export * from './i18n.js';
 export * from './schema.js';
+export * from './checksums.js';
+export * from './fake-values.js';
 export * from './contracts/git.js';
 export * from './contracts/detector.js';
 export * from './contracts/analysis.js';
