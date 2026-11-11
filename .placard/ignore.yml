@@ -1,0 +1,12 @@
+# Placard ignore file.
+# Fingerprints listed here are deliberately accepted and stay out of the open findings.
+# Never put a secret value in this file: the HMAC fingerprint is enough.
+
+ignore:
+  - fingerprint: hmac256:581393e9c1a0ee66464a7450977bbfef
+    rule: cloud-access-key-id
+    reason: AWS documentation example key, publicly known and not a credential.
+      Written in an early draft of KIRO_JOURNAL.md, removed from HEAD; still
+      readable in history, which is exactly what Placard reports.
+    author: b (ZeroClaw agent)
+    date: 2026-11-11T10:38:22.519Z

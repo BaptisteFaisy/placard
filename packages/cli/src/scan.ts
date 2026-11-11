@@ -13,6 +13,7 @@ import { createDetectorEngine } from '@placard/detectors';
 import { analyze } from '@placard/analysis';
 import { renderSummary } from './output.js';
 import { repoSalt } from './salt.js';
+import { buildHeadPresence, type PresenceInput } from './head-presence.js';
 
 /** Une détection ancrée, telle que l'exige le moteur d'analyse. */
 interface AnchoredDetection {
@@ -36,12 +37,15 @@ interface HistoryOutcome {
   detections: AnchoredDetection[];
   skipped: SkippedFiles;
   snapshot: RepoSnapshot | null;
+  /** Couples (chemin, valeur) vus pendant le parcours, pour la présence HEAD. */
+  presenceInputs: PresenceInput[];
 }
 
 /** Parcourt l'historique et applique les détecteurs ligne à ligne. */
 async function collect(options: ScanOptions): Promise<HistoryOutcome> {
   const detector = createDetectorEngine();
   const detections: AnchoredDetection[] = [];
+  const presenceInputs: PresenceInput[] = [];
   const skipped: SkippedFiles = { binary: 0, tooLarge: 0 };
   let snapshot: RepoSnapshot | null = null;
 
@@ -64,11 +68,12 @@ async function collect(options: ScanOptions): Promise<HistoryOutcome> {
       });
       for (const detection of found.detections) {
         detections.push(anchor(detection, ev.line.commit, ev.line.path, ev.line.line, ev.line.text));
+        presenceInputs.push({ path: ev.line.path, value: detection.value });
       }
     },
   });
 
-  return { detections, skipped, snapshot };
+  return { detections, skipped, snapshot, presenceInputs };
 }
 
 /** Rattache une détection à son commit et à son emplacement. */
@@ -131,6 +136,7 @@ export async function scanCommand(options: ScanOptions): Promise<CliResult> {
   // dépôt à l'autre. Les empreintes restent donc comparables d'un scan à
   // l'autre — c'est ce qui rend le fichier d'exclusions utilisable.
   const salt = repoSalt(snapshot.name, repoDir);
+  const headPresence = await buildHeadPresence(repoDir, outcome.presenceInputs);
   const analyzed = await analyze(
     {
       detections: outcome.detections,
@@ -142,9 +148,14 @@ export async function scanCommand(options: ScanOptions): Promise<CliResult> {
         publicRemote: snapshot.publicRemote,
         analyzedAt: new Date().toISOString(),
       },
-      headPresence: new Map(),
+      headPresence,
     },
-    { repo: snapshot, salt, toolVersion: '0.1.0' },
+    {
+      repo: snapshot,
+      salt,
+      ignoreFile: resolve(repoDir, '.placard/ignore.yml'),
+      toolVersion: '0.1.0',
+    },
   );
 
   const reportPath = resolve(options.report ?? resolve(repoDir, '.placard/report.json'));

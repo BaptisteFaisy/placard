@@ -8,10 +8,11 @@ coverage/
 playwright-report/
 test-results/
 
-# Placard — état local du rituel et rapports générés (jamais versionné)
-.placard/
-.placard/state/
-.placard/replacements.txt
+# Placard — rapports et état local (jamais versionnés).
+# Le fichier d'exclusions `.placard/ignore.yml` EST versionné : il fait partie
+# du dépôt, comme le prévoit PLA-F-09 (« exclusions partagées »).
+.placard/*
+!.placard/ignore.yml
 
 # OS / éditeurs
 .DS_Store
