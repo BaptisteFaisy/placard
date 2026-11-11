@@ -36,7 +36,9 @@ describe('bruit', () => {
   let noiseShas: string[];
 
   beforeAll(async () => {
-    result = await makeRepo();
+    // Un dépôt un peu plus long qu'ailleurs : c'est ici que l'on vérifie que
+    // le bruit est bien « des dizaines de commits ».
+    result = await makeRepo({ commits: 60, years: 2 });
     dir = result.repoDir;
     const secretShas = new Set<string>();
     for (const secret of result.planted) {
@@ -52,7 +54,7 @@ describe('bruit', () => {
   });
 
   it('compte des dizaines de commits sans aucun secret', () => {
-    expect(noiseShas.length).toBeGreaterThan(20);
+    expect(noiseShas.length).toBeGreaterThan(30);
   });
 
   it('ne touche que des fichiers sans valeur plantée', async () => {

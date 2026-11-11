@@ -19,8 +19,8 @@ describe('déterminisme', () => {
   });
 
   it('produit exactement les mêmes commits pour deux générations identiques', async () => {
-    const first = await makeRepo({ commits: 40, years: 1, headDate: FIXED_HEAD_DATE });
-    const second = await makeRepo({ commits: 40, years: 1, headDate: FIXED_HEAD_DATE });
+    const first = await makeRepo({ commits: 24, years: 1, headDate: FIXED_HEAD_DATE });
+    const second = await makeRepo({ commits: 24, years: 1, headDate: FIXED_HEAD_DATE });
     dirs.push(first.repoDir, second.repoDir);
 
     expect(second.head).toBe(first.head);
@@ -37,8 +37,8 @@ describe('déterminisme', () => {
   }, 180_000);
 
   it('produit un dépôt différent pour une autre graine', async () => {
-    const alpha = await makeRepo({ seed: 'alpha', commits: 20, years: 1 });
-    const beta = await makeRepo({ seed: 'beta', commits: 20, years: 1 });
+    const alpha = await makeRepo({ seed: 'alpha', commits: 12, years: 1 });
+    const beta = await makeRepo({ seed: 'beta', commits: 12, years: 1 });
     dirs.push(alpha.repoDir, beta.repoDir);
 
     expect(beta.head).not.toBe(alpha.head);
@@ -46,8 +46,8 @@ describe('déterminisme', () => {
   }, 180_000);
 
   it('produit un historique différent pour une autre date de tête', async () => {
-    const early = await makeRepo({ commits: 20, years: 1, headDate: new Date('2024-01-01T00:00:00Z') });
-    const late = await makeRepo({ commits: 20, years: 1, headDate: new Date('2026-01-01T00:00:00Z') });
+    const early = await makeRepo({ commits: 12, years: 1, headDate: new Date('2024-01-01T00:00:00Z') });
+    const late = await makeRepo({ commits: 12, years: 1, headDate: new Date('2026-01-01T00:00:00Z') });
     dirs.push(early.repoDir, late.repoDir);
 
     expect(late.head).not.toBe(early.head);

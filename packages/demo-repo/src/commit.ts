@@ -107,13 +107,22 @@ export async function syncTree(
   }
 }
 
-/** Commite l'état courant du disque et rend le SHA du commit créé. */
-export async function commitAll(dir: string, date: Date, message: string): Promise<string> {
+/** Commite l'état courant du disque. */
+export async function commitAll(dir: string, date: Date, message: string): Promise<void> {
   const env = commitEnv(date);
   await git(dir, ['add', '--all'], env);
   await git(dir, ['commit', '--quiet', '--no-gpg-sign', '--no-verify', '-m', message], env);
-  const head = await git(dir, ['rev-parse', 'HEAD'], env);
-  return head.trim();
+}
+
+/**
+ * Tous les SHA de l'historique, du plus ancien au plus récent.
+ *
+ * Un seul parcours pour tout le dépôt : la génération ne lance donc que
+ * deux processus Git par commit (`add` puis `commit`), au lieu de trois.
+ */
+export async function revList(dir: string): Promise<string[]> {
+  const output = await git(dir, ['rev-list', '--reverse', 'HEAD'], baseEnv());
+  return output.split('\n').filter((line) => line.length > 0);
 }
 
 /** Ajoute un distant public fictif (score +10 de l'analyse). */

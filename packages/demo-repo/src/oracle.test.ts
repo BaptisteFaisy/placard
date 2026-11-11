@@ -2,7 +2,7 @@ import { rm } from 'node:fs/promises';
 
 import { afterAll, beforeAll, describe, expect, it } from 'vitest';
 
-import type { GenerateResult, PlantedSecret } from './index.js';
+import type { GenerateResult } from './index.js';
 import { allShas, makeRepo, pathsAt, pathsContaining, repoGit, showAt } from './testing.js';
 
 /**
@@ -11,7 +11,7 @@ import { allShas, makeRepo, pathsAt, pathsContaining, repoGit, showAt } from './
  */
 
 /** Chemin où la valeur est présente, selon la famille (les fichiers à risque se plantent par leur nom). */
-async function locationsAt(dir: string, rev: string, secret: PlantedSecret): Promise<string[]> {
+async function locationsAt(dir: string, rev: string, secret: GenerateResult['planted'][number]): Promise<string[]> {
   if (secret.family === 'risky-file') {
     const paths = await pathsAt(dir, rev);
     return paths.filter((path) => path.endsWith(secret.value));
@@ -86,10 +86,13 @@ describe('oracle', () => {
       if (secret.removedCommit === undefined) continue;
       const after = await showAt(dir, secret.removedCommit, secret.path);
       if (secret.family === 'risky-file') {
+        // La valeur est le **nom** du fichier : le chemin a disparu.
         expect(after).toBeUndefined();
-      } else {
-        expect(after === undefined || !after.includes(secret.value)).toBe(true);
+        const parent = await showAt(dir, `${secret.removedCommit}^`, secret.path);
+        expect(parent).toBeDefined();
+        continue;
       }
+      expect(after === undefined || !after.includes(secret.value)).toBe(true);
       const before = await showAt(dir, `${secret.removedCommit}^`, secret.path);
       expect(`${before}`).toContain(secret.value);
     }

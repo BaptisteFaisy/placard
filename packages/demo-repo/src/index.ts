@@ -1,7 +1,7 @@
 import { fakeValue, type DemoRepoGenerator, type GenerateOptions, type GenerateResult } from '@placard/core';
 
 import { applyCommit } from './apply.js';
-import { addPublicRemote, commitAll, initRepo, syncTree } from './commit.js';
+import { addPublicRemote, commitAll, initRepo, revList, syncTree } from './commit.js';
 import type { FileContent } from './noise.js';
 import { buildOracle } from './oracle.js';
 import { buildPlan } from './plan.js';
@@ -52,14 +52,16 @@ export async function generate(options: GenerateOptions): Promise<GenerateResult
   await initRepo(options.targetDir);
   const tree = createTree();
   const written = new Map<string, FileContent>();
-  const shas: string[] = [];
   for (let index = 0; index < plan.totalCommits; index += 1) {
     applyCommit(tree, plan, index);
     await syncTree(options.targetDir, tree.files, written);
     const date = plan.dates[index] ?? new Date(0);
     const message = plan.messages[index] ?? 'chore: tidy up';
-    shas.push(await commitAll(options.targetDir, date, message));
+    await commitAll(options.targetDir, date, message);
   }
+  // Un seul parcours de l'historique suffit : les SHA sont lus d'un coup,
+  // du plus ancien au plus récent. Cela évite un processus Git par commit.
+  const shas = await revList(options.targetDir);
   if (plan.publicRemote) await addPublicRemote(options.targetDir);
   return {
     repoDir: options.targetDir,

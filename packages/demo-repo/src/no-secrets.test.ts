@@ -38,7 +38,7 @@ describe('garde PLA-N-09', () => {
   });
 
   it('ne contient aucune valeur de l’oracle dans les sources du paquet', async () => {
-    const result: GenerateResult = await makeRepo({ commits: 20, years: 1 });
+    const result: GenerateResult = await makeRepo({ commits: 12, years: 1 });
     dirs.push(result.repoDir);
     expect(result.planted.length).toBeGreaterThan(0);
     for (const secret of result.planted) {
@@ -47,7 +47,7 @@ describe('garde PLA-N-09', () => {
   }, 180_000);
 
   it('ne contient aucune valeur d’une autre graine non plus', async () => {
-    const other = await makeRepo({ seed: 'autre-graine', commits: 20, years: 1 });
+    const other = await makeRepo({ seed: 'autre-graine', commits: 12, years: 1 });
     dirs.push(other.repoDir);
     for (const secret of other.planted) {
       expect(sources.includes(secret.value)).toBe(false);

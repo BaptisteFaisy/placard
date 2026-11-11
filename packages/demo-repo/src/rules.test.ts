@@ -1,10 +1,10 @@
 import { rm } from 'node:fs/promises';
 
-import { afterAll, describe, expect, it } from 'vitest';
+import { afterAll, beforeAll, describe, expect, it } from 'vitest';
 
 import { FAMILIES } from './index.js';
-import { dialectOf } from './templates.js';
 import { RULE_IDS } from './rules.js';
+import { dialectOf } from './templates.js';
 import { makeRepo } from './testing.js';
 
 /**
@@ -22,52 +22,53 @@ import { makeRepo } from './testing.js';
 const KNOWN_RULES: string[] = Object.values(RULE_IDS);
 
 describe('règles attendues', () => {
-  const dirs: string[] = [];
+  let dir: string;
+  let planted: { family: string; expectedRule: string; value: string; path: string }[];
 
-  afterAll(async () => {
-    for (const dir of dirs) await rm(dir, { recursive: true, force: true });
-  });
-
-  it('annonce toujours une règle du catalogue connu', async () => {
+  beforeAll(async () => {
     const result = await makeRepo({ commits: 30, years: 1 });
-    dirs.push(result.repoDir);
-    expect(result.planted.length).toBeGreaterThan(0);
-    for (const secret of result.planted) {
-      expect(KNOWN_RULES).toContain(secret.expectedRule);
-    }
+    dir = result.repoDir;
+    planted = result.planted;
   }, 180_000);
 
-  it('couvre chacune des neuf familles', async () => {
-    const result = await makeRepo({ commits: 30, years: 1 });
-    dirs.push(result.repoDir);
+  afterAll(async () => {
+    await rm(dir, { recursive: true, force: true });
+  });
+
+  it('annonce toujours une règle du catalogue connu', () => {
+    expect(planted.length).toBeGreaterThan(0);
+    for (const secret of planted) {
+      expect(KNOWN_RULES).toContain(secret.expectedRule);
+    }
+  });
+
+  it('couvre chacune des neuf familles', () => {
     const byFamily = new Map<string, string>();
-    for (const secret of result.planted) byFamily.set(secret.family, secret.expectedRule);
+    for (const secret of planted) byFamily.set(secret.family, secret.expectedRule);
     expect(byFamily.size).toBe(FAMILIES.length);
     for (const family of FAMILIES) {
       expect(byFamily.get(family)).toBeTruthy();
     }
-  }, 180_000);
+  });
 
-  it('emploie une règle de mot de passe cohérente avec le dialecte du fichier', async () => {
-    const result = await makeRepo({ commits: 30, years: 1 });
-    dirs.push(result.repoDir);
-    for (const secret of result.planted) {
-      if (secret.family !== 'plaintext-password') continue;
+  it('emploie une règle de mot de passe cohérente avec le dialecte du fichier', () => {
+    const passwords = planted.filter((secret) => secret.family === 'plaintext-password');
+    expect(passwords.length).toBeGreaterThan(0);
+    for (const secret of passwords) {
       const isEnv = dialectOf(secret.path) === 'env';
       expect(secret.expectedRule).toBe(
         isEnv ? RULE_IDS.passwordEnv : RULE_IDS.passwordAssignment,
       );
     }
-  }, 180_000);
+  });
 
-  it('emploie une règle de donnée personnelle cohérente avec la forme de la valeur', async () => {
-    const result = await makeRepo({ commits: 30, years: 1 });
-    dirs.push(result.repoDir);
-    for (const secret of result.planted) {
-      if (secret.family !== 'identity') continue;
+  it('emploie une règle de donnée personnelle cohérente avec la forme de la valeur', () => {
+    const identities = planted.filter((secret) => secret.family === 'identity');
+    expect(identities.length).toBeGreaterThan(0);
+    for (const secret of identities) {
       expect(secret.expectedRule).toBe(
         secret.value.includes('@') ? RULE_IDS.identityEmail : RULE_IDS.identityNir,
       );
     }
-  }, 180_000);
+  });
 });

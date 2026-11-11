@@ -15,9 +15,13 @@ import { generate, type GenerateOptions, type GenerateResult } from './index.js'
 /** Date de référence figée : sans elle, deux générations ne sont pas comparables. */
 export const FIXED_HEAD_DATE = new Date('2026-10-31T00:00:00Z');
 
-/** Options rapides mais complètes, pour les tests qui n'ont pas besoin des 120 commits. */
+/**
+ * Options rapides mais complètes, pour les tests qui n'ont pas besoin des 120
+ * commits. Le nombre de commits est volontairement modeste : chaque commit
+ * coûte deux processus Git, et la CI tourne sur un runner partagé.
+ */
 export const FAST_OPTIONS = {
-  commits: 60,
+  commits: 40,
   years: 2,
   headDate: FIXED_HEAD_DATE,
 } as const;

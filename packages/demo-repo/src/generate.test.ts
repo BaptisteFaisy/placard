@@ -27,7 +27,7 @@ afterAll(async () => {
 describe('generate — forme du dépôt', () => {
   it('produit le nombre de commits demandé, sur la branche main', async () => {
     expect(shas).toHaveLength(result.commits);
-    expect(result.commits).toBe(60);
+    expect(result.commits).toBe(40);
     const branch = await repoGit(dir, ['rev-parse', '--abbrev-ref', 'HEAD']);
     expect(branch.trim()).toBe('main');
     expect(shas[shas.length - 1]).toBe(result.head);
