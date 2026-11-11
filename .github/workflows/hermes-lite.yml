@@ -1,10 +1,22 @@
 name: Hermes Lite (gate)
 
+# [HERMES-REFRESH] Gate « fraîcheur exigée au merge » + [HERMES-AGENT] saisine de
+# l'agent ZeroClaw `hermes` (provider InferHub) en cas de vrai conflit.
+# Toute la logique vit dans .github/hermes/gate.py et conflict_agent.py
+# (stdlib Python seule, jamais de YAML géant).
+#
+# Un seul pilote de merge : Mergify. Le gate reste en dry-run
+# (variable de dépôt HERMES_LITE_DRY_RUN=1) : il détecte, escalade, rend la main.
 on:
   pull_request:
     types: [opened, reopened, ready_for_review, synchronize]
   check_run:
     types: [completed]
+  # Secours du réveil externe : si la machine qui déclenche le balayage est
+  # éteinte, GitHub relance le gate toutes les 10 minutes. Sur runner
+  # self-hosted d'un dépôt public, cela ne coûte rien.
+  schedule:
+    - cron: '*/10 * * * *'
   workflow_dispatch:
     inputs:
       pr_number:
@@ -18,21 +30,54 @@ permissions:
   checks: write
 
 concurrency:
-  group: hermes-lite-${{ github.event.pull_request.number || github.ref }}
-  cancel-in-progress: false
+  # Un groupe PAR PR et PAR type d'événement : avec un groupe par dépôt, deux PR
+  # (ou une PR + les refs `mergify/merge-queue/*`) s'annulaient mutuellement, et
+  # un check annulé est compté rouge par Mergify (file déquée à chaque passage).
+  # Le passage `pull_request` fait autorité et n'est jamais annulé.
+  group: hermes-lite-${{ github.event_name }}-${{ github.event.pull_request.number || github.event.check_run.pull_requests[0].number || github.event.inputs.pr_number || github.ref }}
+  cancel-in-progress: ${{ github.event_name != 'pull_request' }}
 
 env:
   GH_TOKEN: ${{ secrets.HERMES_LITE_TOKEN || github.token }}
-  HERMES_REQUIRED_CHECKS: 'ci-budget,kiro,typecheck,lint,test,build,stale-base-guard'
+  # [HERMES-AGENT] Conflit -> chat ZeroClaw (daemon sur la machine du runner,
+  # même utilisateur). Le job ne fait que lancer : il reste sous les 5 min de
+  # `ci-budget`, c'est l'agent qui travaille ensuite hors du job.
+  HERMES_AGENT_RESOLVE: ${{ vars.HERMES_AGENT_RESOLVE || '1' }}
+  HERMES_ZC_URL: ${{ vars.HERMES_ZC_URL || 'http://127.0.0.1:42617' }}
+  HERMES_ZC_AGENT: ${{ vars.HERMES_ZC_AGENT || 'hermes' }}
+  HERMES_ZC_TOKEN_FILE: ${{ vars.HERMES_ZC_TOKEN_FILE || '~/.config/zeroclaw-serveur/token' }}
+  HERMES_AGENT_TIMEOUT: ${{ vars.HERMES_AGENT_TIMEOUT || '1500' }}
+  # Checks requis avant merge (noms de JOBS, pas « Workflow / job »).
+  HERMES_REQUIRED_CHECKS: 'ci-budget,kiro,typecheck,lint,test,build'
+  # Rebase serveur du gate : DÉSACTIVÉ. `update-branch` pousse en tant que bot :
+  # GitHub exige alors une approbation humaine sur chaque workflow déclenché, la
+  # PR perd ses checks et n'est plus embarquable. Mettre la branche à jour est le
+  # métier de Mergify (`update_method: merge`) : son push déclenche la CI
+  # normalement. Le gate détecte, escalade, rend la main.
+  HERMES_LITE_REFRESH: '0'
+  MERGE_METHOD: squash
 
 jobs:
   gate:
-    name: gate
+    name: Verdict
     runs-on: [self-hosted, placard-worker]
     timeout-minutes: 5
+    # Le gate écoute `check_run: completed` ET publie lui-même un check : sans ce
+    # garde il se relance sans fin (mesuré sur un autre dépôt : 9 runs du gate
+    # pour un seul push). On ne garde que les checks rattachés à une PR, et on
+    # exclut ceux publiés par le gate lui-même.
+    if: >-
+      github.event_name != 'check_run'
+      || (github.event.check_run.pull_requests[0].number != null
+          && github.event.check_run.name != 'Verdict'
+          && github.event.check_run.name != 'hermes-lite/verdict')
     steps:
       - uses: actions/checkout@v4
         with:
           fetch-depth: 1
-      - name: Évaluation gate et dispatch Hermes sur conflit
-        run: python3 .github/hermes/gate.py
+          persist-credentials: false
+      - name: Gate (fraîcheur, conflit, saisine InferHub)
+        run: |
+          export INPUT_PR_NUMBER="${{ github.event.inputs.pr_number }}"
+          export HERMES_LITE_DRY_RUN="${{ vars.HERMES_LITE_DRY_RUN || '0' }}"
+          python3 .github/hermes/gate.py
