@@ -23,10 +23,17 @@ export interface PlantLine extends PlantBlock {
   id: string;
 }
 
+/**
+ * Une valeur sur une ligne, dans le dialecte du fichier hôte.
+ *
+ * Les guillemets ne sont pas décoratifs : la règle « mot de passe en affectation »
+ * de `@placard/detectors` n'accepte une valeur que **entre guillemets**. Une
+ * valeur plantée sans eux ne serait jamais détectée, et l'oracle mentirait.
+ */
 function singleLine(value: string, key: string, dialect: Dialect): string {
   if (dialect === 'env') return `${key}=${value}`;
-  if (dialect === 'yaml') return `${key}: ${value}`;
-  if (dialect === 'md') return `- ${key}: ${value}`;
+  if (dialect === 'yaml') return `${key}: '${value}'`;
+  if (dialect === 'md') return `- ${key}: '${value}'`;
   return `const ${key} = '${value}';`;
 }
 

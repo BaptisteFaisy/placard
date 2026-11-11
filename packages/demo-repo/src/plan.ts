@@ -1,6 +1,7 @@
 import { fakeValue, prng, type FindingFamily, type Rand } from '@placard/core';
 
 import { planNoise, type NoiseOp } from './noise.js';
+import { expectedRuleFor } from './rules.js';
 import { templateFor } from './templates.js';
 
 /**
@@ -157,79 +158,93 @@ function removeFor(arc: Arc, intro: number, total: number): number | undefined {
   return target > intro ? target : undefined;
 }
 
+/**
+ * Nom de la clé hôte de la valeur plantée.
+ *
+ * Deux contraintes : le nom ne doit contenir **aucun mot-clé** d'une autre
+ * famille (sinon une règle voisine revendique la valeur), et il doit porter le
+ * contexte attendu par la règle de la famille — `key` pour la chaîne
+ * suspecte, `password` pour le mot de passe.
+ */
 function keyFor(family: FindingFamily, value: string): string {
   switch (family) {
     case 'cloud-key':
       return 'AWS_ACCESS_KEY_ID';
     case 'platform-token':
-      return 'DEPLOY_API_TOKEN';
+      return 'DEPLOY_CREDENTIAL';
     case 'private-key':
-      return 'DEPLOY_SIGNING_KEY';
+      return 'DEPLOY_SIGNING_MATERIAL';
     case 'signed-token':
       return 'SESSION_JWT';
     case 'plaintext-password':
       return 'DB_PASSWORD';
     case 'bank-data':
-      return value.startsWith('FR') ? 'SETTLEMENT_ACCOUNT' : 'CARD_NUMBER';
+      return value.startsWith('FR') ? 'SETTLEMENT_ACCOUNT' : 'CARD_REFERENCE';
     case 'identity':
       return value.includes('@') ? 'OWNER_EMAIL' : 'OWNER_SSN';
     case 'risky-file':
       return 'LOCAL_OVERRIDES';
     case 'suspicious-string':
-      return 'LEGACY_SIGNATURE';
+      return 'LEGACY_API_KEY';
     default:
-      return 'LEGACY_SIGNATURE';
+      return 'LEGACY_API_KEY';
   }
 }
 
 /**
- * Règle censée détecter la valeur. Les identifiants restent génériques par
- * famille tant que `@placard/detectors` n'a pas figé son catalogue de règles.
+ * Fichiers hôtes possibles d'une famille.
+ *
+ * Deux familles ont une contrainte de forme :
+ *  - la **clé privée** n'est écrite que dans un `.ts` ou un `.env`, seuls
+ *    dialectes où la valeur reste contiguë dans le fichier ;
+ *  - la **chaîne suspecte** n'est écrite que dans un dialecte où elle est
+ *    *isolée* sur sa ligne. Dans un `.env`, la règle qui la détecte capture
+ *    `CLE=valeur` d'un seul tenant : la valeur rapportée par le moteur ne
+ *    serait alors plus celle que l'oracle annonce.
  */
-function expectedRuleFor(family: FindingFamily, value: string): string {
-  switch (family) {
-    case 'cloud-key':
-      return 'cloud-access-key';
-    case 'platform-token':
-      return 'platform-token';
-    case 'private-key':
-      return 'private-key-block';
-    case 'signed-token':
-      return 'jwt-token';
-    case 'plaintext-password':
-      return 'plaintext-password';
-    case 'bank-data':
-      return value.startsWith('FR') ? 'iban-account' : 'card-number';
-    case 'identity':
-      return value.includes('@') ? 'email-address' : 'french-ssn';
-    case 'risky-file':
-      return 'risky-env-file';
-    case 'suspicious-string':
-      return 'high-entropy-string';
-    default:
-      return 'high-entropy-string';
-  }
-}
-
 function pathPool(family: FindingFamily, testPath: boolean): string[] {
   const pool = testPath ? TEST_PATHS : PROD_PATHS;
-  if (family !== 'private-key') return [...pool];
-  // Une clé privée multi-lignes n'est écrite que dans un fichier `.ts` ou `.env`,
-  // seuls dialectes où la valeur reste contiguë dans le fichier.
-  const safe = pool.filter((path) => {
-    const dialect = templateFor(path)?.dialect;
-    return dialect === 'ts' || dialect === 'env';
-  });
-  return safe.length > 0 ? safe : [...pool];
+  if (family === 'private-key') {
+    const safe = pool.filter((path) => {
+      const dialect = templateFor(path)?.dialect;
+      return dialect === 'ts' || dialect === 'env';
+    });
+    return safe.length > 0 ? safe : [...pool];
+  }
+  if (family === 'suspicious-string') {
+    const safe = pool.filter((path) => templateFor(path)?.dialect !== 'env');
+    return safe.length > 0 ? safe : [...pool];
+  }
+  return [...pool];
 }
 
-function pickPaths(pool: readonly string[], count: number, rand: Rand): string[] {
+/**
+ * Choisit `count` chemins **de même dialecte**.
+ *
+ * Le dialecte conditionne la règle attendue (un mot de passe dans un `.env`
+ * relève de la règle « environnement », le même mot de passe dans une constante
+ * relève de la règle « affectation ») : une valeur plantée à plusieurs
+ * emplacements doit donc porter la même règle partout.
+ */
+function pickPaths(
+  pool: readonly string[],
+  count: number,
+  rand: Rand,
+  uniformDialect: boolean,
+): string[] {
   const available = [...pool];
   const chosen: string[] = [];
   while (chosen.length < count && available.length > 0) {
     const index = Math.min(available.length - 1, Math.floor(rand() * available.length));
     const [taken] = available.splice(index, 1);
-    if (taken !== undefined) chosen.push(taken);
+    if (taken === undefined) continue;
+    if (!uniformDialect) {
+      chosen.push(taken);
+      continue;
+    }
+    const dialect = templateFor(taken)?.dialect ?? 'ts';
+    const already = chosen.map((path) => templateFor(path)?.dialect ?? 'ts');
+    if (already.every((value) => value === dialect)) chosen.push(taken);
   }
   return chosen;
 }
@@ -252,7 +267,10 @@ function pathsFor(
   rand: Rand,
 ): string[] {
   if (family === 'risky-file') return riskyPaths(value, testPath, locations);
-  const chosen = pickPaths(pathPool(family, testPath), locations, rand);
+  // Le mot de passe change de règle selon le dialecte du fichier hôte : tous
+  // ses emplacements doivent donc partager le même dialecte.
+  const uniform = family === 'plaintext-password';
+  const chosen = pickPaths(pathPool(family, testPath), locations, rand, uniform);
   const fallback = testPath ? TEST_PATHS[0] : PROD_PATHS[0];
   return chosen.length > 0 ? chosen : [fallback ?? 'src/config.ts'];
 }
@@ -270,10 +288,11 @@ function planSecrets(seed: string, total: number, count: number, rand: Rand): Pl
     const introIndex = introFor(index, count, total, rand);
     const removeIndex = removeFor(arc, introIndex, total);
     const paths = pathsFor(family, value, testPath, locationsFor(index, rand), rand);
+    const dialect = templateFor(paths[0] ?? '')?.dialect ?? 'ts';
     secrets.push({
       id: `${family}-${arc}-${index}`,
       family,
-      expectedRule: expectedRuleFor(family, value),
+      expectedRule: expectedRuleFor(family, value, dialect),
       value,
       key: keyFor(family, value),
       paths,

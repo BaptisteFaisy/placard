@@ -211,3 +211,13 @@ export function templateFor(path: string): FileTemplate | undefined {
 export function templatePaths(): string[] {
   return Object.keys(TEMPLATES).sort();
 }
+
+/**
+ * Dialecte d'un chemin, ou `undefined` si le chemin n'est pas un modèle.
+ *
+ * Le dialecte décide de la forme d'écriture d'une valeur — et donc de la règle
+ * que le moteur de détection lui appliquera.
+ */
+export function dialectOf(path: string): Dialect | undefined {
+  return templateFor(path)?.dialect;
+}
