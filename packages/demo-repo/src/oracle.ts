@@ -35,7 +35,11 @@ function toPlanted(
     id: secret.id,
     family: secret.family,
     expectedRule: secret.expectedRule,
-    value: secret.value,
+    // Pour un fichier à risque, la « valeur » que le moteur empreinte est le
+    // **chemin entier** (deux fichiers distincts ne doivent jamais partager une
+    // empreinte) : l'oracle doit porter la même valeur, sinon la comparaison
+    // d'empreintes échoue alors que la trouvaille est bien là.
+    value: secret.family === 'risky-file' ? path : secret.value,
     path,
     line: lines.get(secret.id) ?? 1,
     introducedCommit,
