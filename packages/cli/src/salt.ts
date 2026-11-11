@@ -5,10 +5,12 @@ import { execFileSync } from 'node:child_process';
  * Sel propre au dépôt (cahier C.6 : « un HMAC-SHA-256 de la valeur avec un sel
  * propre au dépôt »).
  *
- * Le sel est dérivé du **premier commit** du dépôt et de son nom : il est donc
- * stable dans le temps (les empreintes d'un même secret ne changent pas d'un
- * scan à l'autre, ce qui rend le fichier d'exclusions utilisable) et différent
- * d'un dépôt à l'autre (une empreinte ne peut pas être croisée entre dépôts).
+ * Le sel est dérivé du **premier commit** du dépôt : il est donc
+ * - **stable dans le temps** : les empreintes d'un même secret ne changent pas
+ *   d'un scan à l'autre, ce qui rend le fichier d'exclusions utilisable ;
+ * - **indépendant du chemin** : cloner le dépôt sous un autre nom ne change
+ *   aucune empreinte ;
+ * - **propre au dépôt** : une empreinte ne peut pas être croisée entre dépôts.
  *
  * Le sel n'est jamais écrit : il ne sert qu'à calculer les empreintes.
  */
@@ -28,8 +30,13 @@ export function rootCommit(repoDir: string): string | undefined {
   }
 }
 
-/** Calcule le sel du dépôt à partir de son nom et de son premier commit. */
+/**
+ * Calcule le sel du dépôt. Repli : sans historique (dépôt vide, ou analyse des
+ * seules modifications indexées), le sel retombe sur le nom du dépôt pour rester
+ * déterministe.
+ */
 export function repoSalt(repoName: string, repoDir: string): string {
-  const root = rootCommit(repoDir) ?? 'no-root-commit';
-  return createHash('sha256').update(`${repoName}\u0000${root}`).digest('hex').slice(0, 32);
+  const root = rootCommit(repoDir);
+  const seed = root ?? `name:${repoName}`;
+  return createHash('sha256').update(`placard-salt\u0000${seed}`).digest('hex').slice(0, 32);
 }
