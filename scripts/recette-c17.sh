@@ -19,8 +19,8 @@ pnpm lint
 pnpm vitest run packages/integration
 echo "  -> OK"
 
-echo "[3/4] Auto-scan du dépôt Placard lui-même..."
-pnpm exec tsx --tsconfig tsconfig.node.json packages/cli/src/main.ts scan . --json
+echo "[3/4] Auto-scan du dépôt Placard lui-même (--fail-on-open : 0 trouvaille ouverte exigée)..."
+pnpm exec tsx --tsconfig tsconfig.node.json packages/cli/src/main.ts scan . --fail-on-open
 echo "  -> OK"
 
 echo "[4/4] Construction du site statique de démonstration..."

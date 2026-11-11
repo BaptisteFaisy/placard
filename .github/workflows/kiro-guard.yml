@@ -1,5 +1,9 @@
 name: kiro-guard
 
+# Contrôle de conformité Kiroween 2026 :
+# 1. Dossier /.kiro suivi à la racine et absent du .gitignore
+# 2. Licence MIT, journal Kiro présent
+# 3. Auto-scan du dépôt par son propre moteur : 0 trouvaille ouverte
 on:
   pull_request:
   push:
@@ -21,6 +25,10 @@ jobs:
     steps:
       - uses: actions/checkout@v4
         with:
-          fetch-depth: 1
+          fetch-depth: 0
+          clean: false
       - name: Contrôle de conformité Kiroween
         run: python3 .github/kiro/check_kiro.py
+      - uses: ./.github/actions/setup
+      - name: Auto-scan du dépôt (--fail-on-open)
+        run: pnpm exec tsx --tsconfig tsconfig.node.json packages/cli/src/main.ts scan . --fail-on-open

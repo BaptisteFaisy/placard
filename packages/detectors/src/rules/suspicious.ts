@@ -45,18 +45,25 @@ const CANDIDATE_PATTERN = /(?<![\w-])([A-Za-z0-9+/=_-]{24,160})(?![\w-])/;
 /** Identifiant stable de la règle. */
 export const RULE_SUSPICIOUS_STRING = 'suspicious-high-entropy';
 
+/** La ligne autour du candidat est-elle une URL http(s) dont le candidat est le chemin ? */
+function isInsideUrl(line: string, value: string): boolean {
+  const index = line.indexOf(value);
+  if (index < 0) return false;
+  const before = line.slice(Math.max(0, index - 120), index);
+  return /https?:\/\/[^\s'"`]*$/.test(before);
+}
+
 /**
  * Une chaîne est-elle « suspecte » ? Entropie au-dessus du seuil, longueur et
- * variété suffisantes, ni gabarit ni valeur factice connue.
- *
- * Compromis assumé : on exige au moins un chiffre, ou une chaîne très variée
- * (`length >= 32` et `>= 22` caractères distincts). Sans cela, tout identifiant
- * `camelCase` long cité dans un commentaire contenant « key » serait signalé.
+ * variété suffisantes, ni gabarit ni valeur factice connue, ni chemin d'URL, ni
+ * condensat d'intégrité (`sha512-…` d'un fichier de verrouillage).
  */
-export function isSuspiciousString(value: string, threshold: number): boolean {
+export function isSuspiciousString(value: string, threshold: number, line = ''): boolean {
   const trimmed = value.trim();
   if (trimmed.length < MIN_LENGTH || trimmed.length > MAX_LENGTH) return false;
+  if (/^sha(?:256|384|512)-/i.test(trimmed)) return false;
   if (isPlaceholder(trimmed) || isDummyValue(trimmed)) return false;
+  if (line !== '' && isInsideUrl(line, trimmed)) return false;
   const distinct = new Set(trimmed).size;
   if (distinct < MIN_DISTINCT) return false;
   const looksRandom = /[0-9]/.test(trimmed) || (trimmed.length >= 32 && distinct >= 22);
@@ -75,7 +82,7 @@ export function createSuspiciousRules(
       name: 'Long high-entropy string next to a secret keyword',
       keywords: [...CONTEXT_KEYWORDS],
       pattern: CANDIDATE_PATTERN,
-      validate: (value) => isSuspiciousString(value, threshold),
+      validate: (value, input) => isSuspiciousString(value, threshold, input.line),
       scoreAdjust: -5,
       priority: 10,
     },

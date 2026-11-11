@@ -9,8 +9,7 @@ import type { DetectorRule } from '@placard/core';
  * numéro de suivi) ; le signaler détruirait la confiance dans le rapport.
  */
 
-/** Longueurs admises d'un numéro de carte (ISO/IEC 7812). */
-const CARD_MIN_DIGITS = 12;
+/** Longueurs admises d'un numéro de carte (ISO/IEC 7812, 13..19 avec BIN). */
 const CARD_MAX_DIGITS = 19;
 
 /** Un NIR français fait 15 chiffres : un nombre de 15 chiffres commençant par 1 ou 2 en est un. */
@@ -39,11 +38,15 @@ function looksLikeFrenchSsn(digits: string): boolean {
   return digits.length === NIR_LENGTH && /^[12]/.test(digits);
 }
 
-/** Un numéro de carte plausible : longueur ISO, Luhn valide, chiffres variés. */
+/** Préfixes d'émetteurs de cartes reconnus (Visa 4, Mastercard 5/2, Amex 3, Discover 6). */
+const CARD_ISSUER_PREFIX = /^[23456]/;
+
+/** Un numéro de carte plausible : longueur 13..19, BIN plausible, Luhn valide. */
 export function isCardNumber(value: string): boolean {
   const digits = digitsOf(value);
-  if (digits.length < CARD_MIN_DIGITS || digits.length > CARD_MAX_DIGITS) return false;
+  if (digits.length < 13 || digits.length > CARD_MAX_DIGITS) return false;
   if (!/^\d+$/.test(digits)) return false;
+  if (!CARD_ISSUER_PREFIX.test(digits)) return false;
   if (looksLikeFrenchSsn(digits)) return false;
   if (new Set(digits).size < 4) return false;
   return luhnValid(digits);
