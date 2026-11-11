@@ -1,6 +1,8 @@
 import { nirValid } from '@placard/core';
 import type { DetectorRule } from '@placard/core';
 
+import { isInsideUrl } from '../validators.js';
+
 /**
  * Famille `identity` : données personnelles françaises et adresses e-mail.
  *
@@ -141,7 +143,9 @@ export const identityRules: readonly DetectorRule[] = [
     name: 'Email address',
     keywords: [],
     pattern: new RegExp(EMAIL_PATTERN.source),
-    validate: (value) => isPersonalEmail(value),
+    // Une adresse prise dans l'autorité d'une URL (`https://user:pass@hôte`)
+    // n'est pas une donnée personnelle : c'est un identifiant de connexion.
+    validate: (value, input) => isPersonalEmail(value) && !isInsideUrl(input.line, value),
     priority: 60,
     provider: 'generic',
   },
