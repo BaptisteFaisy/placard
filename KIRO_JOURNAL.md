@@ -3,9 +3,11 @@
 > Hackathon Kiroween 2026 — Category: Costume Contest
 > Journal tenu au fil de l'eau répondant point par point aux huit questions du formulaire de soumission Devpost.
 >
-> **État mesuré au 11 novembre 2026** : 10 paquets TypeScript, **536 tests verts**
-> (62 fichiers de test), 8 jobs CI sous 5 minutes, 8 runners self-hosted dédiés,
-> file Mergify opérationnelle, gate Hermes de résolution de conflits branché.
+> **État mesuré au 11 novembre 2026** : 11 paquets TypeScript, **543 tests verts**
+> (63 fichiers de test), 11 jobs CI tous bornés à 5 minutes, 4 runners self-hosted
+> dédiés sur le R630, file Mergify opérationnelle (12 PR fusionnées par la file),
+> gate Hermes saisissant l'agent ZeroClaw `hermes` (InferHub) sur conflit réel —
+> résolution automatique prouvée sur la PR #21.
 
 ---
 

@@ -32,3 +32,11 @@ ignore:
       purpose."
     author: b (ZeroClaw agent)
     date: 2026-11-11T15:39:09.050Z
+  - fingerprint: hmac256:4a76e6ec5db5f3834d576a1b50862747
+    rule: identity-email
+    reason: "Not an address: the userinfo part of an authentication URL quoted in
+      KIRO_JOURNAL.md while documenting this very false-positive class. No such
+      account exists; the example has since been rewritten without an
+      address-shaped string."
+    author: b (ZeroClaw agent)
+    date: 2026-11-11T16:16:45.925Z
