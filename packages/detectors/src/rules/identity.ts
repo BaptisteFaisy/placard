@@ -6,7 +6,8 @@ import type { DetectorRule } from '@placard/core';
  *
  * Exigence PLA-F-03 : pour le NIR, seule une **clé valide** est signalée. Pour
  * les adresses, les domaines d'exemple (`example.com`, `.test`, `.invalid`,
- * `.local`) sont écartés : ils trahissent une documentation, pas une fuite.
+ * `.local`) et les préfixes d'hôtes SSH (`git@github.com`) sont écartés : ils
+ * trahissent une documentation ou une URL Git, pas une fuite.
  */
 
 /**
@@ -57,7 +58,53 @@ export function isExampleDomain(email: string): boolean {
 
 /** Une adresse est-elle retenue comme donnée personnelle ? */
 export function isPersonalEmail(value: string): boolean {
-  return !isExampleDomain(value);
+  if (isExampleDomain(value)) return false;
+  if (/^(git|hg|svn)@/i.test(value)) return false;
+  return hasAlphaTld(value);
+}
+
+/**
+ * Le domaine finit-il par un TLD **alphabétique** (`.com`, `.fr`) ?
+ *
+ * Sans ce garde, un spécificateur de paquet npm (`react-dom@19.3.1`) est lu
+ * comme une adresse : `19.3.1` satisfait le motif générique. Un TLD réel ne
+ * contient que des lettres (≥ 2).
+ */
+export function hasAlphaTld(email: string): boolean {
+  const at = email.lastIndexOf('@');
+  if (at < 0) return false;
+  const domain = email.slice(at + 1);
+  const lastDot = domain.lastIndexOf('.');
+  if (lastDot < 0) return false;
+  const tld = domain.slice(lastDot + 1);
+  return tld.length >= 2 && /^[A-Za-z]+$/.test(tld);
+}
+
+/** Une suite séquentielle montante/descendante (ex. `0123456789`) n'est pas un numéro. */
+function isSequentialDigits(digits: string): boolean {
+  if (digits.length < 4) return false;
+  let asc = true;
+  let desc = true;
+  for (let i = 1; i < digits.length; i += 1) {
+    const prev = digits.charCodeAt(i - 1);
+    const curr = digits.charCodeAt(i);
+    if (curr !== prev + 1) asc = false;
+    if (curr !== prev - 1) desc = false;
+  }
+  return asc || desc;
+}
+
+/** Un numéro de téléphone français plausible (forme, variété, pas séquentiel). */
+export function isFrenchPhone(value: string): boolean {
+  const digits = value.replace(/[^\d+]/g, '');
+  const national = digits.startsWith('+33')
+    ? `0${digits.slice(3)}`
+    : digits.startsWith('0033')
+      ? `0${digits.slice(4)}`
+      : digits;
+  if (!/^0[1-9]\d{8}$/.test(national)) return false;
+  if (isSequentialDigits(national)) return false;
+  return new Set(national).size >= 4;
 }
 
 /** Compte les adresses d'une ligne, sans dépasser `cap` (borne de coût). */
@@ -70,18 +117,6 @@ export function countEmails(line: string, cap = 1000): number {
     if (count >= cap) break;
   }
   return count;
-}
-
-/** Un numéro de téléphone français plausible (forme et variété des chiffres). */
-export function isFrenchPhone(value: string): boolean {
-  const digits = value.replace(/[^\d+]/g, '');
-  const national = digits.startsWith('+33')
-    ? `0${digits.slice(3)}`
-    : digits.startsWith('0033')
-      ? `0${digits.slice(4)}`
-      : digits;
-  if (!/^0[1-9]\d{8}$/.test(national)) return false;
-  return new Set(national).size >= 4;
 }
 
 /** NIR valide, avec une clé correcte (modulo 97). */

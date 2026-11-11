@@ -24,6 +24,7 @@ const PLACEHOLDER_PATTERNS: readonly RegExp[] = [
   /<%/,
   /\.\.\./,
   /^<[^<>]*>$/,
+  /^\[REDACTED:[a-z-]+\](?:\(\d+\))?$/i,
   /\bchangeme\b/i,
 ];
 
@@ -46,7 +47,8 @@ export function distinctChars(value: string): number {
 
 /**
  * Une valeur est-elle un secret plausible ? Longueur, entropie, ni factice
- * (`isDummyValue` de `@placard/core`), ni gabarit.
+ * (`isDummyValue` de `@placard/core`), ni gabarit, ni mot anglais composé en
+ * kebab-case (`key-bearer`) sans chiffre ni majuscule.
  */
 export function isPlausibleSecret(
   value: string,
@@ -56,6 +58,7 @@ export function isPlausibleSecret(
   const trimmed = value.trim();
   if (trimmed.length < minLength) return false;
   if (isPlaceholder(trimmed) || isDummyValue(trimmed)) return false;
+  if (/^[a-z]+(?:-[a-z]+)+$/.test(trimmed) && trimmed.length < 18) return false;
   return shannonEntropy(trimmed) >= minEntropy;
 }
 

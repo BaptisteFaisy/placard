@@ -10,3 +10,17 @@ ignore:
       readable in history, which is exactly what Placard reports.
     author: b (ZeroClaw agent)
     date: 2026-11-11T10:38:22.519Z
+  - fingerprint: hmac256:121c38c92cef4f2f8ef9fe9ec3573af4
+    rule: identity-email
+    reason: Synthetic identity fixture used by the ritual unit test (no real
+      person). Kept on purpose to exercise the "personal data" path of the
+      ritual.
+    author: b (ZeroClaw agent)
+    date: 2026-11-11T10:51:30.201Z
+  - fingerprint: hmac256:dfaded35f1d38ccd9ed4e3567b47246e
+    rule: private-key-block
+    reason: PEM header and footer literals of a unit test, without any key material.
+      Removed from HEAD; the finding lives only in the history, which is exactly
+      what this tool reports.
+    author: b (ZeroClaw agent)
+    date: 2026-11-11T10:51:30.201Z
