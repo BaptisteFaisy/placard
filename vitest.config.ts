@@ -38,7 +38,9 @@ export default defineConfig({
     testTimeout: 180_000,
     hookTimeout: 180_000,
     pool: 'forks',
-    poolOptions: { forks: { singleFork: false } },
+    // Le runner R630 est partagé avec d'autres dépôts : on borne le nombre de
+    // processus de test pour éviter les timeouts du worker sous forte charge.
+    poolOptions: { forks: { maxForks: 4, minForks: 1, singleFork: false } },
     reporters: ['default'],
   },
 });
