@@ -26,3 +26,16 @@ describe('@placard/web demo application', () => {
     cleanup();
   });
 });
+
+describe('le rapport de démonstration embarqué produit un vrai manoir', () => {
+  it('affiche plusieurs étages et plusieurs portes, pas une page vide', () => {
+    const { container } = render(<App />);
+    const floors = container.querySelectorAll('[data-year]');
+    expect(floors.length).toBeGreaterThanOrEqual(3);
+    const scene = container.querySelector('[data-doors]');
+    expect(scene).toBeTruthy();
+    expect(Number(scene?.getAttribute('data-doors'))).toBeGreaterThanOrEqual(5);
+    expect(scene?.getAttribute('aria-label')).toMatch(/Haunted manor: \d+ floors/);
+    cleanup();
+  });
+});
