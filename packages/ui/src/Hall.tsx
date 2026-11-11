@@ -1,6 +1,6 @@
 import React from 'react';
-import { familyLabel, skeletonLabel } from '@placard/core';
-import type { HallSummary } from '@placard/core';
+import { FAMILIES, familyLabel, skeletonLabel } from '@placard/core';
+import type { HallSummary, SkeletonKind } from '@placard/core';
 
 import { SeverityMark } from './a11y/SeverityMark.js';
 
@@ -27,7 +27,7 @@ function Count({ label, value }: { label: string; value: number }): React.ReactE
 
 /** Le hall complet : total, debout, gravités, familles, scellées, écartées. */
 export function Hall({ hall, repoName }: HallProps): React.ReactElement {
-  const families = Object.entries(hall.byFamily).filter(([, count]) => count > 0);
+  const families = FAMILIES.filter((family) => hall.byFamily[family] > 0);
   return (
     <section className="placard-hall" aria-label="Entrance hall summary">
       <h2 className="placard-hall__title">The entrance hall of {repoName}</h2>
@@ -54,10 +54,10 @@ export function Hall({ hall, repoName }: HallProps): React.ReactElement {
         </ul>
         <h3>By family</h3>
         <ul className="placard-hall__list">
-          {families.map(([family, count]) => (
+          {families.map((family) => (
             <li key={family}>
-              <span>{familyLabel(family as keyof HallSummary['byFamily'])}</span>
-              <span className="placard-hall__value">{count}</span>
+              <span>{familyLabel(family)}</span>
+              <span className="placard-hall__value">{hall.byFamily[family]}</span>
             </li>
           ))}
         </ul>
@@ -68,7 +68,6 @@ export function Hall({ hall, repoName }: HallProps): React.ReactElement {
 
 /** Rappel du vocabulaire du costume, pour la légende du hall. */
 export function skeletonVocabulary(): string[] {
-  return ['key-bearer', 'paper-bearer', 'chest', 'loose-bones'].map((kind) =>
-    skeletonLabel(kind as Parameters<typeof skeletonLabel>[0]),
-  );
+  const kinds: SkeletonKind[] = ['key-bearer', 'paper-bearer', 'chest', 'loose-bones'];
+  return kinds.map((kind) => skeletonLabel(kind));
 }
