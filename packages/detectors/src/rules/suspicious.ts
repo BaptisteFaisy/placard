@@ -1,7 +1,7 @@
 import { isDummyValue, shannonEntropy } from '@placard/core';
 import type { DetectorRule } from '@placard/core';
 
-import { isPlaceholder } from '../validators.js';
+import { isInsideUrl, isPlaceholder } from '../validators.js';
 
 /**
  * Famille `suspicious-string` : longue chaîne à forte entropie près d'un
@@ -44,14 +44,6 @@ const CANDIDATE_PATTERN = /(?<![\w-])([A-Za-z0-9+/=_-]{24,160})(?![\w-])/;
 
 /** Identifiant stable de la règle. */
 export const RULE_SUSPICIOUS_STRING = 'suspicious-high-entropy';
-
-/** La ligne autour du candidat est-elle une URL http(s) dont le candidat est le chemin ? */
-function isInsideUrl(line: string, value: string): boolean {
-  const index = line.indexOf(value);
-  if (index < 0) return false;
-  const before = line.slice(Math.max(0, index - 120), index);
-  return /https?:\/\/[^\s'"`]*$/.test(before);
-}
 
 /**
  * Une chaîne est-elle « suspecte » ? Entropie au-dessus du seuil, longueur et
