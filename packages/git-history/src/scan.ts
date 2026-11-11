@@ -116,6 +116,12 @@ export class HistoryScan implements DiffParserSink {
     this.pathDecided = true;
     this.skipCurrent = this.options.ignore(path);
     this.mode = this.skipCurrent ? 'ignored' : 'pending';
+    if (!this.skipCurrent) {
+      // Émis pour CHAQUE fichier du commit, y compris sans ligne de diff :
+      // c'est ce qui permet aux règles « par nom de fichier » de voir un
+      // `.env` vide (PLA-F-04).
+      this.options.emit({ kind: 'file', file: { commit: this.commit, path } });
+    }
   }
 
   async binary(path: string, sha?: string): Promise<void> {

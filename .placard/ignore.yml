@@ -24,3 +24,11 @@ ignore:
       what this tool reports.
     author: b (ZeroClaw agent)
     date: 2026-11-11T10:51:30.201Z
+  - fingerprint: hmac256:1d6f53de9f482d774e15b15b2cb3e528
+    rule: risky-file-tool-credentials
+    reason: "Reviewed: this .npmrc carries pnpm workspace settings only
+      (node-linker, strict-peer-dependencies, auto-install-peers). No
+      _authToken, _auth or _password key. Kept under version control on
+      purpose."
+    author: b (ZeroClaw agent)
+    date: 2026-11-11T15:39:09.050Z

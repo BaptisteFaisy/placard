@@ -2,6 +2,7 @@ import { generate } from '../../demo-repo/src/index.js';
 import { cli } from '../../cli/src/index.js';
 import { copyFile, mkdir } from 'node:fs/promises';
 import { resolve } from 'node:path';
+import { fileURLToPath } from 'node:url';
 
 async function main() {
   const tmpDemo = resolve('/tmp/placard-web-demo-build');
@@ -12,7 +13,10 @@ async function main() {
   const res = await cli.scan({ repoDir: tmpDemo });
   if (!res.reportPath) throw new Error('No report generated');
 
-  const pubDir = resolve('packages/web/public');
+  // Chemin résolu depuis CE fichier : le script doit pouvoir être lancé depuis
+  // n'importe quel dossier de travail (pnpm --filter change le cwd).
+  const packageRoot = fileURLToPath(new URL('..', import.meta.url));
+  const pubDir = resolve(packageRoot, 'public');
   await mkdir(pubDir, { recursive: true });
   const dest = resolve(pubDir, 'demo-report.json');
   await copyFile(res.reportPath, dest);

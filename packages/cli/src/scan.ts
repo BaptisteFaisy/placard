@@ -1,114 +1,35 @@
 import { resolve } from 'node:path';
 import { writeFile, mkdir } from 'node:fs/promises';
+
 import {
   type CliResult,
-  type ScanOptions,
   type RepoSnapshot,
-  type RawDetection,
-  type SkippedFiles,
+  type ScanOptions,
   stringifyReport,
 } from '@placard/core';
-import { readHistory } from '@placard/git-history';
-import { createDetectorEngine } from '@placard/detectors';
 import { analyze } from '@placard/analysis';
+
+import { collectHistory, type CollectOutcome } from './collect.js';
+import { buildHeadPresence } from './head-presence.js';
 import { renderSummary } from './output.js';
 import { repoSalt } from './salt.js';
-import { buildHeadPresence, type PresenceInput } from './head-presence.js';
 
-/** Une détection ancrée, telle que l'exige le moteur d'analyse. */
-interface AnchoredDetection {
-  detection: RawDetection;
-  commit: {
-    commit: string;
-    shortCommit: string;
-    date: string;
-    year: number;
-    author: string;
-    subject: string;
-    index: number;
-  };
-  path: string;
-  lineNumber: number;
-  context: string[];
-}
-
-/** Ce que le parcours de l'historique produit, réduit à ce dont on a besoin. */
-interface HistoryOutcome {
-  detections: AnchoredDetection[];
-  skipped: SkippedFiles;
-  snapshot: RepoSnapshot | null;
-  /** Couples (chemin, valeur) vus pendant le parcours, pour la présence HEAD. */
-  presenceInputs: PresenceInput[];
-}
-
-/** Parcourt l'historique et applique les détecteurs ligne à ligne. */
-async function collect(options: ScanOptions): Promise<HistoryOutcome> {
-  const detector = createDetectorEngine();
-  const detections: AnchoredDetection[] = [];
-  const presenceInputs: PresenceInput[] = [];
-  const skipped: SkippedFiles = { binary: 0, tooLarge: 0 };
-  let snapshot: RepoSnapshot | null = null;
-
-  await readHistory({
-    repoDir: resolve(options.repoDir),
-    stagedOnly: options.staged,
-    onEvent: (ev) => {
-      if (ev.kind === 'repo') snapshot = ev.repo;
-      if (ev.kind === 'skipped') {
-        if (ev.skipped.reason === 'binary') skipped.binary += 1;
-        if (ev.skipped.reason === 'too_large') skipped.tooLarge += 1;
-      }
-      if (ev.kind !== 'line') return;
-      const found = detector.scanLine({
-        line: ev.line.text,
-        path: ev.line.path,
-        commit: ev.line.commit,
-        lineNumber: ev.line.line,
-        side: ev.line.side,
-      });
-      for (const detection of found.detections) {
-        detections.push(anchor(detection, ev.line.commit, ev.line.path, ev.line.line, ev.line.text));
-        presenceInputs.push({ path: ev.line.path, value: detection.value });
-      }
-    },
-  });
-
-  return { detections, skipped, snapshot, presenceInputs };
-}
-
-/** Rattache une détection à son commit et à son emplacement. */
-function anchor(
-  detection: RawDetection,
-  commit: string,
-  path: string,
-  lineNumber: number,
-  text: string,
-): AnchoredDetection {
-  const now = new Date().toISOString();
-  return {
-    detection,
-    commit: {
-      commit,
-      shortCommit: commit.slice(0, 7),
-      date: now,
-      year: new Date(now).getFullYear(),
-      author: 'committer',
-      subject: 'commit',
-      index: 0,
-    },
-    path,
-    lineNumber,
-    context: [text],
-  };
-}
+/**
+ * Commande `scan` (PLA-F-01, PLA-F-08, PLA-F-10, PLA-F-12).
+ *
+ * Chaîne : lecture de l'historique en flux → détecteurs → regroupement, durée de
+ * vie et score → rapport validé par schéma. Le rapport et toute la sortie
+ * console ne contiennent **aucune valeur détectée** : uniquement des aperçus
+ * masqués, des empreintes HMAC et des extraits caviardés (PLA-N-02).
+ */
 
 /** Instantané de repli quand le dépôt n'a pas pu être décrit. */
 function fallbackSnapshot(): RepoSnapshot {
   return {
     name: 'local-repo',
-    head: '0000000000000000000000000000000000000000',
+    head: '0'.repeat(40),
     shortHead: '0000000',
-    totalCommits: 1,
+    totalCommits: 0,
     branches: ['main'],
     tags: [],
     publicRemote: false,
@@ -116,27 +37,33 @@ function fallbackSnapshot(): RepoSnapshot {
   };
 }
 
-/**
- * Commande `scan` (PLA-F-01, PLA-F-10, PLA-F-12, PLA-F-08).
- *
- * Le rapport et la sortie console ne contiennent que des aperçus masqués et des
- * empreintes : aucune valeur détectée ne quitte le moteur.
- */
+/** Écrit le rapport, sans jamais y laisser une valeur détectée. */
+async function writeReport(reportPath: string, report: Parameters<typeof stringifyReport>[0]): Promise<void> {
+  await mkdir(resolve(reportPath, '..'), { recursive: true });
+  await writeFile(reportPath, stringifyReport(report), 'utf-8');
+}
+
+/** Chemin du rapport : option `--report`, sinon `.placard/report.json` du dépôt. */
+export function reportPathOf(options: ScanOptions, repoDir: string): string {
+  return resolve(options.report ?? resolve(repoDir, '.placard/report.json'));
+}
+
+/** Analyse un dépôt et rend le résultat CLI (code de sortie, chemin du rapport). */
 export async function scanCommand(options: ScanOptions): Promise<CliResult> {
   const repoDir = resolve(options.repoDir);
-  let outcome: HistoryOutcome;
+  let outcome: CollectOutcome;
   try {
-    outcome = await collect(options);
+    outcome = await collectHistory(options);
   } catch (_error: unknown) {
     return { exitCode: 3, errorCode: 'not-a-git-repo' };
   }
 
   const snapshot = outcome.snapshot ?? fallbackSnapshot();
-  // Sel propre au dépôt (cahier C.6) : stable dans le temps, différent d'un
-  // dépôt à l'autre. Les empreintes restent donc comparables d'un scan à
-  // l'autre — c'est ce qui rend le fichier d'exclusions utilisable.
+  // Sel propre au dépôt (cahier C.6) : stable dans le temps — les exclusions
+  // restent valables d'un scan à l'autre — et différent d'un dépôt à l'autre.
   const salt = repoSalt(snapshot.name, repoDir);
   const headPresence = await buildHeadPresence(repoDir, outcome.presenceInputs);
+
   const analyzed = await analyze(
     {
       detections: outcome.detections,
@@ -158,15 +85,11 @@ export async function scanCommand(options: ScanOptions): Promise<CliResult> {
     },
   );
 
-  const reportPath = resolve(options.report ?? resolve(repoDir, '.placard/report.json'));
-  await mkdir(resolve(reportPath, '..'), { recursive: true });
-  await writeFile(reportPath, stringifyReport(analyzed.report), 'utf-8');
+  const reportPath = reportPathOf(options, repoDir);
+  await writeReport(reportPath, analyzed.report);
 
-  if (options.format === 'json') {
-    process.stdout.write(stringifyReport(analyzed.report) + '\n');
-  } else {
-    process.stdout.write(renderSummary(analyzed.report) + '\n');
-  }
+  const text = options.format === 'json' ? stringifyReport(analyzed.report) : renderSummary(analyzed.report);
+  process.stdout.write(`${text}\n`);
 
   const open = analyzed.report.findings.filter((finding) => finding.state === 'open');
   if (options.failOnOpen && open.length > 0) {

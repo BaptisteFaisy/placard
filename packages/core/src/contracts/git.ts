@@ -43,10 +43,23 @@ export interface SkippedFileEvent {
   bytes?: number;
 }
 
+/**
+ * Un fichier touché par le commit, **même quand il ne produit aucune ligne de
+ * diff** (fichier vide ajouté ou supprimé). Sans cet événement, les règles qui
+ * jugent un fichier sur son seul nom (PLA-F-04 : `.env`, clés privées, exports
+ * de base) ne voient jamais les fichiers vides — or un `.env` vide ajouté à un
+ * dépôt reste un signal.
+ */
+export interface FileEvent {
+  commit: string;
+  path: string;
+}
+
 /** Événements émis par le lecteur, dans l'ordre du parcours. */
 export type HistoryEvent =
   | { kind: 'repo'; repo: RepoSnapshot }
   | { kind: 'commit'; commit: CommitEvent }
+  | { kind: 'file'; file: FileEvent }
   | { kind: 'line'; line: DiffLineEvent }
   | { kind: 'skipped'; skipped: SkippedFileEvent }
   | { kind: 'progress'; scanned: number; total: number }
