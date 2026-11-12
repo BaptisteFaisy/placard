@@ -14,6 +14,9 @@ test-results/
 .placard/*
 !.placard/ignore.yml
 
+# Publication npm : paquets préparés pour le `npm publish` (jamais versionnés).
+.publish/
+
 # OS / éditeurs
 .DS_Store
 Thumbs.db
