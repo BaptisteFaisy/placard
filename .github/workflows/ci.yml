@@ -90,7 +90,7 @@ jobs:
           set -euo pipefail
           node tools/prepare-publish.mjs
           for paquet in core detectors analysis ritual; do
-            dossier=".publish/@placard/${paquet}"
+            dossier=".publish/${paquet}"
             (cd "$dossier" && node ../../tools/check-publishable.mjs)
             (cd "$dossier" && npm pack --dry-run)
           done

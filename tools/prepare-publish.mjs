@@ -91,7 +91,7 @@ export function manifestePublie(manifeste, versions) {
 export function preparerPaquet(paquet, versions) {
   const source = join(RACINE, 'packages', paquet);
   const manifeste = lireJson(join(source, 'package.json'));
-  const cible = join(DOSSIER_PUBLICATION, manifeste.name);
+  const cible = join(DOSSIER_PUBLICATION, paquet);
   const construit = join(source, 'dist');
   if (!existsSync(construit)) {
     throw new Error(`Build manquant pour ${manifeste.name} — lancez « pnpm build:paquets »`);

@@ -100,7 +100,7 @@ node tools/prepare-publish.mjs "${PAQUETS[@]}"
 
 # --- Vérification ----------------------------------------------------------
 for paquet in "${PAQUETS[@]}"; do
-  dossier=".publish/@placard/${paquet}"
+  dossier=".publish/${paquet}"
   [ -d "$dossier" ] || die "paquet non préparé : $dossier"
   (cd "$dossier" && node ../../tools/check-publishable.mjs)
   nom="$(node -e "console.log(require('./$dossier/package.json').name)")"
@@ -119,7 +119,7 @@ if [ "$MODE_PUBLICATION" -eq 0 ]; then
 fi
 
 for paquet in "${PAQUETS[@]}"; do
-  dossier=".publish/@placard/${paquet}"
+  dossier=".publish/${paquet}"
   info "publication de $dossier..."
   (cd "$dossier" && npm publish --access public --tag "$ETIQUETTE")
 done
