@@ -1,11 +1,52 @@
 {
   "name": "@placard/ritual",
   "version": "0.1.0",
-  "private": true,
+  "description": "Placard — rituel de remédiation : rotation, purge ordonnée, prévention et certificat de fin.",
+  "license": "MIT",
+  "private": false,
   "type": "module",
   "main": "./src/index.ts",
   "types": "./src/index.ts",
+  "sideEffects": false,
+  "files": ["dist", "src", "README.md", "LICENSE"],
+  "publishConfig": {
+    "access": "public"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/BaptisteFaisy/placard.git",
+    "directory": "packages/ritual"
+  },
+  "bugs": {
+    "url": "https://github.com/BaptisteFaisy/placard/issues"
+  },
+  "homepage": "https://github.com/BaptisteFaisy/placard/tree/main/packages/ritual",
+  "keywords": [
+    "placard",
+    "secret-scanning",
+    "remediation",
+    "rotation",
+    "security",
+    "typescript"
+  ],
+  "engines": {
+    "node": ">=20.11"
+  },
+  "publish": {
+    "main": "./dist/index.js",
+    "module": "./dist/index.js",
+    "types": "./dist/index.d.ts",
+    "exports": {
+      ".": {
+        "types": "./dist/index.d.ts",
+        "import": "./dist/index.js",
+        "default": "./dist/index.js"
+      },
+      "./package.json": "./package.json"
+    }
+  },
   "scripts": {
+    "build": "tsc -p tsconfig.build.json && node ../../tools/fix-esm-extensions.mjs dist",
     "test": "vitest run"
   },
   "dependencies": {
