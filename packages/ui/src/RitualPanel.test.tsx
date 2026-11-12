@@ -3,12 +3,12 @@ import { describe, expect, it } from 'vitest';
 import { within } from '@testing-library/dom';
 import type { PreventionProposal, PurgeArtifacts, RitualStep, RotationCard } from '@placard/core';
 
-import { RitualPanel, stepOf } from './RitualPanel.js';
-import { Hall } from './Hall.js';
-import { Legend, COSTUME_LEGEND } from './Legend.js';
-import { demoModel } from './testing/model.js';
-import { audit } from './testing/axe.js';
-import { click, mount, type as typeText } from './testing/render.js';
+import { RitualPanel, stepOf } from './RitualPanel';
+import { Hall } from './Hall';
+import { Legend, COSTUME_LEGEND } from './Legend';
+import { demoModel } from './testing/model';
+import { audit } from './testing/axe';
+import { click, mount, type as typeText } from './testing/render';
 
 /**
  * Le rituel (PLA-F-22 à PLA-F-28), le hall (PLA-F-20) et la légende (PLA-F-15).

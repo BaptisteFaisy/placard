@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest';
 import { fakeValue } from '@placard/core';
-import { createDetectorEngine } from './index.js';
+import { createDetectorEngine } from './index';
 
 describe('precision — rejet des six classes de faux positifs', () => {
   const engine = createDetectorEngine();

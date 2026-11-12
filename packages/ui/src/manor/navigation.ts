@@ -1,6 +1,6 @@
 import type { Door, FootprintTrail } from '@placard/core';
 
-import type { DoorSlot, ManorLayout } from './layout.js';
+import type { DoorSlot, ManorLayout } from './layout';
 
 /**
  * Navigation clavier du manoir (PLA-F-21) : Tab entre dans le manoir, les

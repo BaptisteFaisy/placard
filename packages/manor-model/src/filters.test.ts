@@ -1,7 +1,7 @@
 import { describe, expect, it } from 'vitest';
 
-import { makeFinding, refOf } from './fixtures.js';
-import { applyFilters, emptyFilter, matchesFilter, normalizeFilter } from './index.js';
+import { makeFinding, refOf } from './fixtures';
+import { applyFilters, emptyFilter, matchesFilter, normalizeFilter } from './index';
 
 const EARLY = refOf('early', '2021-02-01T10:00:00Z');
 const LATE = refOf('late', '2024-02-01T10:00:00Z');

@@ -7,8 +7,8 @@ import type {
   RegistrySortField,
 } from '@placard/core';
 
-import { timeOf } from './dates.js';
-import { rowAriaLabel } from './labels.js';
+import { timeOf } from './dates';
+import { rowAriaLabel } from './labels';
 
 /**
  * Le registre sur le guéridon (PLA-F-18, PLA-F-19).

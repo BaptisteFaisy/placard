@@ -2,7 +2,7 @@ import { rm } from 'node:fs/promises';
 
 import { afterAll, describe, expect, it } from 'vitest';
 
-import { allShas, FIXED_HEAD_DATE, makeRepo, repoGit } from './testing.js';
+import { allShas, FIXED_HEAD_DATE, makeRepo, repoGit } from './testing';
 
 /**
  * Déterminisme : même graine + même `headDate` ⇒ mêmes SHA de commits.

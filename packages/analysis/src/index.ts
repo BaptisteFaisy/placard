@@ -7,10 +7,10 @@ import type {
   AnchoredDetection,
 } from '@placard/core';
 
-import { groupDetections } from './group.js';
-import { appendIgnoreEntry, loadIgnoreFile } from './ignore-file.js';
-import { makePresence } from './lifetime.js';
-import { assembleReport, type ReportContext } from './report.js';
+import { groupDetections } from './group';
+import { appendIgnoreEntry, loadIgnoreFile } from './ignore-file';
+import { makePresence } from './lifetime';
+import { assembleReport, type ReportContext } from './report';
 
 /**
  * Moteur d'analyse (`@placard/analysis`).
@@ -71,8 +71,8 @@ export function createAnalysisEngine(): AnalysisEngine {
 export const analysisApi: AnalysisApi = { analyze, loadIgnoreFile, appendIgnoreEntry };
 
 export { analyze, appendIgnoreEntry, loadIgnoreFile };
-export { assignFindingIds, formatFindingId, FINDING_ID_PREFIX } from './ids.js';
-export { buildSnippet, sanitizeContext, MAX_SNIPPET_CHARS, MAX_SNIPPET_LINES } from './context.js';
+export { assignFindingIds, formatFindingId, FINDING_ID_PREFIX } from './ids';
+export { buildSnippet, sanitizeContext, MAX_SNIPPET_CHARS, MAX_SNIPPET_LINES } from './context';
 export {
   compareDetections,
   fingerprintOf,
@@ -80,7 +80,7 @@ export {
   locationsOf,
   sortDetections,
   type DetectionGroup,
-} from './group.js';
+} from './group';
 export {
   daysBetween,
   lastSightingPerPath,
@@ -88,12 +88,12 @@ export {
   resolveLifetime,
   type HeadPresence,
   type Lifetime,
-} from './lifetime.js';
-export { isDummyGroup, isTestOnlyGroup, scoreGroup, type ScoreContext } from './score.js';
+} from './lifetime';
+export { isDummyGroup, isTestOnlyGroup, scoreGroup, type ScoreContext } from './score';
 export {
   IgnoreFileError,
   parseIgnoreText,
-} from './ignore-file.js';
+} from './ignore-file';
 export {
   assembleReport,
   buildFinding,
@@ -101,4 +101,4 @@ export {
   describeIgnore,
   toCommitRef,
   type ReportContext,
-} from './report.js';
+} from './report';

@@ -1,7 +1,7 @@
 import { describe, expect, it } from 'vitest';
 
-import { NOW, makeFinding, makeReport, refOf } from './fixtures.js';
-import { REGISTRY_SORT_FIELDS, buildRegistryRows, buildViewModel, emptyFilter } from './index.js';
+import { NOW, makeFinding, makeReport, refOf } from './fixtures';
+import { REGISTRY_SORT_FIELDS, buildRegistryRows, buildViewModel, emptyFilter } from './index';
 import type { RegistrySortField } from '@placard/core';
 
 const A = refOf('reg-a', '2021-06-01T10:00:00Z');

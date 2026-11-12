@@ -2,7 +2,7 @@ import React from 'react';
 import { FAMILIES, familyLabel, skeletonLabel } from '@placard/core';
 import type { HallSummary, SkeletonKind } from '@placard/core';
 
-import { SeverityMark } from './a11y/SeverityMark.js';
+import { SeverityMark } from './a11y/SeverityMark';
 
 /**
  * Le hall d'entrée (PLA-F-20) : la synthèse du manoir, en une phrase et une

@@ -1,10 +1,10 @@
 import type { CommitEvent, DiffLineEvent, HistoryEvent } from '@placard/core';
 
-import { BlobSizeOracle } from './blob-sizes.js';
-import { DiffParser, type DiffParserSink } from './diff-parser.js';
-import type { PathFilter } from './ignore-paths.js';
-import type { RawCommit } from './log-stream.js';
-import { sanitizeText } from './sanitize.js';
+import { BlobSizeOracle } from './blob-sizes';
+import { DiffParser, type DiffParserSink } from './diff-parser';
+import type { PathFilter } from './ignore-paths';
+import type { RawCommit } from './log-stream';
+import { sanitizeText } from './sanitize';
 
 /**
  * État d'un parcours : applique la politique du lecteur (chemins ignorés,

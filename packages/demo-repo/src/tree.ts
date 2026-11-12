@@ -1,7 +1,7 @@
-import { formatPlant, lineOf, renderTemplate, type PlantLine } from './plant.js';
-import type { PlannedSecret } from './plan.js';
-import { baseFiles, type FileContent } from './noise.js';
-import { templateFor, templatePaths } from './templates.js';
+import { formatPlant, lineOf, renderTemplate, type PlantLine } from './plant';
+import type { PlannedSecret } from './plan';
+import { baseFiles, type FileContent } from './noise';
+import { templateFor, templatePaths } from './templates';
 
 /**
  * Arbre de travail en mémoire.

@@ -5,7 +5,7 @@ import {
   type ScoreResult,
 } from '@placard/core';
 
-import type { DetectionGroup } from './group.js';
+import type { DetectionGroup } from './group';
 
 /**
  * Score de danger d'une trouvaille (PLA-F-07, cahier C.6).

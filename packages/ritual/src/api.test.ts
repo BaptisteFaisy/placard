@@ -1,7 +1,7 @@
 import type { RitualApi } from '@placard/core';
 import { describe, expect, it } from 'vitest';
 
-import { createRitualApi } from './index.js';
+import { createRitualApi } from './index';
 
 describe('createRitualApi', () => {
   it('implements every member of the RitualApi contract', () => {

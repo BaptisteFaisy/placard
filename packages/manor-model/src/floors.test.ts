@@ -1,7 +1,7 @@
 import { describe, expect, it } from 'vitest';
 
-import { NOW, makeFinding, makeReport, refOf } from './fixtures.js';
-import { buildViewModel, emptyFilter } from './index.js';
+import { NOW, makeFinding, makeReport, refOf } from './fixtures';
+import { buildViewModel, emptyFilter } from './index';
 import type { Door, WallStretch } from '@placard/core';
 
 const C1 = refOf('c1', '2021-02-01T10:00:00Z');

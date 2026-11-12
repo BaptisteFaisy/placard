@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { illustrationOpacity, illustrationTransform, type IllustrationProps } from './scale.js';
+import { illustrationOpacity, illustrationTransform, type IllustrationProps } from './scale';
 
 /**
  * Sceau de cire rouge (C.4) : trouvaille traitée — rotation effectuée et purge

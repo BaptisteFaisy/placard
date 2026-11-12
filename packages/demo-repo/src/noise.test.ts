@@ -2,8 +2,8 @@ import { rm } from 'node:fs/promises';
 
 import { afterAll, beforeAll, describe, expect, it } from 'vitest';
 
-import type { GenerateResult } from './index.js';
-import { allShas, makeRepo, repoGit } from './testing.js';
+import type { GenerateResult } from './index';
+import { allShas, makeRepo, repoGit } from './testing';
 
 /**
  * PLA-P-12 — le bruit du dépôt synthétique ne contient aucun secret.

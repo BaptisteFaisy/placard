@@ -9,9 +9,9 @@ import {
   severityLabel,
 } from '@placard/core';
 
-import { SeverityMark } from './a11y/SeverityMark.js';
-import { Skeleton } from './illustrations/Skeleton.js';
-import { SpiderWeb } from './illustrations/SpiderWeb.js';
+import { SeverityMark } from './a11y/SeverityMark';
+import { Skeleton } from './illustrations/Skeleton';
+import { SpiderWeb } from './illustrations/SpiderWeb';
 
 /**
  * La légende (PLA-F-15) : la table de correspondance costume ↔ données, rendue

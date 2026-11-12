@@ -1,10 +1,10 @@
 import React from 'react';
 import type { Door, Finding } from '@placard/core';
 
-import { DoorIllustration, type DoorIllustrationState } from '../illustrations/DoorIllustration.js';
-import { Skeleton } from '../illustrations/Skeleton.js';
-import { SpiderWeb } from '../illustrations/SpiderWeb.js';
-import type { DoorSlot } from './layout.js';
+import { DoorIllustration, type DoorIllustrationState } from '../illustrations/DoorIllustration';
+import { Skeleton } from '../illustrations/Skeleton';
+import { SpiderWeb } from '../illustrations/SpiderWeb';
+import type { DoorSlot } from './layout';
 
 /**
  * Une porte du manoir : un commit qui contient au moins une trouvaille (C.4).

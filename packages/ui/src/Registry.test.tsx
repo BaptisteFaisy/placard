@@ -4,11 +4,11 @@ import { within } from '@testing-library/dom';
 import { buildRegistryRows } from '@placard/manor-model';
 import type { Finding, RegistrySort } from '@placard/core';
 
-import { Registry } from './Registry.js';
-import { NOW } from './testing/fixtures.js';
-import { demoModel } from './testing/model.js';
-import { audit } from './testing/axe.js';
-import { click, mount, press } from './testing/render.js';
+import { Registry } from './Registry';
+import { NOW } from './testing/fixtures';
+import { demoModel } from './testing/model';
+import { audit } from './testing/axe';
+import { click, mount, press } from './testing/render';
 
 /**
  * Le registre (PLA-F-18, PLA-F-19) : mêmes trouvailles que le manoir, triables,

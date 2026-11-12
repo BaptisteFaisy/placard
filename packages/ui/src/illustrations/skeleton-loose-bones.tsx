@@ -1,7 +1,7 @@
 import React from 'react';
 
-import type { PartProps } from './skeleton-parts.js';
-import { Skull } from './skeleton-parts.js';
+import type { PartProps } from './skeleton-parts';
+import { Skull } from './skeleton-parts';
 
 /** Un os long, dessiné entre deux extrémités. */
 function Bone({ color, d }: PartProps & { d: string }): React.ReactElement {

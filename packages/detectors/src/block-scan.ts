@@ -1,13 +1,13 @@
 import type { DetectorEngine, DetectorInput, DetectorResult, RawDetection } from '@placard/core';
 
-import { countEmails } from './rules/identity.js';
+import { countEmails } from './rules/identity';
 import {
   MAX_PRIVATE_KEY_BLOCK_LINES,
   RULE_PRIVATE_KEY_BLOCK,
   RULE_PRIVATE_KEY_HEADER,
   findPrivateKeyBlock,
-} from './rules/private-keys.js';
-import { EMAIL_DUMP_THRESHOLD, RULE_RISKY_EMAIL_DUMP } from './rules/risky-files.js';
+} from './rules/private-keys';
+import { EMAIL_DUMP_THRESHOLD, RULE_RISKY_EMAIL_DUMP } from './rules/risky-files';
 
 /**
  * Analyse d'un fichier entier, au-dessus du moteur de ligne.

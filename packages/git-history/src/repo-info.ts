@@ -2,8 +2,8 @@ import path from 'node:path';
 
 import type { RepoSnapshot } from '@placard/core';
 
-import { runGit, streamGitLines, type GitResult } from './git-exec.js';
-import { sanitizeText } from './sanitize.js';
+import { runGit, streamGitLines, type GitResult } from './git-exec';
+import { sanitizeText } from './sanitize';
 
 /**
  * Photographie du dépôt avant le parcours (HEAD, références, nombre de commits,

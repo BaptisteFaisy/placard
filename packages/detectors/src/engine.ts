@@ -8,9 +8,9 @@ import type {
   RawDetection,
 } from '@placard/core';
 
-import { resolveOverlaps } from './overlap.js';
-import { compileKeywords, prefilterMatches } from './prefilter.js';
-import { builtinRuleSet, priorityOf, sortByPriority } from './registry.js';
+import { resolveOverlaps } from './overlap';
+import { compileKeywords, prefilterMatches } from './prefilter';
+import { builtinRuleSet, priorityOf, sortByPriority } from './registry';
 
 /**
  * Moteur de détection : implémentation de `DetectorEngine`.

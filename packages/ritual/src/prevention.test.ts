@@ -4,8 +4,8 @@ import { join } from 'node:path';
 import { fakeValue } from '@placard/core';
 import { describe, expect, it } from 'vitest';
 
-import { GITIGNORE_LINES, PRE_COMMIT_HOOK, prevention } from './prevention.js';
-import { makeOptions, makeRepoWithSecret } from './test-support.js';
+import { GITIGNORE_LINES, PRE_COMMIT_HOOK, prevention } from './prevention';
+import { makeOptions, makeRepoWithSecret } from './test-support';
 
 async function optionsForRepo(): Promise<Awaited<ReturnType<typeof makeOptions>>> {
   const repo = await makeRepoWithSecret(fakeValue('cloud-key', 'prevention-seed'));

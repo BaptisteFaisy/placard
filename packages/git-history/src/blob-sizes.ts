@@ -2,7 +2,7 @@ import { spawn, type ChildProcess } from 'node:child_process';
 import path from 'node:path';
 import { Readable } from 'node:stream';
 
-import { GIT_CONFIG_ARGS, gitEnv } from './git-exec.js';
+import { GIT_CONFIG_ARGS, gitEnv } from './git-exec';
 
 /**
  * Oracle de taille de blobs : un unique processus `git cat-file --batch-check`

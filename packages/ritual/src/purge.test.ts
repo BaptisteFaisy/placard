@@ -4,8 +4,8 @@ import { fakeValue } from '@placard/core';
 import type { Finding, RitualOptions } from '@placard/core';
 import { describe, expect, it } from 'vitest';
 
-import { generatePurge, isOutside, markRotated, PurgeLockedError } from './index.js';
-import { findingFor, makeOptions, makeRepoWithSecret } from './test-support.js';
+import { generatePurge, isOutside, markRotated, PurgeLockedError } from './index';
+import { findingFor, makeOptions, makeRepoWithSecret } from './test-support';
 
 /** Valeur fabriquée à l'exécution (PLA-N-09), jamais écrite en dur. */
 const VALUE = fakeValue('cloud-key', 'purge-seed');

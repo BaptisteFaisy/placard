@@ -9,10 +9,10 @@ import {
 import fc from 'fast-check';
 import { describe, expect, it } from 'vitest';
 
-import { TEST_SALT, makeDetection, makeInput, makeOptions, presenceMap } from './fixtures.js';
-import { groupDetections } from './group.js';
-import { analyze } from './index.js';
-import { scoreGroup } from './score.js';
+import { TEST_SALT, makeDetection, makeInput, makeOptions, presenceMap } from './fixtures';
+import { groupDetections } from './group';
+import { analyze } from './index';
+import { scoreGroup } from './score';
 
 /**
  * Propriétés fast-check du lot analyse.

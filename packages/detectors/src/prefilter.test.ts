@@ -1,10 +1,10 @@
 import type { DetectorRule } from '@placard/core';
 import { describe, expect, it } from 'vitest';
 
-import { createDetectorEngine } from './index.js';
-import { compileKeywords, makePrefilter, prefilterMatches } from './prefilter.js';
-import { RULE_IDS } from './registry.js';
-import { fixture, inputOf } from './testing/fixtures.js';
+import { createDetectorEngine } from './index';
+import { compileKeywords, makePrefilter, prefilterMatches } from './prefilter';
+import { RULE_IDS } from './registry';
+import { fixture, inputOf } from './testing/fixtures';
 
 /**
  * Préfiltre par mots-clés (cahier C.6) : une règle ancrée n'est **essayée** que

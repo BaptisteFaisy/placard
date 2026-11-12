@@ -1,8 +1,8 @@
 import { isDummyValue, invalidChecksumVariant } from '@placard/core';
 import { describe, expect, it } from 'vitest';
 
-import { createDetectorEngine } from './index.js';
-import { RULE_IDS } from './registry.js';
+import { createDetectorEngine } from './index';
+import { RULE_IDS } from './registry';
 import {
   QUOTE,
   assignmentLine,
@@ -12,7 +12,7 @@ import {
   fixtureSsn,
   inputOf,
   passwordLine,
-} from './testing/fixtures.js';
+} from './testing/fixtures';
 
 /**
  * PLA-F-03 : seules les données à somme de contrôle **valide** sont signalées,

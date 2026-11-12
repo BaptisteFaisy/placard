@@ -1,6 +1,6 @@
 import type { FindingFamily } from '@placard/core';
 
-import type { Dialect, FileTemplate } from './templates.js';
+import type { Dialect, FileTemplate } from './templates';
 
 /**
  * Mise en forme des lignes plantées.

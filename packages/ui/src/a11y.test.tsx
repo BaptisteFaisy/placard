@@ -4,8 +4,8 @@ import React from 'react';
 import axe from 'axe-core';
 
 import { createManorModel } from '@placard/manor-model';
-import { Manor, Registry, Hall, Legend, FindingSheet, RitualPanel } from './index.js';
-import { makeFinding, makeReport, refOf } from './testing/fixtures.js';
+import { Manor, Registry, Hall, Legend, FindingSheet, RitualPanel } from './index';
+import { makeFinding, makeReport, refOf } from './testing/fixtures';
 
 describe('a11y — conformité WCAG AA (PLA-F-21, PLA-N-05)', () => {
   const report = makeReport(

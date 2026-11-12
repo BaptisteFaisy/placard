@@ -1,6 +1,6 @@
 import type { FindingFamily, RotationCard } from '@placard/core';
 
-import { isPersonalData, PERSONAL_DATA_NOTICE } from './families.js';
+import { isPersonalData, PERSONAL_DATA_NOTICE } from './families';
 
 /**
  * Fiches de rotation (PLA-F-22).

@@ -1,7 +1,7 @@
 import { describe, expect, it } from 'vitest';
 
-import { NOW, makeFinding, makeReport, refOf } from './fixtures.js';
-import { buildViewModel, emptyFilter } from './index.js';
+import { NOW, makeFinding, makeReport, refOf } from './fixtures';
+import { buildViewModel, emptyFilter } from './index';
 
 const A = refOf('hall-a', '2022-02-01T10:00:00Z');
 const B = refOf('hall-b', '2024-03-01T10:00:00Z');

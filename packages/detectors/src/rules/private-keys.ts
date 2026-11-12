@@ -1,6 +1,6 @@
 import type { DetectorRule } from '@placard/core';
 
-import { PEM_CLOSE, PEM_DASHES, PEM_KEY_WORDS, PEM_OPEN } from '../signatures.js';
+import { PEM_CLOSE, PEM_DASHES, PEM_KEY_WORDS, PEM_OPEN } from '../signatures';
 
 /**
  * Famille `private-key` : blocs PEM.

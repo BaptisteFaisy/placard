@@ -1,12 +1,12 @@
 import React from 'react';
 import type { Door, ManorViewModel } from '@placard/core';
 
-import { Lantern } from '../illustrations/Lantern.js';
-import { OpenWindow } from '../illustrations/OpenWindow.js';
-import { Footprints } from '../Footprints.js';
+import { Lantern } from '../illustrations/Lantern';
+import { OpenWindow } from '../illustrations/OpenWindow';
+import { Footprints } from '../Footprints';
 import type { FootprintTrail } from '@placard/core';
-import { FloorRow } from './FloorRow.js';
-import type { ManorLayout } from './layout.js';
+import { FloorRow } from './FloorRow';
+import type { ManorLayout } from './layout';
 
 /**
  * La scène SVG du manoir : un étage par année, couloirs horizontaux, portes,

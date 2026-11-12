@@ -2,16 +2,16 @@ import React from 'react';
 import { FAMILY_TO_SKELETON } from '@placard/core';
 import type { FindingFamily, SkeletonKind } from '@placard/core';
 
-import { SkeletonChest } from './skeleton-chest.js';
-import { SkeletonKeyBearer } from './skeleton-key-bearer.js';
-import { SkeletonLooseBones } from './skeleton-loose-bones.js';
-import { SkeletonPaperBearer } from './skeleton-paper-bearer.js';
+import { SkeletonChest } from './skeleton-chest';
+import { SkeletonKeyBearer } from './skeleton-key-bearer';
+import { SkeletonLooseBones } from './skeleton-loose-bones';
+import { SkeletonPaperBearer } from './skeleton-paper-bearer';
 import {
   illustrationOpacity,
   illustrationTransform,
   severityColor,
   type IllustrationProps,
-} from './scale.js';
+} from './scale';
 
 /**
  * Le squelette d'une trouvaille (C.4) : le **type** code la famille, la

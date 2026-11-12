@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { illustrationOpacity, illustrationTransform, type IllustrationProps } from './scale.js';
+import { illustrationOpacity, illustrationTransform, type IllustrationProps } from './scale';
 
 /**
  * La lanterne (C.4) : **le focus**. Elle suit le curseur et la navigation

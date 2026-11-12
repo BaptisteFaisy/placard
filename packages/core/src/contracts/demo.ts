@@ -1,4 +1,4 @@
-import type { FindingFamily } from '../types.js';
+import type { FindingFamily } from '../types';
 
 /**
  * Contrat du générateur de dépôt hanté (`@placard/demo-repo`).

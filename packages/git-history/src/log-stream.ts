@@ -1,7 +1,7 @@
-import type { GitCommand } from './git-exec.js';
-import { streamGitLines } from './git-exec.js';
-import type { HistoryScan } from './scan.js';
-import { sanitizeText } from './sanitize.js';
+import type { GitCommand } from './git-exec';
+import { streamGitLines } from './git-exec';
+import type { HistoryScan } from './scan';
+import { sanitizeText } from './sanitize';
 
 /**
  * Parcours de `git log --all` en flux.

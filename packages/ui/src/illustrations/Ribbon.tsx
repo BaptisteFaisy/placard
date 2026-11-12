@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { illustrationOpacity, illustrationTransform, type IllustrationProps } from './scale.js';
+import { illustrationOpacity, illustrationTransform, type IllustrationProps } from './scale';
 
 /**
  * Ruban noué (C.4) : faux positif écarté avec une raison motivée

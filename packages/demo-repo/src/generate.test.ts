@@ -2,8 +2,8 @@ import { rm } from 'node:fs/promises';
 
 import { afterAll, beforeAll, describe, expect, it } from 'vitest';
 
-import { FAMILIES, type GenerateResult } from './index.js';
-import { allShas, makeRepo, pathsAt, pathsContaining, repoGit, showAt } from './testing.js';
+import { FAMILIES, type GenerateResult } from './index';
+import { allShas, makeRepo, pathsAt, pathsContaining, repoGit, showAt } from './testing';
 
 /**
  * PLA-F-13 — le générateur fabrique un dépôt crédible, complet et varié.

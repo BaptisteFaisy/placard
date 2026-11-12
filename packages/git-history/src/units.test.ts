@@ -6,12 +6,12 @@ import {
   parseHeaderPath,
   unquoteGitPath,
   type DiffParserSink,
-} from './diff-parser.js';
-import { globToRegExp, compileIgnorePatterns } from './ignore-paths.js';
-import { parseBatchCheckLine } from './blob-sizes.js';
-import { isPublicRemote, repoName } from './repo-info.js';
-import { normalizeRefs, parseRecord, RECORD_MARKER } from './log-stream.js';
-import { isoDate } from './scan.js';
+} from './diff-parser';
+import { globToRegExp, compileIgnorePatterns } from './ignore-paths';
+import { parseBatchCheckLine } from './blob-sizes';
+import { isPublicRemote, repoName } from './repo-info';
+import { normalizeRefs, parseRecord, RECORD_MARKER } from './log-stream';
+import { isoDate } from './scan';
 
 /** Récepteur de test : enregistre les événements du parseur sous forme lisible. */
 function recorder(): { sink: DiffParserSink; log: string[] } {

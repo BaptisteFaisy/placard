@@ -1,7 +1,7 @@
 import { describe, expect, it } from 'vitest';
 
-import { createDetectorEngine } from './index.js';
-import { RULE_IDS } from './registry.js';
+import { createDetectorEngine } from './index';
+import { RULE_IDS } from './registry';
 import {
   apiKeyLine,
   assignmentLine,
@@ -16,7 +16,7 @@ import {
   privateKeyLines,
   riskyFilePath,
   urlWithCredentials,
-} from './testing/fixtures.js';
+} from './testing/fixtures';
 
 /**
  * PLA-F-02 : une valeur de chaque famille est détectée, par la règle attendue.

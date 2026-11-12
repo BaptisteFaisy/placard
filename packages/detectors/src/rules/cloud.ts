@@ -1,7 +1,7 @@
 import type { DetectorRule } from '@placard/core';
 
-import { CLOUD_KEY_PREFIXES, MAP_API_KEY_PREFIX } from '../signatures.js';
-import { matchesAlphabet } from '../validators.js';
+import { CLOUD_KEY_PREFIXES, MAP_API_KEY_PREFIX } from '../signatures';
+import { matchesAlphabet } from '../validators';
 
 /**
  * Famille `cloud-key` : identifiants de clé à préfixe fixe.

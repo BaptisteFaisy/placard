@@ -1,8 +1,8 @@
 import { computeFingerprint } from '@placard/core';
 import { describe, expect, it } from 'vitest';
 
-import { TEST_SALT, makeDetection } from './fixtures.js';
-import { fingerprintOf, groupDetections, locationsOf } from './group.js';
+import { TEST_SALT, makeDetection } from './fixtures';
+import { fingerprintOf, groupDetections, locationsOf } from './group';
 
 describe('groupDetections — regroupement par empreinte (PLA-F-06)', () => {
   it('regroupe la même valeur trouvée à plusieurs endroits en un seul groupe', () => {

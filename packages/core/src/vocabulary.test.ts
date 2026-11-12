@@ -1,8 +1,8 @@
 import { describe, expect, it } from 'vitest';
 import fc from 'fast-check';
 
-import { FAMILY_TO_SKELETON, FAMILIES, findingAriaLabel, familyLabel, skeletonLabel } from './i18n.js';
-import { compareSeverity, maxSeverity, severityOf, SEVERITY_ORDER } from './severity.js';
+import { FAMILY_TO_SKELETON, FAMILIES, findingAriaLabel, familyLabel, skeletonLabel } from './i18n';
+import { compareSeverity, maxSeverity, severityOf, SEVERITY_ORDER } from './severity';
 
 describe('severityOf', () => {
   it('respecte les seuils documentés', () => {

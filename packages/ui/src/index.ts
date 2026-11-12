@@ -11,44 +11,44 @@
 
 import './theme.css';
 
-export { SeverityMark, colorOf, glyphOf, labelOf } from './a11y/SeverityMark.js';
-export type { SeverityMarkProps } from './a11y/SeverityMark.js';
+export { SeverityMark, colorOf, glyphOf, labelOf } from './a11y/SeverityMark';
+export type { SeverityMarkProps } from './a11y/SeverityMark';
 export {
   REDUCED_MOTION_CLASS,
   REDUCED_MOTION_QUERY,
   readPrefersReducedMotion,
   usePrefersReducedMotion,
-} from './a11y/usePrefersReducedMotion.js';
+} from './a11y/usePrefersReducedMotion';
 
-export { Filters, FILTER_STATES, headChoiceOf, toggle, withHeadChoice } from './Filters.js';
-export type { FiltersProps, HeadChoice } from './Filters.js';
+export { Filters, FILTER_STATES, headChoiceOf, toggle, withHeadChoice } from './Filters';
+export type { FiltersProps, HeadChoice } from './Filters';
 
-export { FindingSheet } from './FindingSheet.js';
-export type { FindingSheetProps } from './FindingSheet.js';
+export { FindingSheet } from './FindingSheet';
+export type { FindingSheetProps } from './FindingSheet';
 
-export { Footprints, footPoint, trailPath, trailPoints } from './Footprints.js';
-export type { FootprintsProps } from './Footprints.js';
-export { FootprintSheet, floorsSpanned, trailSummary } from './FootprintSheet.js';
-export type { FootprintSheetProps } from './FootprintSheet.js';
+export { Footprints, footPoint, trailPath, trailPoints } from './Footprints';
+export type { FootprintsProps } from './Footprints';
+export { FootprintSheet, floorsSpanned, trailSummary } from './FootprintSheet';
+export type { FootprintSheetProps } from './FootprintSheet';
 
-export { Hall, skeletonVocabulary } from './Hall.js';
-export type { HallProps } from './Hall.js';
+export { Hall, skeletonVocabulary } from './Hall';
+export type { HallProps } from './Hall';
 
-export { COSTUME_LEGEND, Legend, LegendToggle } from './Legend.js';
-export type { LegendEntry, LegendProps, LegendToggleProps } from './Legend.js';
+export { COSTUME_LEGEND, Legend, LegendToggle } from './Legend';
+export type { LegendEntry, LegendProps, LegendToggleProps } from './Legend';
 
-export { Manor } from './Manor.js';
-export type { ManorProps } from './Manor.js';
+export { Manor } from './Manor';
+export type { ManorProps } from './Manor';
 
-export { Registry, SORT_LABELS, ariaSortFor } from './Registry.js';
-export type { RegistryProps } from './Registry.js';
+export { Registry, SORT_LABELS, ariaSortFor } from './Registry';
+export type { RegistryProps } from './Registry';
 
-export { RitualPanel, stepOf } from './RitualPanel.js';
-export type { RitualPanelProps, RitualVerification } from './RitualPanel.js';
+export { RitualPanel, stepOf } from './RitualPanel';
+export type { RitualPanelProps, RitualVerification } from './RitualPanel';
 
-export { isStillAlive, lastRemoval, lifetimeDaysOf } from './sheet-data.js';
+export { isStillAlive, lastRemoval, lifetimeDaysOf } from './sheet-data';
 
-export * from './illustrations/index.js';
+export * from './illustrations/index';
 export {
   CORRIDOR_START,
   DOOR_WIDTH,
@@ -60,8 +60,8 @@ export {
   WALL_MAX,
   WALL_MIN,
   WALL_UNIT,
-} from './manor/layout.js';
-export type { DoorSlot, FloorLayout, ManorLayout, WallSlot } from './manor/layout.js';
+} from './manor/layout';
+export type { DoorSlot, FloorLayout, ManorLayout, WallSlot } from './manor/layout';
 export {
   clampIndex,
   doorAtIndex,
@@ -72,25 +72,25 @@ export {
   MANOR_KEYS,
   nextDoorIndex,
   trailDoors,
-} from './manor/navigation.js';
-export type { ManorKey } from './manor/navigation.js';
+} from './manor/navigation';
+export type { ManorKey } from './manor/navigation';
 export {
   fallbackReason,
   floorPositionLabel,
   MAX_RENDERED_DOORS,
   planFor,
   summarizeFloors,
-} from './manor/fallback.js';
-export type { FloorSummaryLine, ManorFallbackReason } from './manor/fallback.js';
-export { doorStateOf, MAX_SKELETONS_PER_DOOR, topFindings } from './manor/DoorNode.js';
-export type { DoorNodeProps } from './manor/DoorNode.js';
-export type { WallNodeProps } from './manor/WallNode.js';
-export type { FloorRowProps } from './manor/FloorRow.js';
-export type { ManorSceneProps } from './manor/ManorScene.js';
-export type { FallbackListProps } from './manor/FallbackList.js';
-export { isLocked, stepStatus, stepStatusLabel } from './ritual/StepHeader.js';
-export type { StepHeaderProps } from './ritual/StepHeader.js';
-export type { RotationStepProps } from './ritual/RotationStep.js';
-export type { PurgeStepProps } from './ritual/PurgeStep.js';
-export type { PreventionStepProps } from './ritual/PreventionStep.js';
-export type { VerifyStepProps } from './ritual/VerifyStep.js';
+} from './manor/fallback';
+export type { FloorSummaryLine, ManorFallbackReason } from './manor/fallback';
+export { doorStateOf, MAX_SKELETONS_PER_DOOR, topFindings } from './manor/DoorNode';
+export type { DoorNodeProps } from './manor/DoorNode';
+export type { WallNodeProps } from './manor/WallNode';
+export type { FloorRowProps } from './manor/FloorRow';
+export type { ManorSceneProps } from './manor/ManorScene';
+export type { FallbackListProps } from './manor/FallbackList';
+export { isLocked, stepStatus, stepStatusLabel } from './ritual/StepHeader';
+export type { StepHeaderProps } from './ritual/StepHeader';
+export type { RotationStepProps } from './ritual/RotationStep';
+export type { PurgeStepProps } from './ritual/PurgeStep';
+export type { PreventionStepProps } from './ritual/PreventionStep';
+export type { VerifyStepProps } from './ritual/VerifyStep';

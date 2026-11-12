@@ -3,7 +3,7 @@ import { isAbsolute, join } from 'node:path';
 
 import type { PreventionProposal, RitualOptions } from '@placard/core';
 
-import { git } from './git-exec.js';
+import { git } from './git-exec';
 
 /**
  * Prévention (PLA-F-26).

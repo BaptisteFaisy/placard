@@ -1,6 +1,6 @@
 import { afterEach, beforeAll } from 'vitest';
 
-import { destroyFixture, isolateGitEnvironment, type Fixture } from './fixture.js';
+import { destroyFixture, isolateGitEnvironment, type Fixture } from './fixture';
 
 /**
  * Cycle de vie commun aux suites qui créent de vrais dépôts Git.

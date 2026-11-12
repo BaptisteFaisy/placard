@@ -3,19 +3,19 @@
  * Exporte toutes les primitives pures et le schéma Zod, sans les modules
  * Node-only (`node:crypto` dans `redact.ts` et `fake-values.ts`).
  */
-export * from './types.js';
-export * from './scoring.js';
-export * from './severity.js';
-export * from './i18n.js';
-export * from './schema.js';
-export * from './checksums.js';
-export * from './contracts/git.js';
-export * from './contracts/detector.js';
-export * from './contracts/analysis.js';
-export * from './contracts/demo.js';
-export * from './contracts/ritual.js';
-export * from './contracts/manor.js';
-export * from './contracts/cli.js';
+export * from './types';
+export * from './scoring';
+export * from './severity';
+export * from './i18n';
+export * from './schema';
+export * from './checksums';
+export * from './contracts/git';
+export * from './contracts/detector';
+export * from './contracts/analysis';
+export * from './contracts/demo';
+export * from './contracts/ritual';
+export * from './contracts/manor';
+export * from './contracts/cli';
 
 export const TOOL_NAME = 'placard';
 export const TOOL_VERSION = '0.1.0';

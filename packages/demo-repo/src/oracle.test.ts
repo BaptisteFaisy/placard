@@ -2,8 +2,8 @@ import { rm } from 'node:fs/promises';
 
 import { afterAll, beforeAll, describe, expect, it } from 'vitest';
 
-import type { GenerateResult } from './index.js';
-import { allShas, makeRepo, pathsAt, pathsContaining, repoGit, showAt } from './testing.js';
+import type { GenerateResult } from './index';
+import { allShas, makeRepo, pathsAt, pathsContaining, repoGit, showAt } from './testing';
 
 /**
  * L'oracle est la vérité terrain du projet : chaque affirmation qu'il porte doit

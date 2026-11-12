@@ -3,8 +3,8 @@ import { familyLabel, stateLabel } from '@placard/core';
 import type { Finding, ManorViewModel, RegistryRow, RegistrySort, RegistrySortField } from '@placard/core';
 import { REGISTRY_SORT_FIELDS, buildRegistryRows, plural } from '@placard/manor-model';
 
-import { SeverityMark } from './a11y/SeverityMark.js';
-import { lifetimeDaysOf } from './sheet-data.js';
+import { SeverityMark } from './a11y/SeverityMark';
+import { lifetimeDaysOf } from './sheet-data';
 
 /**
  * Le registre sur le guéridon (PLA-F-18) : la vue tableau équivalente du

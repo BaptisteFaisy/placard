@@ -1,6 +1,6 @@
 import type { FindingFamily } from '@placard/core';
 
-import type { Dialect } from './templates.js';
+import type { Dialect } from './templates';
 
 /**
  * Identifiants de règles attendus par l'oracle.

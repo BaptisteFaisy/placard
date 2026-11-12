@@ -1,4 +1,4 @@
-import type { Finding } from '../types.js';
+import type { Finding } from '../types';
 
 /**
  * Contrat du rituel de remédiation (`@placard/ritual`).

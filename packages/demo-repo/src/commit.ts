@@ -2,7 +2,7 @@ import { spawn } from 'node:child_process';
 import { mkdir, unlink, writeFile } from 'node:fs/promises';
 import { dirname, join } from 'node:path';
 
-import type { FileContent } from './noise.js';
+import type { FileContent } from './noise';
 
 /**
  * Helpers Git du générateur.

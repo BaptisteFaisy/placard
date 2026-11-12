@@ -1,13 +1,13 @@
 import type { RitualApi } from '@placard/core';
 
-import { certificate } from './certificate.js';
-import { dryRun } from './dry-run.js';
-import { prevention } from './prevention.js';
-import { generatePurge } from './purge.js';
-import { rotationCard } from './rotation-cards.js';
-import { loadState, saveState } from './state.js';
-import { markRotated, steps } from './steps.js';
-import { verify } from './verify.js';
+import { certificate } from './certificate';
+import { dryRun } from './dry-run';
+import { prevention } from './prevention';
+import { generatePurge } from './purge';
+import { rotationCard } from './rotation-cards';
+import { loadState, saveState } from './state';
+import { markRotated, steps } from './steps';
+import { verify } from './verify';
 
 /**
  * `@placard/ritual` — le rituel de remédiation.
@@ -17,17 +17,17 @@ import { verify } from './verify.js';
  * rotation, et l'outil n'exécute jamais la réécriture d'historique (PLA-F-24).
  */
 
-export * from './families.js';
-export * from './steps.js';
-export * from './rotation-cards.js';
-export * from './state.js';
-export * from './value-recovery.js';
-export * from './purge-script.js';
-export * from './purge.js';
-export * from './dry-run.js';
-export * from './prevention.js';
-export * from './verify.js';
-export * from './certificate.js';
+export * from './families';
+export * from './steps';
+export * from './rotation-cards';
+export * from './state';
+export * from './value-recovery';
+export * from './purge-script';
+export * from './purge';
+export * from './dry-run';
+export * from './prevention';
+export * from './verify';
+export * from './certificate';
 
 /** Interface du paquet, plus l'essai à blanc qui n'est pas au contrat. */
 export interface RitualApiWithDryRun extends RitualApi {

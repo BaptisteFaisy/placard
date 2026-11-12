@@ -2,9 +2,9 @@ import { describe, expect, it } from 'vitest';
 
 import type { HistoryEvent } from '@placard/core';
 
-import { readHistory } from './index.js';
-import { createFixture, needle } from './testing/fixture.js';
-import { useGitFixtures } from './testing/harness.js';
+import { readHistory } from './index';
+import { createFixture, needle } from './testing/fixture';
+import { useGitFixtures } from './testing/harness';
 
 /**
  * Performance : le cahier des charges vise 5 000 commits, mais la CI tourne sur

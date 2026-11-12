@@ -9,9 +9,9 @@ import type {
   RepoSnapshot,
 } from '@placard/core';
 
-import { createHistoryReader, readHistory } from './index.js';
-import { createFixture, needle, type Fixture } from './testing/fixture.js';
-import { useGitFixtures } from './testing/harness.js';
+import { createHistoryReader, readHistory } from './index';
+import { createFixture, needle, type Fixture } from './testing/fixture';
+import { useGitFixtures } from './testing/harness';
 
 interface Collected {
   events: HistoryEvent[];

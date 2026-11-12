@@ -1,14 +1,14 @@
 import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import type { Door, Finding, FootprintTrail, ManorViewModel } from '@placard/core';
 
-import { FindingSheet } from './FindingSheet.js';
-import { FallbackList } from './manor/FallbackList.js';
-import { topFindings } from './manor/DoorNode.js';
-import { MAX_RENDERED_DOORS, fallbackReason } from './manor/fallback.js';
-import { layoutManor, type ManorLayout } from './manor/layout.js';
-import { ManorScene } from './manor/ManorScene.js';
-import { clampIndex, isManorKey, nextDoorIndex } from './manor/navigation.js';
-import { REDUCED_MOTION_CLASS, usePrefersReducedMotion } from './a11y/usePrefersReducedMotion.js';
+import { FindingSheet } from './FindingSheet';
+import { FallbackList } from './manor/FallbackList';
+import { topFindings } from './manor/DoorNode';
+import { MAX_RENDERED_DOORS, fallbackReason } from './manor/fallback';
+import { layoutManor, type ManorLayout } from './manor/layout';
+import { ManorScene } from './manor/ManorScene';
+import { clampIndex, isManorKey, nextDoorIndex } from './manor/navigation';
+import { REDUCED_MOTION_CLASS, usePrefersReducedMotion } from './a11y/usePrefersReducedMotion';
 
 /**
  * Le manoir (PLA-F-14, PLA-F-15, PLA-F-21).

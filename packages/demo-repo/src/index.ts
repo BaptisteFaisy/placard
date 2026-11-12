@@ -1,11 +1,11 @@
 import { fakeValue, type DemoRepoGenerator, type GenerateOptions, type GenerateResult } from '@placard/core';
 
-import { applyCommit } from './apply.js';
-import { addPublicRemote, commitAll, initRepo, revList, syncTree } from './commit.js';
-import type { FileContent } from './noise.js';
-import { buildOracle } from './oracle.js';
-import { buildPlan } from './plan.js';
-import { createTree } from './tree.js';
+import { applyCommit } from './apply';
+import { addPublicRemote, commitAll, initRepo, revList, syncTree } from './commit';
+import type { FileContent } from './noise';
+import { buildOracle } from './oracle';
+import { buildPlan } from './plan';
+import { createTree } from './tree';
 
 /**
  * `@placard/demo-repo` — générateur de dépôt hanté.
@@ -28,8 +28,8 @@ export type {
   PlantedSecret,
 } from '@placard/core';
 
-export { FAMILIES } from './plan.js';
-export type { RepoPlan } from './plan.js';
+export { FAMILIES } from './plan';
+export type { RepoPlan } from './plan';
 
 const DEFAULT_SEED = 'placard-demo';
 

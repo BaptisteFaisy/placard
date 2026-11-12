@@ -1,8 +1,8 @@
 import { describe, expect, it } from 'vitest';
 
-import { scanFile } from './block-scan.js';
-import { createDetectorEngine } from './index.js';
-import { RULE_IDS } from './registry.js';
+import { scanFile } from './block-scan';
+import { createDetectorEngine } from './index';
+import { RULE_IDS } from './registry';
 import {
   emailLines,
   fixture,
@@ -10,7 +10,7 @@ import {
   inputOf,
   privateKeyLines,
   riskyFilePath,
-} from './testing/fixtures.js';
+} from './testing/fixtures';
 
 /**
  * PLA-F-04 : fichiers à risque, **par nom** et **par contenu**.

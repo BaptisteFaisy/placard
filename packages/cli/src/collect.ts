@@ -12,7 +12,7 @@ import type {
 import { readHistory } from '@placard/git-history';
 import { createDetectorEngine, scanFile } from '@placard/detectors';
 
-import type { PresenceInput } from './head-presence.js';
+import type { PresenceInput } from './head-presence';
 
 /**
  * Collecte des détections sur l'historique (PLA-F-01, PLA-F-02, PLA-F-04).

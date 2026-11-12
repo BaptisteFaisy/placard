@@ -1,8 +1,8 @@
 import { describe, expect, it } from 'vitest';
 
-import { NOW, makeFinding, makeReport, refOf } from './fixtures.js';
-import { buildDoor, doorSeverity, emptyFilter, indexByCommit, touchedCommits } from './index.js';
-import { buildViewModel } from './index.js';
+import { NOW, makeFinding, makeReport, refOf } from './fixtures';
+import { buildDoor, doorSeverity, emptyFilter, indexByCommit, touchedCommits } from './index';
+import { buildViewModel } from './index';
 import type { Door } from '@placard/core';
 
 const OLD = refOf('old', '2021-03-11T10:00:00Z');

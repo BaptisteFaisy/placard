@@ -11,8 +11,8 @@ import {
 } from '@placard/core';
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 
-import { TEST_SALT, makeDetection, makeInput, makeOptions, presenceMap, shaFor } from './fixtures.js';
-import { analyze, appendIgnoreEntry, loadIgnoreFile } from './index.js';
+import { TEST_SALT, makeDetection, makeInput, makeOptions, presenceMap, shaFor } from './fixtures';
+import { analyze, appendIgnoreEntry, loadIgnoreFile } from './index';
 
 /** Familles couvertes par le test de non-divulgation. */
 const ALL_FAMILIES: readonly FindingFamily[] = [

@@ -1,7 +1,7 @@
 import React from 'react';
 
-import type { PartProps } from './skeleton-parts.js';
-import { Legs, RibCage, Skull } from './skeleton-parts.js';
+import type { PartProps } from './skeleton-parts';
+import { Legs, RibCage, Skull } from './skeleton-parts';
 
 /**
  * Squelette à papiers : données bancaires et identité (`bank-data`, `identity`).

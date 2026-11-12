@@ -1,7 +1,7 @@
 import React from 'react';
 import type { ManorViewModel } from '@placard/core';
 
-import { floorPositionLabel, summarizeFloors } from './fallback.js';
+import { floorPositionLabel, summarizeFloors } from './fallback';
 
 /**
  * Repli lisible du manoir pour les très gros dépôts.

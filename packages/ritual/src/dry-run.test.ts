@@ -3,9 +3,9 @@ import { rm } from 'node:fs/promises';
 import { fakeValue } from '@placard/core';
 import { describe, expect, it } from 'vitest';
 
-import { detectRewriteTool, dryRun } from './dry-run.js';
-import { generatePurge, markRotated } from './index.js';
-import { findingFor, gitOrThrow, makeOptions, makeRepoWithSecret } from './test-support.js';
+import { detectRewriteTool, dryRun } from './dry-run';
+import { generatePurge, markRotated } from './index';
+import { findingFor, gitOrThrow, makeOptions, makeRepoWithSecret } from './test-support';
 
 /** Valeur fabriquée à l'exécution : rien au format réel n'est écrit ici. */
 const VALUE = fakeValue('cloud-key', 'pla-p-09-seed');

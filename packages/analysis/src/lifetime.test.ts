@@ -1,7 +1,7 @@
 import { describe, expect, it } from 'vitest';
 
-import { dateFor, makeDetection, presenceMap, shaFor } from './fixtures.js';
-import { daysBetween, lastSightingPerPath, makePresence, resolveLifetime } from './lifetime.js';
+import { dateFor, makeDetection, presenceMap, shaFor } from './fixtures';
+import { daysBetween, lastSightingPerPath, makePresence, resolveLifetime } from './lifetime';
 
 describe('resolveLifetime — introduction, retraits, présence dans HEAD (PLA-F-05)', () => {
   it('date l’introduction au premier commit qui porte la valeur', () => {

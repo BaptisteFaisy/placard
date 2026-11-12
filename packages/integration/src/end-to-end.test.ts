@@ -7,7 +7,7 @@ import { computeFingerprint, stringifyReport } from '@placard/core';
 import { generate } from '@placard/demo-repo';
 import { createManorModel } from '@placard/manor-model';
 import { createRitualApi } from '@placard/ritual';
-import { runScanPipeline } from './pipeline.js';
+import { runScanPipeline } from './pipeline';
 
 describe('end-to-end Placard oracle & properties (C.17)', () => {
   it('valide PLA-P-01, PLA-P-02, PLA-P-03, PLA-P-05, PLA-P-11, PLA-P-12, PLA-F-23 sur dépôt synthétique', async () => {

@@ -1,7 +1,7 @@
 import { describe, expect, it, vi } from 'vitest';
 import { cleanup, fireEvent, render, screen } from '@testing-library/react';
 import React from 'react';
-import { App } from './App.js';
+import { App } from './App';
 
 describe('@placard/web demo application', () => {
   it('monte le manoir avec le rapport de démonstration embarqué sans aucun appel réseau', () => {

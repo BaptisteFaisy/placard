@@ -10,15 +10,15 @@ import type { FindingFamily } from '@placard/core';
 import fc from 'fast-check';
 import { describe, expect, it } from 'vitest';
 
-import { createDetectorEngine } from './index.js';
-import { RULE_IDS } from './registry.js';
+import { createDetectorEngine } from './index';
+import { RULE_IDS } from './registry';
 import {
   apiKeyLine,
   assignmentLine,
   inputOf,
   passwordLine,
   urlWithCredentials,
-} from './testing/fixtures.js';
+} from './testing/fixtures';
 
 /**
  * Propriétés PLA-P-04 (et rappel PLA-P-02) vérifiées par fast-check.

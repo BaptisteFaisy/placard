@@ -3,8 +3,8 @@ import { join } from 'node:path';
 
 import { describe, expect, it } from 'vitest';
 
-import { createDetectorEngine } from './index.js';
-import { inputOf } from './testing/fixtures.js';
+import { createDetectorEngine } from './index';
+import { inputOf } from './testing/fixtures';
 
 /**
  * PLA-N-09 vu depuis le paquet lui-même : le code de `@placard/detectors` ne

@@ -1,9 +1,9 @@
 import { maxSeverity } from '@placard/core';
 import type { CommitRef, CorridorItem, Door, Finding, Floor, PlacardReport, WallStretch } from '@placard/core';
 
-import { timeOf, yearOf } from './dates.js';
-import { buildDoor, indexByCommit, touchedCommits } from './doors.js';
-import { plural } from './labels.js';
+import { timeOf, yearOf } from './dates';
+import { buildDoor, indexByCommit, touchedCommits } from './doors';
+import { plural } from './labels';
 
 /**
  * Les couloirs du manoir (PLA-F-14).

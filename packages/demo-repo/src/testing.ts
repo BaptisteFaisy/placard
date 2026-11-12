@@ -2,8 +2,8 @@ import { mkdtemp } from 'node:fs/promises';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 
-import { baseEnv, git } from './commit.js';
-import { generate, type GenerateOptions, type GenerateResult } from './index.js';
+import { baseEnv, git } from './commit';
+import { generate, type GenerateOptions, type GenerateResult } from './index';
 
 /**
  * Petits utilitaires partagés par les tests du générateur.

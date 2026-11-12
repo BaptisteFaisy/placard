@@ -13,11 +13,11 @@ import {
   type SkippedFiles,
 } from '@placard/core';
 
-import { buildSnippet } from './context.js';
-import { locationsOf, type DetectionGroup } from './group.js';
-import { assignFindingIds } from './ids.js';
-import { resolveLifetime, type HeadPresence } from './lifetime.js';
-import { scoreGroup } from './score.js';
+import { buildSnippet } from './context';
+import { locationsOf, type DetectionGroup } from './group';
+import { assignFindingIds } from './ids';
+import { resolveLifetime, type HeadPresence } from './lifetime';
+import { scoreGroup } from './score';
 
 /**
  * Assemblage du rapport (PLA-F-05 à PLA-F-09, PLA-F-08).

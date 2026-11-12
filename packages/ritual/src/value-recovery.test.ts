@@ -1,8 +1,8 @@
 import { fakeValue, redactPreview } from '@placard/core';
 import { describe, expect, it } from 'vitest';
 
-import { extractFromLine, extractKeyBlock, parsePreview, recoverValue } from './value-recovery.js';
-import { findingFor, makeRepoWithSecret } from './test-support.js';
+import { extractFromLine, extractKeyBlock, parsePreview, recoverValue } from './value-recovery';
+import { findingFor, makeRepoWithSecret } from './test-support';
 
 describe('parsePreview', () => {
   it('decodes a prefix and a length', () => {

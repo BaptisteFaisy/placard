@@ -1,4 +1,4 @@
-import { sanitizePath } from './sanitize.js';
+import { sanitizePath } from './sanitize';
 
 /**
  * Analyse incrémentale d'un diff unifié produit par `git` (`-p -U0 --full-index`).

@@ -1,4 +1,4 @@
-import type { Finding, PlacardReport, SeverityLevel } from '../types.js';
+import type { Finding, PlacardReport, SeverityLevel } from '../types';
 
 /**
  * Contrat du modèle de présentation du manoir (`@placard/manor-model`).

@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { illustrationTransform, type IllustrationProps } from './scale.js';
+import { illustrationTransform, type IllustrationProps } from './scale';
 
 /**
  * Escalier (C.4) : la liaison entre deux étages, donc entre deux années.

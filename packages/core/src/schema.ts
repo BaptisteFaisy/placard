@@ -1,6 +1,6 @@
 import { z } from 'zod';
 
-import type { PlacardReport } from './types.js';
+import type { PlacardReport } from './types';
 
 /**
  * Schéma Zod du rapport Placard.

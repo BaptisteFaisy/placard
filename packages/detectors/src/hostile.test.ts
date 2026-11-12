@@ -1,7 +1,7 @@
 import { describe, expect, it } from 'vitest';
 
-import { createDetectorEngine } from './index.js';
-import { fixture, inputOf } from './testing/fixtures.js';
+import { createDetectorEngine } from './index';
+import { fixture, inputOf } from './testing/fixtures';
 
 /**
  * PLA-P-10 / PLA-N-03 : un contenu hostile ne fait jamais lever le moteur et

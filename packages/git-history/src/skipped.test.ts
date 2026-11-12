@@ -2,9 +2,9 @@ import { describe, expect, it } from 'vitest';
 
 import type { HistoryEvent, ReadHistoryOptions, ReadHistoryResult, SkippedFileEvent } from '@placard/core';
 
-import { readHistory } from './index.js';
-import { createFixture, type Fixture } from './testing/fixture.js';
-import { useGitFixtures } from './testing/harness.js';
+import { readHistory } from './index';
+import { createFixture, type Fixture } from './testing/fixture';
+import { useGitFixtures } from './testing/harness';
 
 const KB = 1024;
 

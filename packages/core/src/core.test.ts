@@ -1,8 +1,8 @@
 import { describe, expect, it } from 'vitest';
 import fc from 'fast-check';
-import { computeFingerprint, redactPreview, sanitizeSnippet } from './redact.js';
-import { computeDangerScore } from './scoring.js';
-import type { FindingFamily } from './types.js';
+import { computeFingerprint, redactPreview, sanitizeSnippet } from './redact';
+import { computeDangerScore } from './scoring';
+import type { FindingFamily } from './types';
 
 describe('redact & fingerprint', () => {
   it('calcule une empreinte reproductible', () => {

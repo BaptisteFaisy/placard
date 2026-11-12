@@ -1,6 +1,6 @@
 import React from 'react';
 
-import type { PartProps } from './skeleton-parts.js';
+import type { PartProps } from './skeleton-parts';
 
 /**
  * La malle cadenassée : un fichier sensible (`risky-file`).

@@ -1,8 +1,8 @@
 import { FAMILY_TO_SKELETON } from '@placard/core';
 import { describe, expect, it } from 'vitest';
 
-import { NOW, makeFinding, makeReport, refOf } from './fixtures.js';
-import { buildViewModel, emptyFilter } from './index.js';
+import { NOW, makeFinding, makeReport, refOf } from './fixtures';
+import { buildViewModel, emptyFilter } from './index';
 import type { Door, WallStretch } from '@placard/core';
 
 const OLD = refOf('costume-old', '2021-04-02T10:00:00Z');
