@@ -2,9 +2,9 @@ import { describe, expect, it } from 'vitest';
 
 import type { DiffLineEvent, HistoryEvent } from '@placard/core';
 
-import { MAX_LINE_CHARS, readHistory, sanitizePath, sanitizeText, stripEscapes } from './index.js';
-import { createFixture, type Fixture } from './testing/fixture.js';
-import { useGitFixtures } from './testing/harness.js';
+import { MAX_LINE_CHARS, readHistory, sanitizePath, sanitizeText, stripEscapes } from './index';
+import { createFixture, type Fixture } from './testing/fixture';
+import { useGitFixtures } from './testing/harness';
 
 const ESC = '\u001b';
 const NUL = '\u0000';

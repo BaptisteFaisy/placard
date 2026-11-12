@@ -14,8 +14,8 @@ export {
   readHistory,
   resolveOptions,
   type ResolvedOptions,
-} from './history.js';
-export { HistoryScan, isoDate, type ScanCounts, type ScanOptions } from './scan.js';
+} from './history';
+export { HistoryScan, isoDate, type ScanCounts, type ScanOptions } from './scan';
 export {
   DIFF_ARGS,
   PROGRESS_STRIDE,
@@ -28,15 +28,15 @@ export {
   type LogOptions,
   type RawCommit,
   type WalkLogOptions,
-} from './log-stream.js';
-export { buildStagedCommand, readHeadInfo, walkStaged } from './staged.js';
+} from './log-stream';
+export { buildStagedCommand, readHeadInfo, walkStaged } from './staged';
 export {
   DiffParser,
   parseDiffPath,
   parseHeaderPath,
   unquoteGitPath,
   type DiffParserSink,
-} from './diff-parser.js';
+} from './diff-parser';
 export {
   MAX_LINE_CHARS,
   MAX_PATH_CHARS,
@@ -44,16 +44,16 @@ export {
   sanitizeText,
   stripEscapes,
   truncateLine,
-} from './sanitize.js';
-export { compileIgnorePatterns, globToRegExp, type PathFilter } from './ignore-paths.js';
-export { BlobSizeOracle, parseBatchCheckLine } from './blob-sizes.js';
+} from './sanitize';
+export { compileIgnorePatterns, globToRegExp, type PathFilter } from './ignore-paths';
+export { BlobSizeOracle, parseBatchCheckLine } from './blob-sizes';
 export {
   assertGitRepo,
   countCommits,
   isPublicRemote,
   readRepoSnapshot,
   repoName,
-} from './repo-info.js';
+} from './repo-info';
 export type {
   CommitEvent,
   DiffLineEvent,

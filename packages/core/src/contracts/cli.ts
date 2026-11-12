@@ -1,6 +1,6 @@
-import type { PlacardReport } from '../types.js';
-import type { AnalysisProgress } from './analysis.js';
-import type { HistoryEvent } from './git.js';
+import type { PlacardReport } from '../types';
+import type { AnalysisProgress } from './analysis';
+import type { HistoryEvent } from './git';
 
 /**
  * Contrat de la ligne de commande (`@placard/cli`).

@@ -8,7 +8,7 @@ import type {
   RitualOptions,
 } from '@placard/core';
 
-import { readReport } from './verify.js';
+import { readReport } from './verify';
 
 /**
  * Certificat (PLA-F-28) : `PLACARD.md` et son badge SVG.

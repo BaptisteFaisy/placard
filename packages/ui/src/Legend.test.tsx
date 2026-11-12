@@ -2,9 +2,9 @@ import React from 'react';
 import { describe, expect, it } from 'vitest';
 import { within } from '@testing-library/dom';
 
-import { Legend, LegendToggle } from './Legend.js';
-import { audit } from './testing/axe.js';
-import { click, mount } from './testing/render.js';
+import { Legend, LegendToggle } from './Legend';
+import { audit } from './testing/axe';
+import { click, mount } from './testing/render';
 
 /**
  * La légende doit être **atteignable depuis tout écran** (PLA-F-15) : le

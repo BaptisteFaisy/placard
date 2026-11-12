@@ -46,7 +46,7 @@ const STORAGE_TS: FileTemplate = {
   dialect: 'ts',
   header: [
     '// Object storage helpers used by the nightly archive job.',
-    "import { baseConfig } from '../config.js';",
+    "import { baseConfig } from '../config';",
     '',
     'export interface UploadResult {',
     '  key: string;',
@@ -145,7 +145,7 @@ const CONFIG_TEST_TS: FileTemplate = {
     '// Tests for the configuration loader.',
     "import { describe, expect, it } from 'vitest';",
     '',
-    "import { baseConfig } from '../src/config.js';",
+    "import { baseConfig } from '../src/config';",
     '',
     "describe('baseConfig', () => {",
     "  it('exposes a region', () => {",
@@ -163,7 +163,7 @@ const QUICKSTART_TS: FileTemplate = {
   dialect: 'ts',
   header: [
     '// Minimal example showing how the client is configured for a stage.',
-    "import { baseConfig } from '../config.js';",
+    "import { baseConfig } from '../config';",
     '',
     'export function quickstart(): string {',
     '  return `running in ${baseConfig.region}`;',

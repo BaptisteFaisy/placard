@@ -1,11 +1,11 @@
 import React from 'react';
 import type { PreventionProposal, PurgeArtifacts, RitualStep, RitualStepId, RotateInput, RotationCard } from '@placard/core';
 
-import { PreventionStep } from './ritual/PreventionStep.js';
-import { PurgeStep } from './ritual/PurgeStep.js';
-import { RotationStep } from './ritual/RotationStep.js';
-import { StepHeader } from './ritual/StepHeader.js';
-import { VerifyStep } from './ritual/VerifyStep.js';
+import { PreventionStep } from './ritual/PreventionStep';
+import { PurgeStep } from './ritual/PurgeStep';
+import { RotationStep } from './ritual/RotationStep';
+import { StepHeader } from './ritual/StepHeader';
+import { VerifyStep } from './ritual/VerifyStep';
 
 /**
  * Le rituel de remédiation, en quatre étapes ordonnées (PLA-F-22 à PLA-F-28).

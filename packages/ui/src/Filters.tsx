@@ -2,7 +2,7 @@ import React from 'react';
 import { FAMILIES, SEVERITY_ORDER, familyLabel, stateLabel } from '@placard/core';
 import type { FindingFilter, FindingState, SeverityLevel, FindingFamily } from '@placard/core';
 
-import { SeverityMark } from './a11y/SeverityMark.js';
+import { SeverityMark } from './a11y/SeverityMark';
 
 /**
  * Les filtres communs aux deux vues (PLA-F-19).

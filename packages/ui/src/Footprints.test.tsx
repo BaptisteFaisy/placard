@@ -1,14 +1,14 @@
 import React from 'react';
 import { describe, expect, it } from 'vitest';
 
-import { Manor } from './Manor.js';
-import { Footprints } from './Footprints.js';
-import { FootprintSheet } from './FootprintSheet.js';
-import { NOW } from './testing/fixtures.js';
-import { demoModel, demoReport } from './testing/model.js';
-import { mount } from './testing/render.js';
+import { Manor } from './Manor';
+import { Footprints } from './Footprints';
+import { FootprintSheet } from './FootprintSheet';
+import { NOW } from './testing/fixtures';
+import { demoModel, demoReport } from './testing/model';
+import { mount } from './testing/render';
 import { footprints } from '@placard/manor-model';
-import { layoutManor } from './manor/layout.js';
+import { layoutManor } from './manor/layout';
 
 /**
  * Empreintes de pas osseuses (PLA-F-17) : la durée de vie d'un secret, de sa

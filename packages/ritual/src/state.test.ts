@@ -4,8 +4,8 @@ import { describe, expect, it } from 'vitest';
 
 import type { RitualState } from '@placard/core';
 
-import { loadState, saveState, stateDir, stateFileName, statePath } from './state.js';
-import { makeOptions } from './test-support.js';
+import { loadState, saveState, stateDir, stateFileName, statePath } from './state';
+import { makeOptions } from './test-support';
 
 const FINGERPRINT = 'hmac256:0123456789abcdef0123456789abcdef';
 

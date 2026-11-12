@@ -3,9 +3,9 @@ import { familyLabel, severityOf, stateLabel } from '@placard/core';
 import type { Finding } from '@placard/core';
 import { formatLongDate, humanizeDays } from '@placard/manor-model';
 
-import { SeverityMark } from './a11y/SeverityMark.js';
-import { Skeleton } from './illustrations/Skeleton.js';
-import { lifetimeDaysOf } from './sheet-data.js';
+import { SeverityMark } from './a11y/SeverityMark';
+import { Skeleton } from './illustrations/Skeleton';
+import { lifetimeDaysOf } from './sheet-data';
 
 /**
  * La fiche d'une trouvaille (PLA-F-16).

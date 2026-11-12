@@ -1,4 +1,4 @@
-import type { SeverityLevel } from './types.js';
+import type { SeverityLevel } from './types';
 
 /**
  * Gravité déduite du score de danger (0-100). Les seuils sont figés ici pour

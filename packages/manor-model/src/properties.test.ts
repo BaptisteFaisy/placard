@@ -4,7 +4,7 @@ import { describe, expect, it } from 'vitest';
 
 import type { CorridorItem, FindingFilter, PlacardReport } from '@placard/core';
 
-import { NOW, makeFinding, makeReport, refOf, shaOf } from './fixtures.js';
+import { NOW, makeFinding, makeReport, refOf, shaOf } from './fixtures';
 import {
   applyFilters,
   buildRegistryRows,
@@ -12,7 +12,7 @@ import {
   emptyFilter,
   matchesFilter,
   REGISTRY_SORT_FIELDS,
-} from './index.js';
+} from './index';
 
 /**
  * Propriétés fast-check du modèle de présentation.

@@ -4,8 +4,8 @@ import { fileURLToPath } from 'node:url';
 
 import { afterAll, beforeAll, describe, expect, it } from 'vitest';
 
-import type { GenerateResult } from './index.js';
-import { makeRepo } from './testing.js';
+import type { GenerateResult } from './index';
+import { makeRepo } from './testing';
 
 /**
  * Garde PLA-N-09 : aucune valeur factice au format réel d'un secret n'est

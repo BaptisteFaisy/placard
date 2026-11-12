@@ -3,7 +3,7 @@ import { describe, expect, it } from 'vitest';
 
 import { FAMILIES } from '@placard/core';
 
-import { PROVIDER_IDS, rotationCard } from './rotation-cards.js';
+import { PROVIDER_IDS, rotationCard } from './rotation-cards';
 
 /** Les cinq fournisseurs attendus, plus le repli générique. */
 const PROVIDER_RULES = [

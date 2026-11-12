@@ -1,7 +1,7 @@
 import type { CommitRef, Finding, FootprintTrail, PlacardReport } from '@placard/core';
 
-import { daysBetween, timeOf, yearOf } from './dates.js';
-import { footprintAriaLabel } from './labels.js';
+import { daysBetween, timeOf, yearOf } from './dates';
+import { footprintAriaLabel } from './labels';
 
 /**
  * Empreintes de pas osseuses (PLA-F-17, C.4).

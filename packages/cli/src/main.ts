@@ -1,5 +1,5 @@
 #!/usr/bin/env node
-import { cli } from './wire.js';
+import { cli } from './wire';
 
 const exitCode = await cli.main(process.argv.slice(2));
 if (exitCode !== 0) {

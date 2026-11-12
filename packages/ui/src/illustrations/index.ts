@@ -1,9 +1,9 @@
-export { DoorIllustration } from './DoorIllustration.js';
-export type { DoorIllustrationProps, DoorIllustrationState } from './DoorIllustration.js';
-export { Lantern } from './Lantern.js';
-export type { LanternProps } from './Lantern.js';
-export { OpenWindow } from './OpenWindow.js';
-export { Ribbon } from './Ribbon.js';
+export { DoorIllustration } from './DoorIllustration';
+export type { DoorIllustrationProps, DoorIllustrationState } from './DoorIllustration';
+export { Lantern } from './Lantern';
+export type { LanternProps } from './Lantern';
+export { OpenWindow } from './OpenWindow';
+export { Ribbon } from './Ribbon';
 export {
   illustrationOpacity,
   illustrationTransform,
@@ -15,14 +15,14 @@ export {
   scaleForDanger,
   severityColor,
   webStrands,
-} from './scale.js';
-export type { IllustrationProps } from './scale.js';
-export { Skeleton, SkeletonFigure, skeletonKindOf } from './Skeleton.js';
-export type { SkeletonProps } from './Skeleton.js';
-export { SpiderWeb } from './SpiderWeb.js';
-export type { SpiderWebProps } from './SpiderWeb.js';
-export { Staircase } from './Staircase.js';
-export type { StaircaseProps } from './Staircase.js';
-export { WallPanel } from './WallPanel.js';
-export type { WallPanelProps } from './WallPanel.js';
-export { WaxSeal } from './WaxSeal.js';
+} from './scale';
+export type { IllustrationProps } from './scale';
+export { Skeleton, SkeletonFigure, skeletonKindOf } from './Skeleton';
+export type { SkeletonProps } from './Skeleton';
+export { SpiderWeb } from './SpiderWeb';
+export type { SpiderWebProps } from './SpiderWeb';
+export { Staircase } from './Staircase';
+export type { StaircaseProps } from './Staircase';
+export { WallPanel } from './WallPanel';
+export type { WallPanelProps } from './WallPanel';
+export { WaxSeal } from './WaxSeal';

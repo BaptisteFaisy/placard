@@ -1,8 +1,8 @@
 import React from 'react';
 
-import { WallPanel } from '../illustrations/WallPanel.js';
+import { WallPanel } from '../illustrations/WallPanel';
 import { wallLabel } from '@placard/manor-model';
-import type { WallSlot } from './layout.js';
+import type { WallSlot } from './layout';
 
 /**
  * Un pan de mur (C.4) : une suite de commits **sans aucune trouvaille**,

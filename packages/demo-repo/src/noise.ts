@@ -91,7 +91,7 @@ const GITIGNORE_LINES: readonly string[] = ['node_modules/', 'dist/', 'coverage/
 
 const INDEX_TS_LINES: readonly string[] = [
   '// Service entry point.',
-  "import { routes } from './api.js';",
+  "import { routes } from './api';",
   '',
   'export function main(): string {',
   '  return `reports-service with ${routes.length} routes`;',

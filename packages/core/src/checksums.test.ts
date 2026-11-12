@@ -1,8 +1,8 @@
 import { describe, expect, it } from 'vitest';
 import fc from 'fast-check';
 
-import { isDummyValue, isTestPath, luhnValid, mod97Valid, nirValid, shannonEntropy } from './checksums.js';
-import { fakeCardNumber, fakeFrenchSsn, fakeIban, fakeValue, invalidChecksumVariant } from './fake-values.js';
+import { isDummyValue, isTestPath, luhnValid, mod97Valid, nirValid, shannonEntropy } from './checksums';
+import { fakeCardNumber, fakeFrenchSsn, fakeIban, fakeValue, invalidChecksumVariant } from './fake-values';
 
 describe('checksums & validations', () => {
   it('PLA-P-04: fakeIban produit un IBAN valide, sa variante invalide ne passe pas', () => {

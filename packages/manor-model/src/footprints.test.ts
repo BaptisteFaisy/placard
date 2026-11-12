@@ -1,7 +1,7 @@
 import { describe, expect, it } from 'vitest';
 
-import { NOW, makeFinding, makeReport, refOf } from './fixtures.js';
-import { buildViewModel, emptyFilter, footprints } from './index.js';
+import { NOW, makeFinding, makeReport, refOf } from './fixtures';
+import { buildViewModel, emptyFilter, footprints } from './index';
 
 const BIRTH = refOf('fp-birth', '2021-03-11T10:00:00Z');
 const MID_2021 = refOf('fp-mid21', '2021-11-02T10:00:00Z');

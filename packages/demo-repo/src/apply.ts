@@ -4,9 +4,9 @@ import {
   binaryAsset,
   LARGE_ASSET_PATH,
   largeAsset,
-} from './noise.js';
-import type { RepoPlan } from './plan.js';
-import { plantSecret, removeSecret, type RepoTree } from './tree.js';
+} from './noise';
+import type { RepoPlan } from './plan';
+import { plantSecret, removeSecret, type RepoTree } from './tree';
 
 /**
  * Application d'un commit du plan à l'arbre en mémoire.

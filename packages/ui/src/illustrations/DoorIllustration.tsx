@@ -6,7 +6,7 @@ import {
   illustrationTransform,
   severityColor,
   type IllustrationProps,
-} from './scale.js';
+} from './scale';
 
 /**
  * La porte du manoir (C.4) : un commit qui contient au moins une trouvaille.

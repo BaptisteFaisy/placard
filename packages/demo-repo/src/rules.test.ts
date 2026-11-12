@@ -2,10 +2,10 @@ import { rm } from 'node:fs/promises';
 
 import { afterAll, beforeAll, describe, expect, it } from 'vitest';
 
-import { FAMILIES } from './index.js';
-import { RULE_IDS } from './rules.js';
-import { dialectOf } from './templates.js';
-import { makeRepo } from './testing.js';
+import { FAMILIES } from './index';
+import { RULE_IDS } from './rules';
+import { dialectOf } from './templates';
+import { makeRepo } from './testing';
 
 /**
  * L'oracle annonce, pour chaque valeur plantée, la règle censée la détecter.

@@ -1,4 +1,4 @@
-import { createDetectorEngine } from './engine.js';
+import { createDetectorEngine } from './engine';
 
 /**
  * `@placard/detectors` — règles de détection, préfiltre et validations.
@@ -25,21 +25,21 @@ export type {
   RawDetection,
 } from '@placard/core';
 
-export { createDetectorEngine } from './engine.js';
+export { createDetectorEngine } from './engine';
 
-export { RULE_IDS, builtinRuleSet, builtinRules, priorityOf, sortByPriority } from './registry.js';
-export type { RegistryOptions, RuleSet } from './registry.js';
+export { RULE_IDS, builtinRuleSet, builtinRules, priorityOf, sortByPriority } from './registry';
+export type { RegistryOptions, RuleSet } from './registry';
 
-export { scanFile } from './block-scan.js';
-export type { FileScanOptions, FileScanResult } from './block-scan.js';
+export { scanFile } from './block-scan';
+export type { FileScanOptions, FileScanResult } from './block-scan';
 
-export { compilePattern, isSafePatternSource, loadCustomRules, parseCustomRules } from './custom-rules.js';
+export { compilePattern, isSafePatternSource, loadCustomRules, parseCustomRules } from './custom-rules';
 
-export { compileKeywords, makePrefilter, prefilterMatches } from './prefilter.js';
-export type { Prefilter } from './prefilter.js';
+export { compileKeywords, makePrefilter, prefilterMatches } from './prefilter';
+export type { Prefilter } from './prefilter';
 
-export { compareDetections, overlaps, resolveOverlaps } from './overlap.js';
-export type { Priorities } from './overlap.js';
+export { compareDetections, overlaps, resolveOverlaps } from './overlap';
+export type { Priorities } from './overlap';
 
 export {
   PASSWORD_MIN_ENTROPY,
@@ -50,7 +50,7 @@ export {
   isPlausibleSecret,
   matchesAlphabet,
   matchesAlphabetRange,
-} from './validators.js';
+} from './validators';
 
 export {
   MAX_PRIVATE_KEY_BLOCK_CHARS,
@@ -59,19 +59,19 @@ export {
   matchPrivateKeyFooter,
   matchPrivateKeyHeader,
   privateKeyBlockComplete,
-} from './rules/private-keys.js';
+} from './rules/private-keys';
 
-export { EMAIL_DUMP_THRESHOLD, riskyFileLevelRules, riskyFilePathRules } from './rules/risky-files.js';
+export { EMAIL_DUMP_THRESHOLD, riskyFileLevelRules, riskyFilePathRules } from './rules/risky-files';
 
-export { countEmails, isExampleDomain, isFrenchPhone, isFrenchSsn, isPersonalEmail } from './rules/identity.js';
+export { countEmails, isExampleDomain, isFrenchPhone, isFrenchSsn, isPersonalEmail } from './rules/identity';
 
-export { isCardNumber } from './rules/banking.js';
+export { isCardNumber } from './rules/banking';
 
-export { DEFAULT_ENTROPY_THRESHOLD, isSuspiciousString } from './rules/suspicious.js';
+export { DEFAULT_ENTROPY_THRESHOLD, isSuspiciousString } from './rules/suspicious';
 
-export { looksLikeMachineValue, passwordFromUrl } from './rules/passwords.js';
+export { looksLikeMachineValue, passwordFromUrl } from './rules/passwords';
 
-export { decodesToJsonObject } from './rules/signed-tokens.js';
+export { decodesToJsonObject } from './rules/signed-tokens';
 
 /** Fonction de construction du moteur, également exportée par commodité. */
 export const detectors = { createDetectorEngine } as const;

@@ -1,8 +1,8 @@
 import { maxSeverity } from '@placard/core';
 import type { CommitRef, Door, Finding, SeverityLevel } from '@placard/core';
 
-import { ageInDays, yearOf } from './dates.js';
-import { doorAriaLabel } from './labels.js';
+import { ageInDays, yearOf } from './dates';
+import { doorAriaLabel } from './labels';
 
 /**
  * Les portes du manoir : un commit qui contient au moins une trouvaille (C.4).

@@ -1,7 +1,7 @@
 import { createHash } from 'node:crypto';
 
-import { luhnValid, mod97OfDigits, nirKey } from './checksums.js';
-import type { FindingFamily } from './types.js';
+import { luhnValid, mod97OfDigits, nirKey } from './checksums';
+import type { FindingFamily } from './types';
 
 /**
  * Fabrique de valeurs factices, à graine déterministe.

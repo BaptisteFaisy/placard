@@ -1,6 +1,6 @@
 import type { ManorViewModel } from '@placard/core';
 
-import { layoutManor, type ManorLayout } from './layout.js';
+import { layoutManor, type ManorLayout } from './layout';
 
 /**
  * Repli lisible pour les grands dépôts (exigence « 500 portes »).

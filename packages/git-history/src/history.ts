@@ -5,11 +5,11 @@ import type {
   RepoSnapshot,
 } from '@placard/core';
 
-import { compileIgnorePatterns } from './ignore-paths.js';
-import { walkLog } from './log-stream.js';
-import { countCommits, readRepoSnapshot } from './repo-info.js';
-import { HistoryScan } from './scan.js';
-import { walkStaged } from './staged.js';
+import { compileIgnorePatterns } from './ignore-paths';
+import { walkLog } from './log-stream';
+import { countCommits, readRepoSnapshot } from './repo-info';
+import { HistoryScan } from './scan';
+import { walkStaged } from './staged';
 
 /**
  * Lecture en flux de l'historique Git (`@placard/git-history`).

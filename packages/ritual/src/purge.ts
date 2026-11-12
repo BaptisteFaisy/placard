@@ -3,15 +3,15 @@ import { isAbsolute, join, relative, resolve } from 'node:path';
 
 import type { Finding, PurgeArtifacts, RitualOptions } from '@placard/core';
 
-import { isPersonalData } from './families.js';
+import { isPersonalData } from './families';
 import {
   buildFallbackHelper,
   buildPurgeScript,
   buildReplacementsFile,
   REPLACEMENT_MARKER,
-} from './purge-script.js';
-import { loadState } from './state.js';
-import { recoverValue } from './value-recovery.js';
+} from './purge-script';
+import { loadState } from './state';
+import { recoverValue } from './value-recovery';
 
 /**
  * Génération du script de purge (PLA-F-24).

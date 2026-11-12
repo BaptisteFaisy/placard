@@ -1,7 +1,7 @@
 import { buildViewModel, emptyFilter } from '@placard/manor-model';
 import type { FindingFilter, ManorViewModel, PlacardReport } from '@placard/core';
 
-import { NOW, makeFinding, makeReport, refOf } from './fixtures.js';
+import { NOW, makeFinding, makeReport, refOf } from './fixtures';
 
 /**
  * Rapport de démonstration partagé par les tests d'interface : trois étages,

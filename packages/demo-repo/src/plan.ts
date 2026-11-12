@@ -1,8 +1,8 @@
 import { fakeValue, prng, type FindingFamily, type Rand } from '@placard/core';
 
-import { planNoise, type NoiseOp } from './noise.js';
-import { expectedRuleFor } from './rules.js';
-import { templateFor } from './templates.js';
+import { planNoise, type NoiseOp } from './noise';
+import { expectedRuleFor } from './rules';
+import { templateFor } from './templates';
 
 /**
  * Plan de commits du dépôt hanté (PLA-F-13).

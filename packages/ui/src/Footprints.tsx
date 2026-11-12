@@ -1,7 +1,7 @@
 import React from 'react';
 import type { FootprintTrail } from '@placard/core';
 
-import { DOOR_WIDTH, FLOOR_BASELINE, type DoorSlot, type ManorLayout } from './manor/layout.js';
+import { DOOR_WIDTH, FLOOR_BASELINE, type DoorSlot, type ManorLayout } from './manor/layout';
 
 /**
  * Empreintes de pas osseuses (C.4, PLA-F-17) : la durée de vie d'un même

@@ -1,4 +1,4 @@
-import type { FindingFamily } from '../types.js';
+import type { FindingFamily } from '../types';
 
 /**
  * Contrat des détecteurs (`@placard/detectors`).

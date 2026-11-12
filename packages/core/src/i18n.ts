@@ -1,5 +1,5 @@
-import { severityOf } from './severity.js';
-import type { FindingFamily, FindingState, SeverityLevel } from './types.js';
+import { severityOf } from './severity';
+import type { FindingFamily, FindingState, SeverityLevel } from './types';
 
 /**
  * Vocabulaire partagé de l'interface. Toutes les chaînes visibles sont en

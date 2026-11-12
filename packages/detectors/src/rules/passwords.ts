@@ -1,6 +1,6 @@
 import type { DetectorRule } from '@placard/core';
 
-import { PASSWORD_MIN_ENTROPY, PASSWORD_MIN_LENGTH, isPlausibleSecret } from '../validators.js';
+import { PASSWORD_MIN_ENTROPY, PASSWORD_MIN_LENGTH, isPlausibleSecret } from '../validators';
 
 /**
  * Famille `plaintext-password` : mot de passe écrit en clair.

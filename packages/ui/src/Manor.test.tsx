@@ -2,11 +2,11 @@ import React from 'react';
 import { afterEach, describe, expect, it } from 'vitest';
 import { within } from '@testing-library/dom';
 
-import { Manor } from './Manor.js';
-import { NOW } from './testing/fixtures.js';
-import { demoModel, openOnlyModel } from './testing/model.js';
-import { audit } from './testing/axe.js';
-import { cleanup, click, mount, press, type Mounted } from './testing/render.js';
+import { Manor } from './Manor';
+import { NOW } from './testing/fixtures';
+import { demoModel, openOnlyModel } from './testing/model';
+import { audit } from './testing/axe';
+import { cleanup, click, mount, press, type Mounted } from './testing/render';
 
 /**
  * Tests du manoir (PLA-F-14, PLA-F-15, PLA-F-17, PLA-F-21).

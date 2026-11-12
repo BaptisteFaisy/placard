@@ -7,8 +7,8 @@ import {
   NPM_TOKEN_PREFIX,
   SLACK_TOKEN_PREFIX,
   STRIPE_LIVE_PREFIX,
-} from '../signatures.js';
-import { matchesAlphabet, matchesAlphabetRange } from '../validators.js';
+} from '../signatures';
+import { matchesAlphabet, matchesAlphabetRange } from '../validators';
 
 /**
  * Famille `platform-token` : jetons à préfixe des plateformes.

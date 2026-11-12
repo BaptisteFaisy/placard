@@ -1,6 +1,6 @@
 import type { Finding } from '@placard/core';
 
-import { git } from './git-exec.js';
+import { git } from './git-exec';
 
 /**
  * Récupération de la valeur d'une trouvaille (PLA-F-24).

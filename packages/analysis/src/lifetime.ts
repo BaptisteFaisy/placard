@@ -1,6 +1,6 @@
 import type { AnchoredDetection, CommitEvent } from '@placard/core';
 
-import { sortDetections } from './group.js';
+import { sortDetections } from './group';
 
 /**
  * Durée de vie d'un secret (PLA-F-05).

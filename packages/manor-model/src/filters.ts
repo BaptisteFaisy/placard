@@ -1,7 +1,7 @@
 import { severityOf } from '@placard/core';
 import type { Finding, FindingFilter } from '@placard/core';
 
-import { yearOf } from './dates.js';
+import { yearOf } from './dates';
 
 /**
  * Filtres communs au manoir et au registre (PLA-F-19).

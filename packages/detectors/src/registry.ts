@@ -1,14 +1,14 @@
 import type { DetectorRule } from '@placard/core';
 
-import { bankingRules } from './rules/banking.js';
-import { cloudRules } from './rules/cloud.js';
-import { identityRules } from './rules/identity.js';
-import { passwordRules } from './rules/passwords.js';
-import { privateKeyRules } from './rules/private-keys.js';
-import { riskyFileLevelRules, riskyFilePathRules } from './rules/risky-files.js';
-import { signedTokenRules } from './rules/signed-tokens.js';
-import { DEFAULT_ENTROPY_THRESHOLD, createSuspiciousRules } from './rules/suspicious.js';
-import { tokenRules } from './rules/tokens.js';
+import { bankingRules } from './rules/banking';
+import { cloudRules } from './rules/cloud';
+import { identityRules } from './rules/identity';
+import { passwordRules } from './rules/passwords';
+import { privateKeyRules } from './rules/private-keys';
+import { riskyFileLevelRules, riskyFilePathRules } from './rules/risky-files';
+import { signedTokenRules } from './rules/signed-tokens';
+import { DEFAULT_ENTROPY_THRESHOLD, createSuspiciousRules } from './rules/suspicious';
+import { tokenRules } from './rules/tokens';
 
 /**
  * Registre : assemblage et **ordre d'application** des règles.

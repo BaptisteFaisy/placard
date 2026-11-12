@@ -2,10 +2,10 @@ import React from 'react';
 import type { Door } from '@placard/core';
 import { floorLabel } from '@placard/manor-model';
 
-import { Staircase } from '../illustrations/Staircase.js';
-import { DoorNode } from './DoorNode.js';
-import { WallNode } from './WallNode.js';
-import { CORRIDOR_START, FLOOR_BASELINE, FLOOR_HEIGHT, STAIR_WIDTH, type FloorLayout } from './layout.js';
+import { Staircase } from '../illustrations/Staircase';
+import { DoorNode } from './DoorNode';
+import { WallNode } from './WallNode';
+import { CORRIDOR_START, FLOOR_BASELINE, FLOOR_HEIGHT, STAIR_WIDTH, type FloorLayout } from './layout';
 
 /**
  * Un étage du manoir : une année d'historique (C.4).

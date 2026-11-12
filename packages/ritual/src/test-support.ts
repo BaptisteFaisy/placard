@@ -5,7 +5,7 @@ import { join } from 'node:path';
 import { computeFingerprint, fakeValue, redactPreview } from '@placard/core';
 import type { Finding, FindingFamily, RitualOptions } from '@placard/core';
 
-import { git } from './git-exec.js';
+import { git } from './git-exec';
 
 /**
  * Outillage des tests : valeurs fabriquées à l'exécution (PLA-N-09), dépôts

@@ -1,8 +1,8 @@
-import { runGit, streamGitLines } from './git-exec.js';
-import { DIFF_ARGS } from './log-stream.js';
-import type { RawCommit } from './log-stream.js';
-import type { HistoryScan } from './scan.js';
-import { sanitizeText } from './sanitize.js';
+import { runGit, streamGitLines } from './git-exec';
+import { DIFF_ARGS } from './log-stream';
+import type { RawCommit } from './log-stream';
+import type { HistoryScan } from './scan';
+import { sanitizeText } from './sanitize';
 
 /**
  * Mode `--staged` (PLA-F-10) : analyse des seules modifications indexées.

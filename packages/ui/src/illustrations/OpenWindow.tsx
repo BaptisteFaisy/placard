@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { illustrationOpacity, illustrationTransform, type IllustrationProps } from './scale.js';
+import { illustrationOpacity, illustrationTransform, type IllustrationProps } from './scale';
 
 /**
  * Fenêtre ouverte du couloir (C.4) : le dépôt a un distant **public**, donc

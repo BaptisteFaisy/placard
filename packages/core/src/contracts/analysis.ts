@@ -1,6 +1,6 @@
-import type { PlacardReport, RepoMeta, SkippedFiles } from '../types.js';
-import type { RawDetection } from './detector.js';
-import type { CommitEvent, RepoSnapshot } from './git.js';
+import type { PlacardReport, RepoMeta, SkippedFiles } from '../types';
+import type { RawDetection } from './detector';
+import type { CommitEvent, RepoSnapshot } from './git';
 
 /**
  * Contrat du moteur d'analyse (`@placard/analysis`).

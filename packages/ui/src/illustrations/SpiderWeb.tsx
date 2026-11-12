@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { illustrationOpacity, illustrationTransform, webStrands, type IllustrationProps } from './scale.js';
+import { illustrationOpacity, illustrationTransform, webStrands, type IllustrationProps } from './scale';
 
 /**
  * Toile d'araignée (C.4) : l'âge du commit. Plus le commit est ancien, plus il

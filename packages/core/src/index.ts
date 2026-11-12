@@ -1,18 +1,18 @@
-export * from './types.js';
-export * from './redact.js';
-export * from './scoring.js';
-export * from './severity.js';
-export * from './i18n.js';
-export * from './schema.js';
-export * from './checksums.js';
-export * from './fake-values.js';
-export * from './contracts/git.js';
-export * from './contracts/detector.js';
-export * from './contracts/analysis.js';
-export * from './contracts/demo.js';
-export * from './contracts/ritual.js';
-export * from './contracts/manor.js';
-export * from './contracts/cli.js';
+export * from './types';
+export * from './redact';
+export * from './scoring';
+export * from './severity';
+export * from './i18n';
+export * from './schema';
+export * from './checksums';
+export * from './fake-values';
+export * from './contracts/git';
+export * from './contracts/detector';
+export * from './contracts/analysis';
+export * from './contracts/demo';
+export * from './contracts/ritual';
+export * from './contracts/manor';
+export * from './contracts/cli';
 
 /** Version de l'outil, lue depuis le paquet racine. */
 export const TOOL_NAME = 'placard';

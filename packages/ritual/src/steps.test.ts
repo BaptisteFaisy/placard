@@ -2,8 +2,8 @@ import { describe, expect, it } from 'vitest';
 
 import type { RitualState } from '@placard/core';
 
-import { PURGE_LOCK_REASON, isRotationDone, steps } from './steps.js';
-import { fakeFinding, findingFor } from './test-support.js';
+import { PURGE_LOCK_REASON, isRotationDone, steps } from './steps';
+import { fakeFinding, findingFor } from './test-support';
 
 const NOW = '2026-11-11T10:00:00.000Z';
 

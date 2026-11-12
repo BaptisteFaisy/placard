@@ -3,7 +3,7 @@ import { readFile } from 'node:fs/promises';
 import { safeParseReport } from '@placard/core';
 import type { Finding, PlacardReport, RitualOptions, RitualState } from '@placard/core';
 
-import { baseState, loadState, saveState } from './state.js';
+import { baseState, loadState, saveState } from './state';
 
 /**
  * Vérification (PLA-F-27).

@@ -1,8 +1,8 @@
 import { describe, expect, it } from 'vitest';
 
-import { TEST_SALT, makeDetection } from './fixtures.js';
-import { groupDetections } from './group.js';
-import { isDummyGroup, isTestOnlyGroup, scoreGroup } from './score.js';
+import { TEST_SALT, makeDetection } from './fixtures';
+import { groupDetections } from './group';
+import { isDummyGroup, isTestOnlyGroup, scoreGroup } from './score';
 
 /** Groupe d'une seule détection, pour isoler un terme du score. */
 function groupOf(

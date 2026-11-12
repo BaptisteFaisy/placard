@@ -5,8 +5,8 @@ import { fakeValue } from '@placard/core';
 import type { Finding } from '@placard/core';
 import { describe, expect, it } from 'vitest';
 
-import { BADGE_FILE, CERTIFICATE_FILE, certificate } from './certificate.js';
-import { fakeFinding, findingFor, makeOptions } from './test-support.js';
+import { BADGE_FILE, CERTIFICATE_FILE, certificate } from './certificate';
+import { fakeFinding, findingFor, makeOptions } from './test-support';
 
 const VALUE = fakeValue('cloud-key', 'certificate-seed');
 

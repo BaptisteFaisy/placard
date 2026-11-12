@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { illustrationTransform, type IllustrationProps } from './scale.js';
+import { illustrationTransform, type IllustrationProps } from './scale';
 
 /**
  * Pan de mur (C.4) : une suite de commits **sans aucune trouvaille**,

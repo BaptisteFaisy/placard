@@ -11,11 +11,11 @@ import type {
   SeverityLevel,
 } from '@placard/core';
 
-import { applyFilters, emptyFilter, normalizeFilter } from './filters.js';
-import { buildFloors, countItems } from './floors.js';
-import { footprints } from './footprints.js';
-import { buildHall } from './hall.js';
-import { buildRegistryRows } from './registry.js';
+import { applyFilters, emptyFilter, normalizeFilter } from './filters';
+import { buildFloors, countItems } from './floors';
+import { footprints } from './footprints';
+import { buildHall } from './hall';
+import { buildRegistryRows } from './registry';
 
 /**
  * `@placard/manor-model` — modèle de présentation partagé du manoir et du
@@ -28,14 +28,14 @@ import { buildRegistryRows } from './registry.js';
  * toujours le même ensemble de trouvailles pour un même filtre.
  */
 
-export * from './dates.js';
-export * from './doors.js';
-export * from './filters.js';
-export * from './floors.js';
-export * from './footprints.js';
-export * from './hall.js';
-export * from './labels.js';
-export * from './registry.js';
+export * from './dates';
+export * from './doors';
+export * from './filters';
+export * from './floors';
+export * from './footprints';
+export * from './hall';
+export * from './labels';
+export * from './registry';
 
 /**
  * Construit le modèle complet : étages, portes, hall, trouvailles filtrées.

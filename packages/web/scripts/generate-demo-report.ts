@@ -1,5 +1,5 @@
-import { generate } from '../../demo-repo/src/index.js';
-import { cli } from '../../cli/src/index.js';
+import { generate } from '../../demo-repo/src/index';
+import { cli } from '../../cli/src/index';
 import { copyFile, mkdir } from 'node:fs/promises';
 import { resolve } from 'node:path';
 import { tmpdir } from 'node:os';

@@ -1,7 +1,7 @@
 import { isDummyValue, shannonEntropy } from '@placard/core';
 import type { DetectorRule } from '@placard/core';
 
-import { isInsideUrl, isPlaceholder } from '../validators.js';
+import { isInsideUrl, isPlaceholder } from '../validators';
 
 /**
  * Famille `suspicious-string` : longue chaîne à forte entropie près d'un

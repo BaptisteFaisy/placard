@@ -2,8 +2,8 @@ import { describe, expect, it } from 'vitest';
 import { mkdtemp, rm } from 'node:fs/promises';
 import { join } from 'node:path';
 import { tmpdir } from 'node:os';
-import { cli } from './wire.js';
-import { parseArgs } from './args.js';
+import { cli } from './wire';
+import { parseArgs } from './args';
 
 describe('cli commands & args', () => {
   it('parseArgs comprend scan et les drapeaux', () => {

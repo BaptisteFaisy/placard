@@ -1,10 +1,10 @@
 import React from 'react';
 import { describe, expect, it } from 'vitest';
 
-import { Manor } from './Manor.js';
-import { NOW } from './testing/fixtures.js';
-import { demoModel } from './testing/model.js';
-import { fire, mount } from './testing/render.js';
+import { Manor } from './Manor';
+import { NOW } from './testing/fixtures';
+import { demoModel } from './testing/model';
+import { fire, mount } from './testing/render';
 
 /**
  * La lanterne suit le focus (PLA-F-15) : le pointeur comme le clavier

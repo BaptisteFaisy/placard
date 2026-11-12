@@ -10,15 +10,15 @@ import {
   scaleForDanger,
   severityColor,
   webStrands,
-} from './illustrations/scale.js';
-import { doorStateOf, topFindings } from './manor/DoorNode.js';
-import { itemWidth, layoutManor } from './manor/layout.js';
-import { clampIndex, nextDoorIndex } from './manor/navigation.js';
-import { floorPositionLabel, summarizeFloors } from './manor/fallback.js';
-import { floorsSpanned, trailSummary } from './FootprintSheet.js';
-import { lastRemoval, lifetimeDaysOf } from './sheet-data.js';
-import { demoModel, demoReport } from './testing/model.js';
-import { NOW } from './testing/fixtures.js';
+} from './illustrations/scale';
+import { doorStateOf, topFindings } from './manor/DoorNode';
+import { itemWidth, layoutManor } from './manor/layout';
+import { clampIndex, nextDoorIndex } from './manor/navigation';
+import { floorPositionLabel, summarizeFloors } from './manor/fallback';
+import { floorsSpanned, trailSummary } from './FootprintSheet';
+import { lastRemoval, lifetimeDaysOf } from './sheet-data';
+import { demoModel, demoReport } from './testing/model';
+import { NOW } from './testing/fixtures';
 import { footprints } from '@placard/manor-model';
 
 /**

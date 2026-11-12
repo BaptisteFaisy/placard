@@ -1,7 +1,7 @@
 import type { Finding, RitualOptions, RitualState, RitualStep, RotateInput } from '@placard/core';
 
-import { EVALUATE_TITLE, isPersonalData } from './families.js';
-import { baseState, loadState, saveState } from './state.js';
+import { EVALUATE_TITLE, isPersonalData } from './families';
+import { baseState, loadState, saveState } from './state';
 
 /**
  * Les quatre étapes du rituel et leurs verrous (PLA-F-23).

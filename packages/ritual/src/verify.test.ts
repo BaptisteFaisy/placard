@@ -4,8 +4,8 @@ import { join } from 'node:path';
 import type { Finding, PlacardReport } from '@placard/core';
 import { describe, expect, it } from 'vitest';
 
-import { markRotated, verify } from './index.js';
-import { fakeFinding, makeOptions } from './test-support.js';
+import { markRotated, verify } from './index';
+import { fakeFinding, makeOptions } from './test-support';
 
 /** Rapport minimal mais conforme au schéma, pour la relecture de vérification. */
 function reportWith(findings: Finding[]): PlacardReport {
@@ -68,7 +68,7 @@ describe('verify', () => {
     const finding = fakeFinding();
     const reportPath = await writeReport(options.tmpDir, []);
     const state = await verify(options, finding, reportPath);
-    const { loadState } = await import('./state.js');
+    const { loadState } = await import('./state');
     expect(await loadState(options.placardDir, finding.fingerprint)).toEqual(state);
   });
 

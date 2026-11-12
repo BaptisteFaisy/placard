@@ -2,9 +2,9 @@ import { describe, expect, it } from 'vitest';
 import { buildViewModel, emptyFilter } from '@placard/manor-model';
 import type { Finding, PlacardReport } from '@placard/core';
 
-import { fallbackReason, MAX_RENDERED_DOORS, planFor, summarizeFloors } from './manor/fallback.js';
-import { makeFinding, makeReport, refOf } from './testing/fixtures.js';
-import { NOW } from './testing/fixtures.js';
+import { fallbackReason, MAX_RENDERED_DOORS, planFor, summarizeFloors } from './manor/fallback';
+import { makeFinding, makeReport, refOf } from './testing/fixtures';
+import { NOW } from './testing/fixtures';
 
 /**
  * Le repli lisible doit tenir à 500 portes (exigence du cahier des charges) :

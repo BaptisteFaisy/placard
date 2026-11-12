@@ -2,9 +2,9 @@ import { resolve } from 'node:path';
 import { type CliApi, type CliResult, type DemoOptions, type RitualCliOptions, type ServeOptions } from '@placard/core';
 import { generate } from '@placard/demo-repo';
 import { createRitualApi } from '@placard/ritual';
-import { startReportServer } from './server.js';
-import { scanCommand } from './scan.js';
-import { parseArgs } from './args.js';
+import { startReportServer } from './server';
+import { scanCommand } from './scan';
+import { parseArgs } from './args';
 
 /** Commande `serve` (PLA-F-30) : serveur local sur 127.0.0.1, sans réseau sortant. */
 async function serveCommand(options: ServeOptions): Promise<CliResult> {

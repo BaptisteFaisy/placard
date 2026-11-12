@@ -5,8 +5,8 @@ import { join } from 'node:path';
 import { computeFingerprint, fakeValue } from '@placard/core';
 import { afterEach, beforeEach, describe, expect, it } from 'vitest';
 
-import { TEST_SALT } from './fixtures.js';
-import { IgnoreFileError, appendIgnoreEntry, loadIgnoreFile, parseIgnoreText } from './ignore-file.js';
+import { TEST_SALT } from './fixtures';
+import { IgnoreFileError, appendIgnoreEntry, loadIgnoreFile, parseIgnoreText } from './ignore-file';
 
 const FINGERPRINT_A = computeFingerprint(fakeValue('cloud-key', 'ignore-a'), TEST_SALT);
 const FINGERPRINT_B = computeFingerprint(fakeValue('cloud-key', 'ignore-b'), TEST_SALT);

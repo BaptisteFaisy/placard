@@ -2,7 +2,7 @@ import { mkdtemp, rm } from 'node:fs/promises';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 
-import { git, run } from './git-exec.js';
+import { git, run } from './git-exec';
 
 /**
  * Essai à blanc (PLA-F-25).

@@ -2,9 +2,9 @@ import { describe, expect, it } from 'vitest';
 
 import type { HistoryEvent } from '@placard/core';
 
-import { readHistory } from './index.js';
-import { createFixture, needle, type Fixture } from './testing/fixture.js';
-import { useGitFixtures } from './testing/harness.js';
+import { readHistory } from './index';
+import { createFixture, needle, type Fixture } from './testing/fixture';
+import { useGitFixtures } from './testing/harness';
 
 /** Dépôt de N commits, chacun ajoutant une ligne à un fichier suivi. */
 function linearRepo(commits: number): Fixture {

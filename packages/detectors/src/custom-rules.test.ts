@@ -4,9 +4,9 @@ import { join } from 'node:path';
 
 import { afterAll, beforeAll, describe, expect, it } from 'vitest';
 
-import { compilePattern, isSafePatternSource, loadCustomRules, parseCustomRules } from './custom-rules.js';
-import { createDetectorEngine } from './index.js';
-import { inputOf } from './testing/fixtures.js';
+import { compilePattern, isSafePatternSource, loadCustomRules, parseCustomRules } from './custom-rules';
+import { createDetectorEngine } from './index';
+import { inputOf } from './testing/fixtures';
 
 /**
  * PLA-F-11 : règles personnalisées chargées depuis un fichier du dépôt.

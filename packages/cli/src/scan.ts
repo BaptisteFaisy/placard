@@ -9,10 +9,10 @@ import {
 } from '@placard/core';
 import { analyze } from '@placard/analysis';
 
-import { collectHistory, type CollectOutcome } from './collect.js';
-import { buildHeadPresence } from './head-presence.js';
-import { renderSummary } from './output.js';
-import { repoSalt } from './salt.js';
+import { collectHistory, type CollectOutcome } from './collect';
+import { buildHeadPresence } from './head-presence';
+import { renderSummary } from './output';
+import { repoSalt } from './salt';
 
 /**
  * Commande `scan` (PLA-F-01, PLA-F-08, PLA-F-10, PLA-F-12).

@@ -1,7 +1,7 @@
 import { nirValid } from '@placard/core';
 import type { DetectorRule } from '@placard/core';
 
-import { isInsideUrl } from '../validators.js';
+import { isInsideUrl } from '../validators';
 
 /**
  * Famille `identity` : données personnelles françaises et adresses e-mail.

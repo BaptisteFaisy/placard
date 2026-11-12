@@ -4,12 +4,12 @@ import { within } from '@testing-library/dom';
 import { buildViewModel, emptyFilter } from '@placard/manor-model';
 import type { FindingFilter, ManorViewModel } from '@placard/core';
 
-import { Filters, headChoiceOf, toggle, withHeadChoice } from './Filters.js';
-import { Manor } from './Manor.js';
-import { Registry } from './Registry.js';
-import { NOW } from './testing/fixtures.js';
-import { demoReport } from './testing/model.js';
-import { click, mount, type Mounted } from './testing/render.js';
+import { Filters, headChoiceOf, toggle, withHeadChoice } from './Filters';
+import { Manor } from './Manor';
+import { Registry } from './Registry';
+import { NOW } from './testing/fixtures';
+import { demoReport } from './testing/model';
+import { click, mount, type Mounted } from './testing/render';
 
 /**
  * Les filtres (PLA-F-19) et la propriété PLA-P-11 : pour tout jeu de filtres,

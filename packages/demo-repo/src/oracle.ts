@@ -1,6 +1,6 @@
 import { isTestPath, type PlantedSecret } from '@placard/core';
 
-import type { PlannedSecret } from './plan.js';
+import type { PlannedSecret } from './plan';
 
 /**
  * Construction de l'oracle.
