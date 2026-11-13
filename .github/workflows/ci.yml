@@ -19,37 +19,55 @@ concurrency:
 jobs:
   typecheck:
     name: typecheck
-    runs-on: [self-hosted, placard-worker]
+    runs-on: ubuntu-latest
     timeout-minutes: 5
     steps:
       - uses: actions/checkout@v4
         with:
           fetch-depth: 1
           clean: false
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - uses: pnpm/action-setup@v4
+        with:
+          version: '9.15.9'
       - uses: ./.github/actions/setup
       - run: pnpm typecheck
 
   lint:
     name: lint
-    runs-on: [self-hosted, placard-worker]
+    runs-on: ubuntu-latest
     timeout-minutes: 5
     steps:
       - uses: actions/checkout@v4
         with:
           fetch-depth: 1
           clean: false
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - uses: pnpm/action-setup@v4
+        with:
+          version: '9.15.9'
       - uses: ./.github/actions/setup
       - run: pnpm lint
 
   test:
     name: test
-    runs-on: [self-hosted, placard-worker]
+    runs-on: ubuntu-latest
     timeout-minutes: 5
     steps:
       - uses: actions/checkout@v4
         with:
           fetch-depth: 1
           clean: false
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - uses: pnpm/action-setup@v4
+        with:
+          version: '9.15.9'
       - uses: ./.github/actions/setup
       - run: pnpm test
       - name: Rapports de tests
@@ -63,25 +81,37 @@ jobs:
 
   build:
     name: build
-    runs-on: [self-hosted, placard-worker]
+    runs-on: ubuntu-latest
     timeout-minutes: 5
     steps:
       - uses: actions/checkout@v4
         with:
           fetch-depth: 1
           clean: false
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - uses: pnpm/action-setup@v4
+        with:
+          version: '9.15.9'
       - uses: ./.github/actions/setup
       - run: pnpm build
 
   publish-build:
     name: publish-build
-    runs-on: [self-hosted, placard-worker]
+    runs-on: ubuntu-latest
     timeout-minutes: 5
     steps:
       - uses: actions/checkout@v4
         with:
           fetch-depth: 1
           clean: false
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - uses: pnpm/action-setup@v4
+        with:
+          version: '9.15.9'
       - uses: ./.github/actions/setup
       - name: Construction des paquets publiables
         run: pnpm build:paquets

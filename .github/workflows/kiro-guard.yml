@@ -20,7 +20,7 @@ concurrency:
 jobs:
   kiro:
     name: kiro
-    runs-on: [self-hosted, placard-worker]
+    runs-on: ubuntu-latest
     timeout-minutes: 5
     steps:
       - uses: actions/checkout@v4
@@ -29,6 +29,18 @@ jobs:
           clean: false
       - name: Contrôle de conformité Kiroween
         run: python3 .github/kiro/check_kiro.py
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - uses: pnpm/action-setup@v4
+        with:
+          version: '9.15.9'
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - uses: pnpm/action-setup@v4
+        with:
+          version: '9.15.9'
       - uses: ./.github/actions/setup
       - name: Auto-scan du dépôt (--fail-on-open)
         run: pnpm exec tsx --tsconfig tsconfig.node.json packages/cli/src/main.ts scan . --fail-on-open
