@@ -72,3 +72,25 @@ jobs:
           clean: false
       - uses: ./.github/actions/setup
       - run: pnpm build
+
+  publish-build:
+    name: publish-build
+    runs-on: [self-hosted, placard-worker]
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+          clean: false
+      - uses: ./.github/actions/setup
+      - name: Construction des paquets publiables
+        run: pnpm build:paquets
+      - name: Préparation et vérification des paquets
+        run: |
+          set -euo pipefail
+          node tools/prepare-publish.mjs
+          for paquet in core detectors analysis ritual; do
+            dossier=".publish/${paquet}"
+            (cd "$dossier" && node ../../tools/check-publishable.mjs)
+            (cd "$dossier" && npm pack --dry-run)
+          done

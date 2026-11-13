@@ -1,0 +1,25 @@
+{
+  // Construction du paquet publiable `@placard/ritual`.
+  //
+  // `@placard/core` est résolu par ses déclarations construites
+  // (`packages/core/dist/index.d.ts`) : le paquet publié dépend de
+  // `@placard/core` comme dépendance npm ordinaire, il n'embarque jamais le
+  // code du cœur (une seule implémentation, jamais une copie).
+  "$schema": "https://json.schemastore.org/tsconfig",
+  "extends": "../../tsconfig.base.json",
+  "compilerOptions": {
+    "noEmit": false,
+    "outDir": "./dist",
+    "rootDir": "./src",
+    "declaration": true,
+    "declarationMap": true,
+    "sourceMap": true,
+    "types": ["node"],
+    "lib": ["ES2022"],
+    "paths": {
+      "@placard/core": ["packages/core/dist/index.d.ts"]
+    }
+  },
+  "include": ["src/**/*.ts"],
+  "exclude": ["src/**/*.test.ts", "src/**/*.test.tsx", "src/test-support.ts"]
+}

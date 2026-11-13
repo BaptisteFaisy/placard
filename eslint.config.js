@@ -8,7 +8,7 @@ export default tseslint.config(
   {
     // Scripts d'outillage exécutés par Node hors du navigateur (recette, capture
     // vidéo) : ils ont besoin des globaux Node.
-    files: ['scripts/**/*.mjs', 'scripts/**/*.js'],
+    files: ['scripts/**/*.mjs', 'scripts/**/*.js', 'tools/**/*.mjs', 'tools/**/*.js'],
     languageOptions: {
       globals: {
         console: 'readonly',

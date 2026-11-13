@@ -152,6 +152,26 @@ bash scripts/recette-c17.sh   # full acceptance recipe
 
 ---
 
+## Publishing the shared packages
+
+The four core packages — `@placard/core`, `@placard/detectors`,
+`@placard/analysis`, `@placard/ritual` — are **publishable on npm** so that
+sibling applications (placard-wiki, tickets-pieges, gammes…) consume **one
+implementation**, never a copy (cahier des charges §21).
+
+```bash
+pnpm build:paquets        # tsc → dist, then the ESM extension rewrite
+tools/publish.sh --dry-run # checks everything, publishes nothing
+tools/publish.sh          # publishes the four core packages (npm account required)
+```
+
+The published packages are ESM (`import`) with their TypeScript declarations
+embedded; `@placard/core` is an ordinary npm dependency of the other three.
+Strategy, rationale and remaining manual steps (npm account, scope, token):
+[`docs/PUBLICATION-NPM.md`](docs/PUBLICATION-NPM.md).
+
+---
+
 ## Dependencies & licences
 
 All runtime dependencies use permissive licences (MIT, Apache-2.0, BSD-3-Clause). **No GPLv3 or AGPL dependency is included** — HyperFormula (GPLv3) and TruffleHog (AGPL) were deliberately avoided.

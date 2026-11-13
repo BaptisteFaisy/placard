@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "type": "module",
-  "description": "Placard \u2014 Skeletons in the Closet. Scan Git history for forgotten secrets and personal data, triage them in a haunted manor, remediate in the right order.",
+  "description": "Placard — Skeletons in the Closet. Scan Git history for forgotten secrets and personal data, triage them in a haunted manor, remediate in the right order.",
   "license": "MIT",
   "packageManager": "pnpm@9.15.9",
   "engines": {
@@ -17,10 +17,13 @@
     "test": "vitest run",
     "test:watch": "vitest",
     "build": "pnpm -r --if-present build",
+    "build:paquets": "pnpm --filter @placard/core --filter @placard/detectors --filter @placard/analysis --filter @placard/ritual -r run build",
     "verify": "pnpm typecheck && pnpm lint && pnpm test",
     "self-scan": "tsx packages/cli/src/main.ts scan .",
     "budget:check": "python3 .github/ci-budget/check_timeouts.py",
-    "kiro:check": "python3 .github/kiro/check_kiro.py"
+    "kiro:check": "python3 .github/kiro/check_kiro.py",
+    "publier:verifier": "node tools/prepare-publish.mjs",
+    "publier:paquets": "bash tools/publish.sh"
   },
   "devDependencies": {
     "@eslint/js": "9.15.0",

@@ -1,0 +1,26 @@
+{
+  // Construction du paquet publiable `@placard/core`.
+  //
+  // Stratégie : ESM (module ESNext) + déclarations, les imports relatifs
+  // restent sans extension comme dans les sources (convention Bundler,
+  // PR #34) ; `tools/fix-esm-extensions.mjs` les réécrit ensuite avec
+  // l'extension `.js` exigée par Node ESM.
+  "$schema": "https://json.schemastore.org/tsconfig",
+  "extends": "../../tsconfig.base.json",
+  "compilerOptions": {
+    "noEmit": false,
+    "outDir": "./dist",
+    "rootDir": "./src",
+    "declaration": true,
+    "declarationMap": true,
+    "sourceMap": true,
+    "types": ["node"],
+    "lib": ["ES2022"],
+    // Les chemins du tsconfig de base pointent vers les sources : on les
+    // neutralise pour que le compilateur n'absorbe pas les sources des autres
+    // paquets (le `rootDir` resterait enfreint).
+    "paths": {}
+  },
+  "include": ["src/**/*.ts"],
+  "exclude": ["src/**/*.test.ts", "src/**/*.test.tsx"]
+}
