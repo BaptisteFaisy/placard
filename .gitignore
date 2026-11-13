@@ -1,0 +1,26 @@
+# Node / build
+node_modules/
+dist/
+build/
+coverage/
+*.tsbuildinfo
+.vite/
+playwright-report/
+test-results/
+
+# Placard — rapports et état local (jamais versionnés).
+# Le fichier d'exclusions `.placard/ignore.yml` EST versionné : il fait partie
+# du dépôt, comme le prévoit PLA-F-09 (« exclusions partagées »).
+.placard/*
+!.placard/ignore.yml
+
+# Publication npm : paquets préparés pour le `npm publish` (jamais versionnés).
+.publish/
+
+# OS / éditeurs
+.DS_Store
+Thumbs.db
+*.swp
+
+# Règle du concours Kiroween : le dossier .kiro DOIT être suivi par Git.
+# Aucune ligne de ce fichier ne concerne .kiro — vérifié par le job `kiro`.

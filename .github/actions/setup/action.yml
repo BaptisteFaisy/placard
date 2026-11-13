@@ -1,0 +1,29 @@
+name: 'Setup (runner self-hosted placard-worker)'
+description: >
+  Prépare l'espace de travail sur le runner self-hosted puis installe les
+  dépendances verrouillées. Le `node_modules` est conservé entre deux jobs
+  (check-out sans nettoyage + `git clean` ciblé) : l'installation devient un
+  quasi-no-op au lieu de rejouer 300 paquets à chaque job — c'est ce qui tient
+  le verdict CI sous les 5 minutes (règle user 2026-10-24).
+runs:
+  using: composite
+  steps:
+    - name: Nettoyage ciblé de l'espace de travail
+      shell: bash
+      run: |
+        set -euo pipefail
+        # On conserve node_modules (cache chaud) et les artefacts de build ;
+        # tout le reste est remis à zéro avant chaque job.
+        git checkout -- .
+        git clean -ffdx -e node_modules -e dist -e coverage -e .placard -e '*.tsbuildinfo' -e '.vite'
+    - name: Chaîne d'outils du runner
+      shell: bash
+      run: |
+        set -euo pipefail
+        node -v  || { echo "::error::node est absent du PATH du runner"; exit 1; }
+        pnpm -v  || { echo "::error::pnpm est absent du PATH du runner"; exit 1; }
+        git --version
+        python3 -V
+    - name: Dépendances verrouillées
+      shell: bash
+      run: pnpm install --frozen-lockfile --prefer-offline --reporter=append-only

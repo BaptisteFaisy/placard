@@ -1,0 +1,43 @@
+name: stale-base-guard
+
+# Garde informatif : mesure le retard d'une PR sur `main` (via l'API compare)
+# et publie un avertissement. Ne bloque jamais (exit 0) : c'est le gate
+# hermes-lite qui rafraîchit la branche, et Mergify qui merge.
+on:
+  pull_request:
+    types: [opened, synchronize, reopened]
+  workflow_dispatch:
+    inputs:
+      pr_number:
+        description: 'Numéro de PR'
+        required: true
+
+permissions:
+  contents: read
+  pull-requests: read
+
+concurrency:
+  group: stale-base-guard-${{ github.event.pull_request.number || github.event.inputs.pr_number }}
+  cancel-in-progress: true
+
+jobs:
+  stale-base-guard:
+    name: stale-base-guard
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+      - name: Mesure du retard sur main
+        env:
+          GH_TOKEN: ${{ github.token }}
+          PR_NUMBER: ${{ github.event.pull_request.number || github.event.inputs.pr_number }}
+        run: |
+          set -euo pipefail
+          if [ -z "${PR_NUMBER:-}" ]; then echo "Pas de PR : garde ignoré."; exit 0; fi
+          BEHIND=$(gh api "repos/$GITHUB_REPOSITORY/pulls/$PR_NUMBER" --jq '.base.sha as $b | $b' >/dev/null 2>&1 || true)
+          DELTA=$(gh api "repos/$GITHUB_REPOSITORY/compare/${{ github.event.pull_request.base.sha }}...${{ github.event.pull_request.head.sha }}" --jq '.behind_by // 0' 2>/dev/null || echo 0)
+          echo "PR #$PR_NUMBER : behind_by=$DELTA"
+          if [ "$DELTA" -gt 0 ]; then echo "::warning::La PR est en retard de $DELTA commit(s) sur main"; fi
+          exit 0

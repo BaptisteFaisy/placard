@@ -1,0 +1,500 @@
+{
+  "schema": "1.0.0",
+  "tool": {
+    "name": "placard",
+    "version": "0.1.0"
+  },
+  "repo": {
+    "name": "acme-api",
+    "head": "21d61ad1772efd8350fcf95be4c01828190f8ff8",
+    "totalCommits": 120,
+    "publicRemote": false,
+    "analyzedAt": "2026-11-11T19:35:14.050Z"
+  },
+  "findings": [
+    {
+      "id": "sk_0001",
+      "family": "private-key",
+      "rule": "private-key-block",
+      "fingerprint": "hmac256:05b5cb60509b995cfece7c17d63d0699",
+      "preview": "[REDACTED:private-key](321)",
+      "danger": 100,
+      "reasons": [
+        "base private-key: +90",
+        "still present in HEAD: +15"
+      ],
+      "inHead": true,
+      "introduced": {
+        "commit": "6ded8453ff22096d3b2f3d77c50eeeb7c8b8a64b",
+        "shortCommit": "6ded845",
+        "date": "2024-12-22T13:28:39.000Z",
+        "author": "Placard Demo",
+        "message": "chore(config): drop legacy deploy_signing_material wiring"
+      },
+      "removed": [],
+      "locations": [
+        {
+          "commit": "6ded8453ff22096d3b2f3d77c50eeeb7c8b8a64b",
+          "path": "src/legacy/billing.ts",
+          "line": 14,
+          "snippet": "-----BEGIN RSA PRIVATE KEY-----"
+        },
+        {
+          "commit": "4c27fa96125aabb5b69b6166cea89c94bb0045f8",
+          "path": "src/legacy/billing.ts",
+          "line": 16,
+          "snippet": "-----BEGIN RSA PRIVATE KEY-----"
+        }
+      ],
+      "state": "open"
+    },
+    {
+      "id": "sk_0002",
+      "family": "platform-token",
+      "rule": "platform-assistant-project-key",
+      "fingerprint": "hmac256:14e7756df14783531c8a979e0b8b0bc8",
+      "preview": "sk-p…(48)",
+      "danger": 60,
+      "reasons": [
+        "base platform-token: +75",
+        "still present in HEAD: +15",
+        "test/example directory path: -30"
+      ],
+      "inHead": true,
+      "introduced": {
+        "commit": "172e253cdd5436486476e52548600d00e77e55b7",
+        "shortCommit": "172e253",
+        "date": "2023-04-10T02:00:29.000Z",
+        "author": "Placard Demo",
+        "message": "chore(config): drop legacy deploy_credential wiring"
+      },
+      "removed": [],
+      "locations": [
+        {
+          "commit": "172e253cdd5436486476e52548600d00e77e55b7",
+          "path": "tests/config.test.ts",
+          "line": 14,
+          "snippet": "const DEPLOY_CREDENTIAL = '[REDACTED:platform-token]';"
+        },
+        {
+          "commit": "55f72e4e3f322398b4ca1dfc52e886048861c87f",
+          "path": "tests/config.test.ts",
+          "line": 14,
+          "snippet": "const DEPLOY_CREDENTIAL = '[REDACTED:platform-token]';"
+        }
+      ],
+      "state": "open"
+    },
+    {
+      "id": "sk_0003",
+      "family": "plaintext-password",
+      "rule": "plaintext-password-assignment",
+      "fingerprint": "hmac256:5f5396f88aaa977c024d40eccbb6849c",
+      "preview": "[REDACTED:plaintext-password](16)",
+      "danger": 45,
+      "reasons": [
+        "base plaintext-password: +60",
+        "still present in HEAD: +15",
+        "test/example directory path: -30"
+      ],
+      "inHead": true,
+      "introduced": {
+        "commit": "84c0d3c2e61585abfcc7171d39a675ae593a4cc8",
+        "shortCommit": "84c0d3c",
+        "date": "2024-03-19T11:24:44.000Z",
+        "author": "Placard Demo",
+        "message": "feat(config): wire db_password for the deploy pipeline"
+      },
+      "removed": [],
+      "locations": [
+        {
+          "commit": "84c0d3c2e61585abfcc7171d39a675ae593a4cc8",
+          "path": "examples/quickstart.ts",
+          "line": 10,
+          "snippet": "const DB_PASSWORD = '[REDACTED:plaintext-password]';"
+        },
+        {
+          "commit": "84c0d3c2e61585abfcc7171d39a675ae593a4cc8",
+          "path": "tests/config.test.ts",
+          "line": 15,
+          "snippet": "const DB_PASSWORD = '[REDACTED:plaintext-password]';"
+        }
+      ],
+      "state": "open"
+    },
+    {
+      "id": "sk_0004",
+      "family": "signed-token",
+      "rule": "signed-token-jwt",
+      "fingerprint": "hmac256:757124e73779301d53133e32b0c20ca8",
+      "preview": "[REDACTED:signed-token](175)",
+      "danger": 25,
+      "reasons": [
+        "base signed-token: +40",
+        "still present in HEAD: +15",
+        "test/example directory path: -30"
+      ],
+      "inHead": true,
+      "introduced": {
+        "commit": "1ab79e9910b7e5ed521a938a9c7e847186298fb0",
+        "shortCommit": "1ab79e9",
+        "date": "2023-11-16T16:51:55.000Z",
+        "author": "Placard Demo",
+        "message": "feat(config): wire session_jwt for the deploy pipeline"
+      },
+      "removed": [],
+      "locations": [
+        {
+          "commit": "1ab79e9910b7e5ed521a938a9c7e847186298fb0",
+          "path": "examples/quickstart.ts",
+          "line": 9,
+          "snippet": "const SESSION_JWT = '[REDACTED:signed-token]';"
+        },
+        {
+          "commit": "1ab79e9910b7e5ed521a938a9c7e847186298fb0",
+          "path": "tests/config.test.ts",
+          "line": 14,
+          "snippet": "const SESSION_JWT = '[REDACTED:signed-token]';"
+        }
+      ],
+      "state": "open"
+    },
+    {
+      "id": "sk_0005",
+      "family": "bank-data",
+      "rule": "bank-iban",
+      "fingerprint": "hmac256:9b406a82cbee8f7b4962dfcda1c77716",
+      "preview": "FR90…KC5O",
+      "danger": 70,
+      "reasons": [
+        "base bank-data: +70"
+      ],
+      "inHead": false,
+      "introduced": {
+        "commit": "f0787e2a7ec28407dfcdf928176d0b69d7e84389",
+        "shortCommit": "f0787e2",
+        "date": "2024-08-01T15:33:41.000Z",
+        "author": "Placard Demo",
+        "message": "chore(config): drop legacy settlement_account wiring"
+      },
+      "removed": [
+        {
+          "commit": "f19ea68f31927c69cc2ab447681087cc81c77ed6",
+          "shortCommit": "f19ea68",
+          "date": "2024-07-14T20:25:38.000Z",
+          "author": "Placard Demo",
+          "message": "feat(config): wire settlement_account for the deploy pipeline"
+        }
+      ],
+      "locations": [
+        {
+          "commit": "f0787e2a7ec28407dfcdf928176d0b69d7e84389",
+          "path": "deploy/production.env",
+          "line": 5,
+          "snippet": "SETTLEMENT_ACCOUNT=[REDACTED:bank-data]"
+        },
+        {
+          "commit": "f19ea68f31927c69cc2ab447681087cc81c77ed6",
+          "path": "deploy/production.env",
+          "line": 5,
+          "snippet": "SETTLEMENT_ACCOUNT=[REDACTED:bank-data]"
+        }
+      ],
+      "state": "open"
+    },
+    {
+      "id": "sk_0006",
+      "family": "cloud-key",
+      "rule": "cloud-api-key",
+      "fingerprint": "hmac256:9f8ac88e9f551a1b81a6b32983ef2ce3",
+      "preview": "AIza…(39)",
+      "danger": 70,
+      "reasons": [
+        "base cloud-key: +85",
+        "still present in HEAD: +15",
+        "test/example directory path: -30"
+      ],
+      "inHead": true,
+      "introduced": {
+        "commit": "6d870d87e6616226986d1fcfdf836efc5f815812",
+        "shortCommit": "6d870d8",
+        "date": "2025-11-07T01:14:00.000Z",
+        "author": "Placard Demo",
+        "message": "chore(config): drop legacy aws_access_key_id wiring"
+      },
+      "removed": [
+        {
+          "commit": "e25ba8e0436a88577995f42efaf73bc919b959ff",
+          "shortCommit": "e25ba8e",
+          "date": "2025-10-25T14:09:55.000Z",
+          "author": "Placard Demo",
+          "message": "feat(config): wire aws_access_key_id for the deploy pipeline"
+        }
+      ],
+      "locations": [
+        {
+          "commit": "6d870d87e6616226986d1fcfdf836efc5f815812",
+          "path": "docs/setup.md",
+          "line": 9,
+          "snippet": "- AWS_ACCESS_KEY_ID: '[REDACTED:cloud-key]'"
+        },
+        {
+          "commit": "6d870d87e6616226986d1fcfdf836efc5f815812",
+          "path": "examples/quickstart.ts",
+          "line": 12,
+          "snippet": "const AWS_ACCESS_KEY_ID = '[REDACTED:cloud-key]';"
+        },
+        {
+          "commit": "e25ba8e0436a88577995f42efaf73bc919b959ff",
+          "path": "docs/setup.md",
+          "line": 9,
+          "snippet": "- AWS_ACCESS_KEY_ID: '[REDACTED:cloud-key]'"
+        },
+        {
+          "commit": "e25ba8e0436a88577995f42efaf73bc919b959ff",
+          "path": "examples/quickstart.ts",
+          "line": 12,
+          "snippet": "const AWS_ACCESS_KEY_ID = '[REDACTED:cloud-key]';"
+        }
+      ],
+      "state": "open"
+    },
+    {
+      "id": "sk_0007",
+      "family": "risky-file",
+      "rule": "risky-file-dotenv",
+      "fingerprint": "hmac256:d67fb80ac147c22f2106f63eb3658757",
+      "preview": "[REDACTED:risky-file](20)",
+      "danger": 20,
+      "reasons": [
+        "base risky-file: +50",
+        "test/example directory path: -30"
+      ],
+      "inHead": false,
+      "introduced": {
+        "commit": "f7eda2bbe046add6a5ef81f1da8b305b7a8799b2",
+        "shortCommit": "f7eda2b",
+        "date": "2026-07-26T14:34:06.000Z",
+        "author": "Placard Demo",
+        "message": "chore(config): drop legacy local_overrides wiring"
+      },
+      "removed": [
+        {
+          "commit": "4344f8a10e05377a08d2a335d14f118a460eeace",
+          "shortCommit": "4344f8a",
+          "date": "2025-02-24T00:47:34.000Z",
+          "author": "Placard Demo",
+          "message": "feat(config): wire local_overrides for the deploy pipeline"
+        }
+      ],
+      "locations": [
+        {
+          "commit": "f7eda2bbe046add6a5ef81f1da8b305b7a8799b2",
+          "path": "examples/.env.bmtyhf",
+          "line": 0,
+          "snippet": "[REDACTED:risky-file]"
+        },
+        {
+          "commit": "4344f8a10e05377a08d2a335d14f118a460eeace",
+          "path": "examples/.env.bmtyhf",
+          "line": 0,
+          "snippet": "[REDACTED:risky-file]"
+        }
+      ],
+      "state": "open"
+    },
+    {
+      "id": "sk_0008",
+      "family": "cloud-key",
+      "rule": "cloud-access-key-id",
+      "fingerprint": "hmac256:d6de5d56a7b3e19d058701024c715c38",
+      "preview": "ASIA…(20)",
+      "danger": 100,
+      "reasons": [
+        "base cloud-key: +85",
+        "still present in HEAD: +15"
+      ],
+      "inHead": true,
+      "introduced": {
+        "commit": "73a374c42129428a0b6c2189a61dbdfd97838f4c",
+        "shortCommit": "73a374c",
+        "date": "2022-11-24T15:47:56.000Z",
+        "author": "Placard Demo",
+        "message": "feat(config): wire aws_access_key_id for the deploy pipeline"
+      },
+      "removed": [],
+      "locations": [
+        {
+          "commit": "73a374c42129428a0b6c2189a61dbdfd97838f4c",
+          "path": "config/settings.yml",
+          "line": 8,
+          "snippet": "AWS_ACCESS_KEY_ID: '[REDACTED:cloud-key]'"
+        },
+        {
+          "commit": "73a374c42129428a0b6c2189a61dbdfd97838f4c",
+          "path": "src/legacy/billing.ts",
+          "line": 13,
+          "snippet": "const AWS_ACCESS_KEY_ID = '[REDACTED:cloud-key]';"
+        },
+        {
+          "commit": "73a374c42129428a0b6c2189a61dbdfd97838f4c",
+          "path": "src/services/storage.ts",
+          "line": 15,
+          "snippet": "const AWS_ACCESS_KEY_ID = '[REDACTED:cloud-key]';"
+        }
+      ],
+      "state": "open"
+    },
+    {
+      "id": "sk_0009",
+      "family": "suspicious-string",
+      "rule": "suspicious-high-entropy",
+      "fingerprint": "hmac256:e09f4b274b6fdf4c589a9237a5aa4c13",
+      "preview": "[REDACTED:suspicious-string](40)",
+      "danger": 40,
+      "reasons": [
+        "base suspicious-string: +25",
+        "still present in HEAD: +15"
+      ],
+      "inHead": true,
+      "introduced": {
+        "commit": "7a162df783f03afcd003fbbbb4f05a711258c06d",
+        "shortCommit": "7a162df",
+        "date": "2025-07-11T04:12:39.000Z",
+        "author": "Placard Demo",
+        "message": "feat(config): wire legacy_api_key for the deploy pipeline"
+      },
+      "removed": [],
+      "locations": [
+        {
+          "commit": "7a162df783f03afcd003fbbbb4f05a711258c06d",
+          "path": "src/legacy/billing.ts",
+          "line": 14,
+          "snippet": "const LEGACY_API_KEY = '[REDACTED:suspicious-string]';"
+        }
+      ],
+      "state": "open"
+    },
+    {
+      "id": "sk_0010",
+      "family": "platform-token",
+      "rule": "platform-slack-token",
+      "fingerprint": "hmac256:e21bede4ca233f2b570e4664d39817ac",
+      "preview": "xoxb…(45)",
+      "danger": 75,
+      "reasons": [
+        "base platform-token: +75"
+      ],
+      "inHead": false,
+      "introduced": {
+        "commit": "21d61ad1772efd8350fcf95be4c01828190f8ff8",
+        "shortCommit": "21d61ad",
+        "date": "2026-11-11T19:35:10.000Z",
+        "author": "Placard Demo",
+        "message": "chore(config): drop legacy deploy_credential wiring"
+      },
+      "removed": [
+        {
+          "commit": "fcff90c1267059efb048456d708184800d29b639",
+          "shortCommit": "fcff90c",
+          "date": "2026-03-10T09:53:46.000Z",
+          "author": "Placard Demo",
+          "message": "feat(config): wire deploy_credential for the deploy pipeline"
+        }
+      ],
+      "locations": [
+        {
+          "commit": "21d61ad1772efd8350fcf95be4c01828190f8ff8",
+          "path": "src/db/connection.ts",
+          "line": 14,
+          "snippet": "const DEPLOY_CREDENTIAL = '[REDACTED:platform-token]';"
+        },
+        {
+          "commit": "fcff90c1267059efb048456d708184800d29b639",
+          "path": "src/db/connection.ts",
+          "line": 14,
+          "snippet": "const DEPLOY_CREDENTIAL = '[REDACTED:platform-token]';"
+        }
+      ],
+      "state": "open"
+    },
+    {
+      "id": "sk_0011",
+      "family": "identity",
+      "rule": "identity-nir",
+      "fingerprint": "hmac256:f1ffb2bc3b59ad6c4fefc3f64adb0c3f",
+      "preview": "[REDACTED:identity](15)",
+      "danger": 15,
+      "reasons": [
+        "base identity: +30",
+        "still present in HEAD: +15",
+        "test/example directory path: -30"
+      ],
+      "inHead": true,
+      "introduced": {
+        "commit": "fbe601f1f73c1e170cbc235c5a6c9360b6a873ef",
+        "shortCommit": "fbe601f",
+        "date": "2024-11-15T20:39:16.000Z",
+        "author": "Placard Demo",
+        "message": "feat(config): wire owner_ssn for the deploy pipeline"
+      },
+      "removed": [],
+      "locations": [
+        {
+          "commit": "fbe601f1f73c1e170cbc235c5a6c9360b6a873ef",
+          "path": "examples/quickstart.ts",
+          "line": 11,
+          "snippet": "const OWNER_SSN = '[REDACTED:identity]';"
+        }
+      ],
+      "state": "open"
+    },
+    {
+      "id": "sk_0012",
+      "family": "private-key",
+      "rule": "private-key-block",
+      "fingerprint": "hmac256:fadc6661cd156ed8290718851b9c7975",
+      "preview": "[REDACTED:private-key](321)",
+      "danger": 90,
+      "reasons": [
+        "base private-key: +90"
+      ],
+      "inHead": false,
+      "introduced": {
+        "commit": "f7eda2bbe046add6a5ef81f1da8b305b7a8799b2",
+        "shortCommit": "f7eda2b",
+        "date": "2026-07-26T14:34:06.000Z",
+        "author": "Placard Demo",
+        "message": "chore(config): drop legacy local_overrides wiring"
+      },
+      "removed": [
+        {
+          "commit": "c63a8d2cdde25e581b294fe2f922d8ad9164f9a9",
+          "shortCommit": "c63a8d2",
+          "date": "2026-07-11T10:59:29.000Z",
+          "author": "Placard Demo",
+          "message": "feat(config): wire deploy_signing_material for the deploy pipeline"
+        }
+      ],
+      "locations": [
+        {
+          "commit": "f7eda2bbe046add6a5ef81f1da8b305b7a8799b2",
+          "path": "src/config.ts",
+          "line": 16,
+          "snippet": "-----BEGIN RSA PRIVATE KEY-----"
+        },
+        {
+          "commit": "c63a8d2cdde25e581b294fe2f922d8ad9164f9a9",
+          "path": "src/config.ts",
+          "line": 18,
+          "snippet": "-----BEGIN RSA PRIVATE KEY-----"
+        }
+      ],
+      "state": "open"
+    }
+  ],
+  "skipped": {
+    "binary": 1,
+    "tooLarge": 1
+  }
+}

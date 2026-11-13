@@ -1,0 +1,36 @@
+{
+  "$schema": "https://json.schemastore.org/tsconfig",
+  "compilerOptions": {
+    "target": "ES2022",
+    "lib": ["ES2022"],
+    "module": "ESNext",
+    "moduleResolution": "Bundler",
+    "strict": true,
+    "noUncheckedIndexedAccess": true,
+    "noImplicitOverride": true,
+    "noFallthroughCasesInSwitch": true,
+    "exactOptionalPropertyTypes": false,
+    "forceConsistentCasingInFileNames": true,
+    "declaration": true,
+    "declarationMap": true,
+    "sourceMap": true,
+    "skipLibCheck": true,
+    "resolveJsonModule": true,
+    "isolatedModules": true,
+    "esModuleInterop": true,
+    "baseUrl": ".",
+    "paths": {
+      "@placard/core": ["packages/core/src/index.ts"],
+      "@placard/git-history": ["packages/git-history/src/index.ts"],
+      "@placard/detectors": ["packages/detectors/src/index.ts"],
+      "@placard/analysis": ["packages/analysis/src/index.ts"],
+      "@placard/demo-repo": ["packages/demo-repo/src/index.ts"],
+      "@placard/ritual": ["packages/ritual/src/index.ts"],
+      "@placard/cli": ["packages/cli/src/index.ts"],
+      "@placard/manor-model": ["packages/manor-model/src/index.ts"],
+      "@placard/ui": ["packages/ui/src/index.ts"],
+      "@placard/web": ["packages/web/src/index.ts"],
+      "@placard/integration": ["packages/integration/src/index.ts"]
+    }
+  }
+}

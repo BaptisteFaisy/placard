@@ -1,0 +1,23 @@
+{
+  "name": "@placard/cli",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "main": "./src/index.ts",
+  "types": "./src/index.ts",
+  "scripts": {
+    "test": "vitest run",
+    "placard": "tsx src/main.ts"
+  },
+  "dependencies": {
+    "@placard/core": "workspace:*",
+    "@placard/git-history": "workspace:*",
+    "@placard/detectors": "workspace:*",
+    "@placard/analysis": "workspace:*",
+    "@placard/demo-repo": "workspace:*",
+    "@placard/ritual": "workspace:*"
+  },
+  "bin": {
+    "placard": "./src/main.ts"
+  }
+}

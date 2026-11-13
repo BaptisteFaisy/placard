@@ -1,0 +1,42 @@
+# Placard ignore file.
+# Fingerprints listed here are deliberately accepted and stay out of the open findings.
+# Never put a secret value in this file: the HMAC fingerprint is enough.
+
+ignore:
+  - fingerprint: hmac256:581393e9c1a0ee66464a7450977bbfef
+    rule: cloud-access-key-id
+    reason: AWS documentation example key, publicly known and not a credential.
+      Written in an early draft of KIRO_JOURNAL.md, removed from HEAD; still
+      readable in history, which is exactly what Placard reports.
+    author: b (ZeroClaw agent)
+    date: 2026-11-11T10:38:22.519Z
+  - fingerprint: hmac256:121c38c92cef4f2f8ef9fe9ec3573af4
+    rule: identity-email
+    reason: Synthetic identity fixture used by the ritual unit test (no real
+      person). Kept on purpose to exercise the "personal data" path of the
+      ritual.
+    author: b (ZeroClaw agent)
+    date: 2026-11-11T10:51:30.201Z
+  - fingerprint: hmac256:dfaded35f1d38ccd9ed4e3567b47246e
+    rule: private-key-block
+    reason: PEM header and footer literals of a unit test, without any key material.
+      Removed from HEAD; the finding lives only in the history, which is exactly
+      what this tool reports.
+    author: b (ZeroClaw agent)
+    date: 2026-11-11T10:51:30.201Z
+  - fingerprint: hmac256:1d6f53de9f482d774e15b15b2cb3e528
+    rule: risky-file-tool-credentials
+    reason: "Reviewed: this .npmrc carries pnpm workspace settings only
+      (node-linker, strict-peer-dependencies, auto-install-peers). No
+      _authToken, _auth or _password key. Kept under version control on
+      purpose."
+    author: b (ZeroClaw agent)
+    date: 2026-11-11T15:39:09.050Z
+  - fingerprint: hmac256:4a76e6ec5db5f3834d576a1b50862747
+    rule: identity-email
+    reason: "Not an address: the userinfo part of an authentication URL quoted in
+      KIRO_JOURNAL.md while documenting this very false-positive class. No such
+      account exists; the example has since been rewritten without an
+      address-shaped string."
+    author: b (ZeroClaw agent)
+    date: 2026-11-11T16:16:45.925Z

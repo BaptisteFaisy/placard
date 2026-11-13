@@ -1,0 +1,50 @@
+{
+  "name": "placard",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "Placard — Skeletons in the Closet. Scan Git history for forgotten secrets and personal data, triage them in a haunted manor, remediate in the right order.",
+  "license": "MIT",
+  "packageManager": "pnpm@9.15.9",
+  "engines": {
+    "node": ">=20.11"
+  },
+  "scripts": {
+    "typecheck": "tsc -p tsconfig.node.json --noEmit && tsc -p tsconfig.web.json --noEmit",
+    "lint": "eslint .",
+    "lint:fix": "eslint . --fix",
+    "format": "prettier --write \"packages/*/src/**/*.{ts,tsx,css}\"",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "build": "pnpm -r --if-present build",
+    "build:paquets": "pnpm --filter @placard/core --filter @placard/detectors --filter @placard/analysis --filter @placard/ritual -r run build",
+    "verify": "pnpm typecheck && pnpm lint && pnpm test",
+    "self-scan": "tsx packages/cli/src/main.ts scan .",
+    "budget:check": "python3 .github/ci-budget/check_timeouts.py",
+    "kiro:check": "python3 .github/kiro/check_kiro.py",
+    "publier:verifier": "node tools/prepare-publish.mjs",
+    "publier:paquets": "bash tools/publish.sh"
+  },
+  "devDependencies": {
+    "@eslint/js": "9.15.0",
+    "@testing-library/dom": "10.4.0",
+    "@testing-library/react": "16.1.0",
+    "@testing-library/user-event": "14.5.2",
+    "@types/node": "22.10.1",
+    "@types/react": "18.3.12",
+    "@types/react-dom": "18.3.1",
+    "@vitejs/plugin-react": "4.3.4",
+    "axe-core": "4.10.2",
+    "eslint": "9.15.0",
+    "fast-check": "3.23.1",
+    "jsdom": "25.0.1",
+    "prettier": "3.4.1",
+    "react": "18.3.1",
+    "react-dom": "18.3.1",
+    "tsx": "4.19.2",
+    "typescript": "5.6.3",
+    "typescript-eslint": "8.16.0",
+    "vite": "5.4.11",
+    "vitest": "2.1.8"
+  }
+}

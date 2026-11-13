@@ -1,0 +1,125 @@
+name: release
+
+# Publication npm des paquets partagés de Placard, déclenchée par un tag
+# `v*` (ex. `v0.2.0`). Le tag fixe la version des paquets publiés : un
+# paquet dont la version ne correspond pas au tag n'est pas publié.
+#
+# Pré-requis côté compte npm (à faire une fois, hors CI) :
+#   - un compte npm (ou une organisation) disposant du scope `@placard` ;
+#   - un token d'automatisation (Automation token) dans le secret GitHub
+#     `NODE_AUTH_TOKEN` du dépôt, avec le droit de publier.
+#
+# Chaque job est borné à 5 minutes (règle utilisateur de budget, contrôle
+# `.github/ci-budget/check_timeouts.py`).
+on:
+  push:
+    tags: ['v*']
+  workflow_dispatch:
+    inputs:
+      paquets:
+        description: 'Paquets à publier (séparés par des virgules)'
+        required: false
+        default: 'core,detectors,analysis,ritual'
+
+permissions:
+  contents: write
+
+concurrency:
+  group: release-${{ github.ref }}
+  cancel-in-progress: false
+
+env:
+  # Les quatre paquets cœur publiables (cahier des charges §21).
+  PAQUETS: ${{ github.event.inputs.paquets || 'core,detectors,analysis,ritual' }}
+  REGISTRY: 'https://registry.npmjs.org/'
+
+jobs:
+  build:
+    name: build
+    runs-on: [self-hosted, placard-worker]
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+          clean: false
+      - uses: ./.github/actions/setup
+      - name: Construction des paquets
+        run: pnpm build:paquets
+      - name: Préparation des paquets
+        run: node tools/prepare-publish.mjs
+      - name: Vérification des paquets préparés
+        run: |
+          set -euo pipefail
+          for paquet in ${PAQUETS//,/ }; do
+            dossier=".publish/${paquet}"
+            (cd "$dossier" && node ../../tools/check-publishable.mjs)
+            (cd "$dossier" && npm pack --dry-run)
+          done
+      - name: Archivage des paquets préparés
+        uses: actions/upload-artifact@v4
+        with:
+          name: paquets-publies
+          path: .publish
+          retention-days: 3
+          if-no-files-found: error
+
+  publish:
+    name: publish
+    needs: build
+    runs-on: [self-hosted, placard-worker]
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+          clean: false
+      - uses: ./.github/actions/setup
+      - name: Récupération des paquets préparés
+        uses: actions/download-artifact@v4
+        with:
+          name: paquets-publies
+          path: .publish
+      - name: Authentification npm
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NODE_AUTH_TOKEN }}
+        run: |
+          set -euo pipefail
+          if [ -z "${NODE_AUTH_TOKEN}" ]; then
+            echo "::error::secret NODE_AUTH_TOKEN absent : publication impossible"
+            exit 1
+          fi
+          printf '%s\n' "registry=${REGISTRY}" > .npmrc
+          printf '%s\n' "//registry.npmjs.org/:_authToken=${NODE_AUTH_TOKEN}" >> .npmrc
+      - name: Publication (paquets dont la version correspond au tag)
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NODE_AUTH_TOKEN }}
+          TAG_VERSION: ${{ github.ref_name }}
+        run: |
+          set -euo pipefail
+          version_tag="${TAG_VERSION#v}"
+          for paquet in ${PAQUETS//,/ }; do
+            dossier=".publish/${paquet}"
+            nom="$(node -e "console.log(require('./$dossier/package.json').name)")"
+            version="$(node -e "console.log(require('./$dossier/package.json').version)")"
+            if [ "$version" != "$version_tag" ]; then
+              echo "::notice::$nom@$version ne correspond pas au tag $version_tag : ignoré"
+              continue
+            fi
+            if npm view "$nom@$version" version >/dev/null 2>&1; then
+              echo "::notice::$nom@$version est déjà publié : ignoré"
+              continue
+            fi
+            echo "Publication de $nom@$version…"
+            npm publish "$dossier" --access public --registry "$REGISTRY"
+          done
+      - name: Publication du tag GitHub
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -euo pipefail
+          if gh release view "$GITHUB_REF_NAME" >/dev/null 2>&1; then
+            echo "::notice::la release $GITHUB_REF_NAME existe déjà"
+          else
+            gh release create "$GITHUB_REF_NAME" --generate-notes --title "Placard $GITHUB_REF_NAME"
+          fi

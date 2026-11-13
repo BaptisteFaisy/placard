@@ -1,0 +1,141 @@
+name: ci
+
+# Quatre contrôles indépendants (types, lint, tests, construction), chacun
+# borné à 5 minutes (règle user 2026-10-24). Les jobs tournent en parallèle
+# sur les runners self-hosted `placard-worker` (R630).
+on:
+  pull_request:
+  push:
+    branches: [main]
+  workflow_dispatch: {}
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ci-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  typecheck:
+    name: typecheck
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+          clean: false
+      - uses: pnpm/action-setup@v4
+        with:
+          version: '9.15.9'
+      - name: Dépendances (pnpm install)
+        run: pnpm install --frozen-lockfile --prefer-offline
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: pnpm
+      - uses: ./.github/actions/setup
+      - run: pnpm typecheck
+
+  lint:
+    name: lint
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+          clean: false
+      - uses: pnpm/action-setup@v4
+        with:
+          version: '9.15.9'
+      - name: Dépendances (pnpm install)
+        run: pnpm install --frozen-lockfile --prefer-offline
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: pnpm
+      - uses: ./.github/actions/setup
+      - run: pnpm lint
+
+  test:
+    name: test
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+          clean: false
+      - uses: pnpm/action-setup@v4
+        with:
+          version: '9.15.9'
+      - name: Dépendances (pnpm install)
+        run: pnpm install --frozen-lockfile --prefer-offline
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: pnpm
+      - uses: ./.github/actions/setup
+      - run: pnpm test
+      - name: Rapports de tests
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: rapports-tests
+          path: coverage/
+          retention-days: 3
+          if-no-files-found: ignore
+
+  build:
+    name: build
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+          clean: false
+      - uses: pnpm/action-setup@v4
+        with:
+          version: '9.15.9'
+      - name: Dépendances (pnpm install)
+        run: pnpm install --frozen-lockfile --prefer-offline
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: pnpm
+      - uses: ./.github/actions/setup
+      - run: pnpm build
+
+  publish-build:
+    name: publish-build
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+          clean: false
+      - uses: pnpm/action-setup@v4
+        with:
+          version: '9.15.9'
+      - name: Dépendances (pnpm install)
+        run: pnpm install --frozen-lockfile --prefer-offline
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: pnpm
+      - uses: ./.github/actions/setup
+      - name: Construction des paquets publiables
+        run: pnpm build:paquets
+      - name: Préparation et vérification des paquets
+        run: |
+          set -euo pipefail
+          node tools/prepare-publish.mjs
+          for paquet in core detectors analysis ritual; do
+            dossier=".publish/${paquet}"
+            (cd "$dossier" && node ../../tools/check-publishable.mjs)
+            (cd "$dossier" && npm pack --dry-run)
+          done

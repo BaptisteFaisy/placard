@@ -1,0 +1,448 @@
+/* @placard/ui — thème du manoir (direction artistique Kiroween 2026).
+ *
+ * Règles tenues ici :
+ * - palette de `art-direction.md` ;
+ * - tout mouvement < 400 ms ;
+ * - `prefers-reduced-motion: reduce` coupe toutes les transitions ;
+ * - contraste AA (>= 4.5:1) pour le texte et le registre, sur fond uni ;
+ * - focus toujours visible, jamais supprimé sans remplacement.
+ */
+
+.placard-theme,
+.placard-manor,
+.placard-registry,
+.placard-sheet,
+.placard-legend,
+.placard-ritual,
+.placard-hall,
+.placard-filters {
+  --placard-night: #14101f;
+  --placard-stone: #2a2140;
+  --placard-bone: #ede6d6;
+  --placard-candle: #f2a541;
+  --placard-alert: #e4572e;
+  --placard-poison: #8bd450;
+  --placard-wax: #b23a48;
+  --placard-ribbon: #7c6db8;
+  --placard-motion: 260ms;
+  --placard-radius: 6px;
+
+  color: var(--placard-bone);
+  background: var(--placard-night);
+  font-family: ui-sans-serif, system-ui, 'Segoe UI', sans-serif;
+}
+
+/* ---------- Focus visible ---------- */
+
+.placard-manor :focus-visible,
+.placard-registry :focus-visible,
+.placard-filters :focus-visible,
+.placard-ritual :focus-visible,
+.placard-legend :focus-visible,
+.placard-sheet :focus-visible {
+  outline: 3px solid var(--placard-candle);
+  outline-offset: 2px;
+}
+
+.placard-door-node:focus-visible {
+  outline: 3px solid var(--placard-candle);
+  outline-offset: 3px;
+}
+
+/* ---------- Manoir ---------- */
+
+.placard-manor {
+  position: relative;
+  display: block;
+  overflow-x: auto;
+  background: var(--placard-night);
+}
+
+.placard-manor__svg {
+  display: block;
+  min-width: 320px;
+}
+
+.placard-floor__year {
+  fill: var(--placard-bone);
+  font-size: 15px;
+  font-weight: 700;
+}
+
+.placard-floor__position {
+  fill: #b7aed0;
+  font-size: 9px;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.placard-floor__ground {
+  stroke: var(--placard-stone);
+  stroke-width: 3;
+}
+
+.placard-door-node {
+  cursor: pointer;
+  transition: transform var(--placard-motion) ease-out;
+}
+
+.placard-door-node--active .placard-door__frame {
+  stroke: var(--placard-candle);
+  stroke-width: 2.2;
+}
+
+.placard-door__commit {
+  fill: var(--placard-bone);
+  font-size: 8px;
+  font-family: ui-monospace, monospace;
+}
+
+.placard-door__count {
+  fill: #b7aed0;
+  font-size: 7px;
+}
+
+.placard-glow {
+  transition: opacity var(--placard-motion) ease-in-out;
+}
+
+.placard-door--alert .placard-glow {
+  animation: placard-flicker 1800ms ease-in-out infinite;
+}
+
+.placard-wall-node__label {
+  fill: var(--placard-bone);
+  font-size: 9px;
+  opacity: 0.85;
+}
+
+.placard-manor__window-label {
+  fill: #b7aed0;
+  font-size: 9px;
+}
+
+.placard-footprints__trail {
+  fill: none;
+  stroke: var(--placard-bone);
+  stroke-width: 1;
+  stroke-dasharray: 3 4;
+  opacity: 0.55;
+}
+
+.placard-lantern {
+  transition: transform var(--placard-motion) ease-out;
+  pointer-events: none;
+}
+
+@keyframes placard-flicker {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.55;
+  }
+}
+
+/* ---------- Gravité : couleur + pictogramme + libellé ---------- */
+
+.placard-severity {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 0.35em;
+  white-space: nowrap;
+}
+
+.placard-severity__glyph {
+  font-family: ui-monospace, monospace;
+  font-weight: 700;
+}
+
+.placard-severity--medium .placard-severity__glyph {
+  /* Le parchemin est clair : on garde le contraste sur fond nuit. */
+  color: var(--placard-bone) !important;
+}
+
+/* ---------- Fiche ---------- */
+
+.placard-sheet {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: min(420px, 100%);
+  max-height: 100%;
+  overflow-y: auto;
+  padding: 1rem 1.25rem;
+  border-left: 2px solid var(--placard-stone);
+  background: #1b1630;
+  color: var(--placard-bone);
+  box-shadow: -8px 0 24px rgba(0, 0, 0, 0.45);
+}
+
+.placard-sheet__title {
+  margin: 0;
+  font-size: 1.15rem;
+}
+
+.placard-sheet__preview code,
+.placard-sheet__locations code,
+.placard-sheet__rule {
+  font-family: ui-monospace, monospace;
+  color: #f6efdf;
+}
+
+.placard-sheet__snippet {
+  padding: 0.5rem;
+  border-radius: var(--placard-radius);
+  background: #120e1c;
+  color: var(--placard-bone);
+  overflow-x: auto;
+}
+
+.placard-sheet__reasons li {
+  margin-block: 0.15rem;
+}
+
+/* ---------- Registre ---------- */
+
+.placard-registry__table {
+  width: 100%;
+  border-collapse: collapse;
+  background: var(--placard-night);
+  color: var(--placard-bone);
+}
+
+.placard-registry__caption {
+  padding: 0.5rem 0;
+  text-align: left;
+  font-weight: 700;
+}
+
+.placard-registry th,
+.placard-registry td {
+  padding: 0.4rem 0.6rem;
+  border-bottom: 1px solid var(--placard-stone);
+  text-align: left;
+  vertical-align: top;
+}
+
+.placard-registry thead th {
+  background: var(--placard-stone);
+  color: var(--placard-bone);
+}
+
+.placard-registry__sort {
+  border: 0;
+  padding: 0;
+  background: none;
+  color: inherit;
+  font: inherit;
+  cursor: pointer;
+}
+
+.placard-registry__row {
+  cursor: pointer;
+  transition: background var(--placard-motion) ease-out;
+}
+
+.placard-registry__row--selected,
+.placard-registry__row:hover {
+  background: #221a38;
+}
+
+/* ---------- Filtres ---------- */
+
+.placard-filters {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  padding: 0.75rem;
+  background: #1b1630;
+  border-radius: var(--placard-radius);
+}
+
+.placard-filters__group {
+  margin: 0;
+  border: 1px solid var(--placard-stone);
+  border-radius: var(--placard-radius);
+  padding: 0.4rem 0.6rem;
+}
+
+.placard-filters__option {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding-block: 0.1rem;
+}
+
+.placard-filters input,
+.placard-filters select {
+  font: inherit;
+  color: var(--placard-bone);
+  background: #120e1c;
+  border: 1px solid var(--placard-stone);
+  border-radius: var(--placard-radius);
+  padding: 0.15rem 0.3rem;
+}
+
+/* ---------- Rituel ---------- */
+
+.placard-ritual__step {
+  margin-block: 0.75rem;
+  padding: 0.75rem;
+  border: 1px solid var(--placard-stone);
+  border-radius: var(--placard-radius);
+  background: #1b1630;
+}
+
+.placard-ritual__step[data-status='locked'] {
+  opacity: 0.85;
+}
+
+.placard-ritual__lock {
+  padding: 0.4rem 0.6rem;
+  border-left: 3px solid var(--placard-alert);
+  background: #241a22;
+}
+
+.placard-ritual button,
+.placard-sheet button,
+.placard-legend button,
+.placard-purge button,
+.placard-prevention button,
+.placard-verify button {
+  font: inherit;
+  padding: 0.35rem 0.7rem;
+  border-radius: var(--placard-radius);
+  border: 1px solid var(--placard-bone);
+  background: var(--placard-stone);
+  color: var(--placard-bone);
+  cursor: pointer;
+  transition: background var(--placard-motion) ease-out;
+}
+
+.placard-ritual button:disabled,
+.placard-purge button:disabled,
+.placard-prevention button:disabled {
+  cursor: not-allowed;
+  opacity: 0.6;
+}
+
+.placard-ritual pre,
+.placard-prevention pre {
+  padding: 0.5rem;
+  border-radius: var(--placard-radius);
+  background: #120e1c;
+  color: var(--placard-bone);
+  overflow-x: auto;
+}
+
+/* ---------- Hall d'entrée (PLA-F-20) ---------- */
+
+.placard-hall {
+  padding: 1rem 1.25rem;
+  border-radius: var(--placard-radius);
+  background: var(--placard-stone);
+}
+
+.placard-hall__title {
+  margin: 0 0 0.25rem;
+  font-size: 1.25rem;
+  color: var(--placard-candle);
+}
+
+.placard-hall__lede {
+  margin: 0 0 1rem;
+}
+
+.placard-hall__counts {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  margin: 0 0 1.25rem;
+  padding: 0;
+}
+
+.placard-hall__count {
+  flex: 1 1 7rem;
+  padding: 0.5rem 0.75rem;
+  background: var(--placard-night);
+  border-left: 3px solid var(--placard-candle);
+  border-radius: var(--placard-radius);
+}
+
+.placard-hall__count dt {
+  font-size: 0.72rem;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  opacity: 0.85;
+}
+
+.placard-hall__count dd {
+  margin: 0;
+  font-size: 1.5rem;
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+}
+
+.placard-hall__breakdown {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 2rem;
+}
+
+.placard-hall__breakdown h3 {
+  margin: 0 0 0.4rem;
+  font-size: 0.85rem;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: var(--placard-candle);
+}
+
+/* Chaque ligne : pictogramme + libellé, puis le nombre poussé à droite. Sans
+ * cette grille, glyphe, libellé et compte se collent (« !!!Critical3 »). */
+.placard-hall__list {
+  display: grid;
+  gap: 0.3rem;
+  min-width: 15rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.placard-hall__list li {
+  display: flex;
+  align-items: baseline;
+  gap: 0.5rem;
+}
+
+.placard-hall__value {
+  margin-left: auto;
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+}
+
+/* ---------- Mouvement réduit ---------- */
+
+@media (prefers-reduced-motion: reduce) {
+  .placard-theme *,
+  .placard-manor *,
+  .placard-registry *,
+  .placard-sheet *,
+  .placard-legend *,
+  .placard-ritual *,
+  .placard-hall *,
+  .placard-filters * {
+    animation: none !important;
+    transition: none !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* Classe posée par le rendu quand la préférence est détectée en JS : même
+ * effet, sans dépendre du média (utile pour les tests et le rendu serveur). */
+.placard--reduced-motion *,
+.placard--reduced-motion {
+  animation: none !important;
+  transition: none !important;
+}
