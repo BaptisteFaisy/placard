@@ -23,7 +23,7 @@ concurrency:
 jobs:
   stale-base-guard:
     name: stale-base-guard
-    runs-on: [self-hosted, placard-worker]
+    runs-on: ubuntu-latest
     timeout-minutes: 5
     steps:
       - uses: actions/checkout@v4
